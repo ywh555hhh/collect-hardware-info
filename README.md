@@ -63,6 +63,9 @@ raw/
     kv_sweep_lfm25/             # LFM2.5 KV cache / concurrency sweep raw data
     kv_sweep_qwen3_0p6b/        # Qwen3-0.6B pure-attention baseline sweep
     api_bench_lfm25/            # LFM2.5 warm API server concurrency smoke
+    api_bench_lfm25_warm/       # LFM2.5 eager warm steady-state API benchmark
+    api_bench_lfm25_non_eager_warm/
+                                  # LFM2.5 torch.compile / CUDAGraph warm API benchmark
     non_eager_probe/            # LFM2.5 torch.compile / CUDAGraph probe
 
 probes/
@@ -75,6 +78,21 @@ scripts/
   vllm_kv_sweep.py              # 扫 max_model_len / gpu_memory_utilization
   vllm_api_bench.py             # OpenAI-compatible API server 并发 smoke
 ```
+
+## vLLM 推理实验
+
+当前已经补了三类和推理优化更相关的数据：
+
+- lifecycle：拆 `download/config/tokenizer -> model load -> backend selection -> KV cache -> warmup -> request`。
+- KV/cache sweep：扫 `max_model_len` 和 `gpu_memory_utilization`，观察 cache tokens 和 max concurrency。
+- API steady-state：常驻 OpenAI-compatible server，比较 eager 和 non-eager，并扫 prompt length。
+
+入口文档：
+
+- `notes/metax-c500-vllm-lifecycle.md`
+- `notes/metax-c500-vllm-lifecycle-and-kv-cache.md`
+- `notes/metax-c500-vllm-deeper-exploration.md`
+- `notes/metax-c500-vllm-api-steady-state.md`
 
 ## 复现方式
 

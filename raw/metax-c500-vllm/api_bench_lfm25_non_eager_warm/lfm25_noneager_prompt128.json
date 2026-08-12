@@ -1,0 +1,1911 @@
+{
+  "model": "LFM2.5-1.2B-Instruct",
+  "model_path": "/data/models/LFM2.5-1.2B-Instruct",
+  "params": {
+    "model": "/data/models/LFM2.5-1.2B-Instruct",
+    "model_name": "LFM2.5-1.2B-Instruct",
+    "output": "/data/reports/api_bench_lfm25_non_eager_warm/lfm25_noneager_prompt128.json",
+    "dtype": "float16",
+    "max_model_len": 2048,
+    "gpu_memory_utilization": 0.7,
+    "max_tokens": 64,
+    "concurrency": "1,2,4,8,16",
+    "requests_per_concurrency": 16,
+    "warmup_requests": 4,
+    "prompt": "用两句话解释 KV cache 对推理服务并发的影响。",
+    "prompt_token_len": 128,
+    "port": 18021,
+    "ready_timeout_s": 300,
+    "request_timeout_s": 120,
+    "sample_mxsmi": true,
+    "mxsmi_interval_s": 1.0,
+    "enforce_eager": false,
+    "effective_prompt": "用两句话解释 KV cache 对推理服务并发的影响。\n\n1. 请从推理系统角度分析一次请求的生命周期，包括 prefill、decode、KV cache、调度、显存分配、图捕获和吞吐延迟权衡。\n2. 请从推理系统角度分析一次请求的生命周期，包括 prefill、decode、KV cache、调度、显存分配、图捕获和吞吐延迟权衡。\n3. 请从推理系统角度分析一次请求的生命周期，包括 prefill、decode、KV cache、调度、显存分配、图捕获和吞吐延迟权衡。\n4. 请从推理系统角度分析一次请求的生命周期，包括 prefill、decode、KV cache、调度、显存分配、图捕获和吞吐延迟权衡。"
+  },
+  "effective_prompt_chars": 308,
+  "server_pid": 22629,
+  "started_at": "2026-08-12T10:50:43+0800",
+  "server_log": "/data/reports/api_bench_lfm25_non_eager_warm/lfm25_noneager_prompt128.server.log",
+  "models_response": "{\"object\":\"list\",\"data\":[{\"id\":\"LFM2.5-1.2B-Instruct\",\"object\":\"model\",\"created\":1786503111,\"owned_by\":\"vllm\",\"root\":\"/data/models/LFM2.5-1.2B-Instruct\",\"parent\":null,\"max_model_len\":2048,\"permission\":[{\"id\":\"modelperm-b7c5b29bab76e33d\",\"object\":\"model_permission\",\"created\":1786503111,\"allow_create_engine\":false,\"allow_sampling\":true,\"allow_logprobs\":true,\"allow_search_indices\":false,\"allow_view\":true,\"allow_fine_tuning\":false,\"organization\":\"*\",\"group\":null,\"is_blocking\":false}]}]}",
+  "ready": true,
+  "startup_s": 68.516,
+  "groups": [
+    {
+      "concurrency": 1,
+      "requests": 16,
+      "warmup_requests": 4,
+      "warmup_wall_s": 0.98,
+      "warmup_results": [
+        {
+          "idx": -4,
+          "concurrency": 1,
+          "status": 200,
+          "latency_ms": 298.098,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 177.794
+        },
+        {
+          "idx": -3,
+          "concurrency": 1,
+          "status": 200,
+          "latency_ms": 226.835,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 233.65
+        },
+        {
+          "idx": -2,
+          "concurrency": 1,
+          "status": 200,
+          "latency_ms": 226.839,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 233.646
+        },
+        {
+          "idx": -1,
+          "concurrency": 1,
+          "status": 200,
+          "latency_ms": 226.205,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 234.3
+        }
+      ],
+      "ok": 16,
+      "failed": 0,
+      "wall_s": 3.621,
+      "latency_ms": {
+        "count": 16,
+        "min": 223.738,
+        "p50": 225.643,
+        "p90": 230.136,
+        "p99": 230.376,
+        "max": 230.376,
+        "mean": 226.195
+      },
+      "prompt_tokens": 3792,
+      "completion_tokens": 848,
+      "total_tokens": 4640,
+      "completion_tokens_per_s_wall": 234.19,
+      "total_tokens_per_s_wall": 1281.417,
+      "mxsmi_samples": [
+        {
+          "ts": "2026-08-12T10:51:52+0800",
+          "usage": {
+            "cmd": [
+              "mx-smi",
+              "--show-usage"
+            ],
+            "returncode": 0,
+            "stdout": "mx-smi  version: 2.2.12\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 10:51:52 2026\n\nAttached GPUs                                     : 1\nGPU#0  MXC500  0000:37:00.0\n    Utilization\n        GPU                                       : 36 %\n        VPUE                                      : 0 %\n        VPUD                                      : 0 %\n\nEnd of Log\n",
+            "stderr": ""
+          },
+          "ap_usage": {
+            "cmd": [
+              "mx-smi",
+              "--show-ap-usage"
+            ],
+            "returncode": 0,
+            "stdout": "mx-smi  version: 2.2.12\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 10:51:52 2026\n\nAttached GPUs                                     : 1\nGPU#0  MXC500  0000:37:00.0\n                         Ap Usage\nIndex  0   1   2   3   4   5   6   7   8   9   10  11  12  \ndpc0   36  36  36  36  36  36  36  36  36  36  36  36  36  \ndpc1   36  36  36  36  36  36  36  36  36  36  36  36  36  \ndpc2   36  36  36  36  36  36  36  36  36  36  36  36  36  \ndpc3   36  36  36  36  36  36  36  36  36  36  36  36  36  \ndpc4   36  36  36  36  36  36  36  36  36  36  36  36  36  \ndpc5   36  36  36  36  36  36  36  36  36  36  36  36  36  \ndpc6   36  36  36  36  36  36  36  36  36  36  36  36  36  \ndpc7   36  36  36  36  36  36  36  36  36  36  36  36  36  \n\nEnd of Log\n",
+            "stderr": ""
+          },
+          "hbm_bandwidth": {
+            "cmd": [
+              "mx-smi",
+              "--show-hbm-bandwidth"
+            ],
+            "returncode": 0,
+            "stdout": "mx-smi  version: 2.2.12\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 10:51:52 2026\n\nAttached GPUs                                     : 1\nGPU#0  MXC500  0000:37:00.0\n    Hbm Bandwidth\n        throughput                                : 576366 MBytes/s\n\nEnd of Log\n",
+            "stderr": ""
+          }
+        },
+        {
+          "ts": "2026-08-12T10:51:53+0800",
+          "usage": {
+            "cmd": [
+              "mx-smi",
+              "--show-usage"
+            ],
+            "returncode": 0,
+            "stdout": "mx-smi  version: 2.2.12\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 10:51:53 2026\n\nAttached GPUs                                     : 1\nGPU#0  MXC500  0000:37:00.0\n    Utilization\n        GPU                                       : 40 %\n        VPUE                                      : 0 %\n        VPUD                                      : 0 %\n\nEnd of Log\n",
+            "stderr": ""
+          },
+          "ap_usage": {
+            "cmd": [
+              "mx-smi",
+              "--show-ap-usage"
+            ],
+            "returncode": 0,
+            "stdout": "mx-smi  version: 2.2.12\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 10:51:53 2026\n\nAttached GPUs                                     : 1\nGPU#0  MXC500  0000:37:00.0\n                         Ap Usage\nIndex  0   1   2   3   4   5   6   7   8   9   10  11  12  \ndpc0   40  40  40  40  40  40  40  40  40  40  40  40  40  \ndpc1   40  40  40  40  40  40  40  40  40  40  40  40  40  \ndpc2   40  40  40  40  40  40  40  40  40  40  40  40  40  \ndpc3   40  40  40  40  40  40  40  40  40  40  40  40  40  \ndpc4   40  40  40  40  40  40  40  40  40  40  40  40  40  \ndpc5   40  40  40  40  40  40  40  40  40  40  40  40  40  \ndpc6   40  40  40  40  40  40  40  40  40  40  40  40  40  \ndpc7   40  40  40  40  40  40  40  40  40  40  40  40  40  \n\nEnd of Log\n",
+            "stderr": ""
+          },
+          "hbm_bandwidth": {
+            "cmd": [
+              "mx-smi",
+              "--show-hbm-bandwidth"
+            ],
+            "returncode": 0,
+            "stdout": "mx-smi  version: 2.2.12\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 10:51:53 2026\n\nAttached GPUs                                     : 1\nGPU#0  MXC500  0000:37:00.0\n    Hbm Bandwidth\n        throughput                                : 594686 MBytes/s\n\nEnd of Log\n",
+            "stderr": ""
+          }
+        },
+        {
+          "ts": "2026-08-12T10:51:54+0800",
+          "usage": {
+            "cmd": [
+              "mx-smi",
+              "--show-usage"
+            ],
+            "returncode": 0,
+            "stdout": "mx-smi  version: 2.2.12\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 10:51:54 2026\n\nAttached GPUs                                     : 1\nGPU#0  MXC500  0000:37:00.0\n    Utilization\n        GPU                                       : 40 %\n        VPUE                                      : 0 %\n        VPUD                                      : 0 %\n\nEnd of Log\n",
+            "stderr": ""
+          },
+          "ap_usage": {
+            "cmd": [
+              "mx-smi",
+              "--show-ap-usage"
+            ],
+            "returncode": 0,
+            "stdout": "mx-smi  version: 2.2.12\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 10:51:54 2026\n\nAttached GPUs                                     : 1\nGPU#0  MXC500  0000:37:00.0\n                         Ap Usage\nIndex  0   1   2   3   4   5   6   7   8   9   10  11  12  \ndpc0   40  40  40  40  40  40  40  40  40  40  40  40  40  \ndpc1   40  40  40  40  40  40  40  40  40  41  40  41  41  \ndpc2   40  40  40  40  40  40  40  40  40  40  40  41  41  \ndpc3   40  40  40  40  40  40  40  40  40  40  40  40  40  \ndpc4   40  40  40  40  40  40  40  40  40  40  40  41  40  \ndpc5   40  40  40  40  40  40  40  40  40  40  40  40  41  \ndpc6   40  40  40  40  40  40  40  40  40  40  40  41  41  \ndpc7   40  40  40  40  40  40  40  40  40  40  40  40  40  \n\nEnd of Log\n",
+            "stderr": ""
+          },
+          "hbm_bandwidth": {
+            "cmd": [
+              "mx-smi",
+              "--show-hbm-bandwidth"
+            ],
+            "returncode": 0,
+            "stdout": "mx-smi  version: 2.2.12\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 10:51:54 2026\n\nAttached GPUs                                     : 1\nGPU#0  MXC500  0000:37:00.0\n    Hbm Bandwidth\n        throughput                                : 504399 MBytes/s\n\nEnd of Log\n",
+            "stderr": ""
+          }
+        },
+        {
+          "ts": "2026-08-12T10:51:55+0800",
+          "usage": {
+            "cmd": [
+              "mx-smi",
+              "--show-usage"
+            ],
+            "returncode": 0,
+            "stdout": "mx-smi  version: 2.2.12\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 10:51:55 2026\n\nAttached GPUs                                     : 1\nGPU#0  MXC500  0000:37:00.0\n    Utilization\n        GPU                                       : 41 %\n        VPUE                                      : 0 %\n        VPUD                                      : 0 %\n\nEnd of Log\n",
+            "stderr": ""
+          },
+          "ap_usage": {
+            "cmd": [
+              "mx-smi",
+              "--show-ap-usage"
+            ],
+            "returncode": 0,
+            "stdout": "mx-smi  version: 2.2.12\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 10:51:55 2026\n\nAttached GPUs                                     : 1\nGPU#0  MXC500  0000:37:00.0\n                         Ap Usage\nIndex  0   1   2   3   4   5   6   7   8   9   10  11  12  \ndpc0   41  41  41  41  41  41  41  41  41  41  41  41  41  \ndpc1   41  41  41  41  41  41  41  41  41  41  41  41  41  \ndpc2   41  41  41  41  41  41  41  41  41  41  41  41  41  \ndpc3   41  41  41  41  41  41  41  41  41  41  41  41  41  \ndpc4   41  41  41  41  41  41  41  41  41  41  41  41  41  \ndpc5   41  41  41  41  41  41  41  41  41  41  41  41  41  \ndpc6   41  41  41  41  41  41  41  41  41  41  41  41  41  \ndpc7   41  41  41  41  41  41  41  41  41  41  41  41  41  \n\nEnd of Log\n",
+            "stderr": ""
+          },
+          "hbm_bandwidth": {
+            "cmd": [
+              "mx-smi",
+              "--show-hbm-bandwidth"
+            ],
+            "returncode": 0,
+            "stdout": "mx-smi  version: 2.2.12\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 10:51:55 2026\n\nAttached GPUs                                     : 1\nGPU#0  MXC500  0000:37:00.0\n    Hbm Bandwidth\n        throughput                                : 576207 MBytes/s\n\nEnd of Log\n",
+            "stderr": ""
+          }
+        }
+      ],
+      "results": [
+        {
+          "idx": 0,
+          "concurrency": 1,
+          "status": 200,
+          "latency_ms": 226.476,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 234.02
+        },
+        {
+          "idx": 1,
+          "concurrency": 1,
+          "status": 200,
+          "latency_ms": 228.65,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 231.795
+        },
+        {
+          "idx": 2,
+          "concurrency": 1,
+          "status": 200,
+          "latency_ms": 228.471,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 231.976
+        },
+        {
+          "idx": 3,
+          "concurrency": 1,
+          "status": 200,
+          "latency_ms": 226.491,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 234.005
+        },
+        {
+          "idx": 4,
+          "concurrency": 1,
+          "status": 200,
+          "latency_ms": 226.281,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 234.222
+        },
+        {
+          "idx": 5,
+          "concurrency": 1,
+          "status": 200,
+          "latency_ms": 225.455,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 235.08
+        },
+        {
+          "idx": 6,
+          "concurrency": 1,
+          "status": 200,
+          "latency_ms": 230.376,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 230.058
+        },
+        {
+          "idx": 7,
+          "concurrency": 1,
+          "status": 200,
+          "latency_ms": 224.897,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 235.664
+        },
+        {
+          "idx": 8,
+          "concurrency": 1,
+          "status": 200,
+          "latency_ms": 230.136,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 230.299
+        },
+        {
+          "idx": 9,
+          "concurrency": 1,
+          "status": 200,
+          "latency_ms": 225.434,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 235.102
+        },
+        {
+          "idx": 10,
+          "concurrency": 1,
+          "status": 200,
+          "latency_ms": 224.528,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 236.051
+        },
+        {
+          "idx": 11,
+          "concurrency": 1,
+          "status": 200,
+          "latency_ms": 223.738,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 236.884
+        },
+        {
+          "idx": 12,
+          "concurrency": 1,
+          "status": 200,
+          "latency_ms": 223.759,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 236.862
+        },
+        {
+          "idx": 13,
+          "concurrency": 1,
+          "status": 200,
+          "latency_ms": 224.597,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 235.978
+        },
+        {
+          "idx": 14,
+          "concurrency": 1,
+          "status": 200,
+          "latency_ms": 225.643,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 234.884
+        },
+        {
+          "idx": 15,
+          "concurrency": 1,
+          "status": 200,
+          "latency_ms": 224.193,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 236.403
+        }
+      ]
+    },
+    {
+      "concurrency": 2,
+      "requests": 16,
+      "warmup_requests": 4,
+      "warmup_wall_s": 0.851,
+      "warmup_results": [
+        {
+          "idx": -4,
+          "concurrency": 2,
+          "status": 200,
+          "latency_ms": 570.564,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 92.891
+        },
+        {
+          "idx": -3,
+          "concurrency": 2,
+          "status": 200,
+          "latency_ms": 593.392,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 293,
+            "completion_tokens": 56,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取延迟与吞吐需求。",
+          "completion_tokens_per_s": 94.373
+        },
+        {
+          "idx": -2,
+          "concurrency": 2,
+          "status": 200,
+          "latency_ms": 252.477,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 209.92
+        },
+        {
+          "idx": -1,
+          "concurrency": 2,
+          "status": 200,
+          "latency_ms": 256.984,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 293,
+            "completion_tokens": 56,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取延迟与吞吐需求。",
+          "completion_tokens_per_s": 217.912
+        }
+      ],
+      "ok": 16,
+      "failed": 0,
+      "wall_s": 2.148,
+      "latency_ms": {
+        "count": 16,
+        "min": 252.506,
+        "p50": 268.544,
+        "p90": 272.862,
+        "p99": 275.075,
+        "max": 275.075,
+        "mean": 265.8
+      },
+      "prompt_tokens": 3792,
+      "completion_tokens": 887,
+      "total_tokens": 4679,
+      "completion_tokens_per_s_wall": 412.939,
+      "total_tokens_per_s_wall": 2178.291,
+      "mxsmi_samples": [
+        {
+          "ts": "2026-08-12T10:51:57+0800",
+          "usage": {
+            "cmd": [
+              "mx-smi",
+              "--show-usage"
+            ],
+            "returncode": 0,
+            "stdout": "mx-smi  version: 2.2.12\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 10:51:57 2026\n\nAttached GPUs                                     : 1\nGPU#0  MXC500  0000:37:00.0\n    Utilization\n        GPU                                       : 26 %\n        VPUE                                      : 0 %\n        VPUD                                      : 0 %\n\nEnd of Log\n",
+            "stderr": ""
+          },
+          "ap_usage": {
+            "cmd": [
+              "mx-smi",
+              "--show-ap-usage"
+            ],
+            "returncode": 0,
+            "stdout": "mx-smi  version: 2.2.12\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 10:51:57 2026\n\nAttached GPUs                                     : 1\nGPU#0  MXC500  0000:37:00.0\n                         Ap Usage\nIndex  0   1   2   3   4   5   6   7   8   9   10  11  12  \ndpc0   27  26  26  26  26  26  26  26  26  26  26  26  26  \ndpc1   27  26  26  26  26  26  26  26  26  26  26  26  26  \ndpc2   27  26  27  26  27  26  26  26  26  26  26  26  26  \ndpc3   27  26  27  26  26  26  26  26  26  26  26  26  26  \ndpc4   27  26  27  26  26  26  26  26  26  26  26  26  26  \ndpc5   27  26  26  26  26  26  26  26  26  26  26  26  26  \ndpc6   27  26  26  26  26  26  26  26  26  26  26  26  26  \ndpc7   27  26  27  26  26  26  26  26  26  26  26  26  26  \n\nEnd of Log\n",
+            "stderr": ""
+          },
+          "hbm_bandwidth": {
+            "cmd": [
+              "mx-smi",
+              "--show-hbm-bandwidth"
+            ],
+            "returncode": 0,
+            "stdout": "mx-smi  version: 2.2.12\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 10:51:57 2026\n\nAttached GPUs                                     : 1\nGPU#0  MXC500  0000:37:00.0\n    Hbm Bandwidth\n        throughput                                : 549504 MBytes/s\n\nEnd of Log\n",
+            "stderr": ""
+          }
+        },
+        {
+          "ts": "2026-08-12T10:51:58+0800",
+          "usage": {
+            "cmd": [
+              "mx-smi",
+              "--show-usage"
+            ],
+            "returncode": 0,
+            "stdout": "mx-smi  version: 2.2.12\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 10:51:58 2026\n\nAttached GPUs                                     : 1\nGPU#0  MXC500  0000:37:00.0\n    Utilization\n        GPU                                       : 37 %\n        VPUE                                      : 0 %\n        VPUD                                      : 0 %\n\nEnd of Log\n",
+            "stderr": ""
+          },
+          "ap_usage": {
+            "cmd": [
+              "mx-smi",
+              "--show-ap-usage"
+            ],
+            "returncode": 0,
+            "stdout": "mx-smi  version: 2.2.12\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 10:51:58 2026\n\nAttached GPUs                                     : 1\nGPU#0  MXC500  0000:37:00.0\n                         Ap Usage\nIndex  0   1   2   3   4   5   6   7   8   9   10  11  12  \ndpc0   38  37  38  37  38  37  38  37  37  37  37  37  37  \ndpc1   38  37  38  37  38  37  38  37  37  37  37  37  37  \ndpc2   38  37  38  37  38  37  38  37  38  37  37  37  37  \ndpc3   38  37  38  37  38  37  38  37  37  37  37  37  37  \ndpc4   39  37  38  37  38  37  38  37  37  37  37  37  37  \ndpc5   38  37  38  37  38  37  38  37  37  37  37  37  37  \ndpc6   38  37  38  37  38  37  38  37  38  37  37  37  37  \ndpc7   38  37  38  37  38  37  38  37  38  37  37  37  37  \n\nEnd of Log\n",
+            "stderr": ""
+          },
+          "hbm_bandwidth": {
+            "cmd": [
+              "mx-smi",
+              "--show-hbm-bandwidth"
+            ],
+            "returncode": 0,
+            "stdout": "mx-smi  version: 2.2.12\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 10:51:58 2026\n\nAttached GPUs                                     : 1\nGPU#0  MXC500  0000:37:00.0\n    Hbm Bandwidth\n        throughput                                : 530479 MBytes/s\n\nEnd of Log\n",
+            "stderr": ""
+          }
+        },
+        {
+          "ts": "2026-08-12T10:51:59+0800",
+          "usage": {
+            "cmd": [
+              "mx-smi",
+              "--show-usage"
+            ],
+            "returncode": 0,
+            "stdout": "mx-smi  version: 2.2.12\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 10:51:59 2026\n\nAttached GPUs                                     : 1\nGPU#0  MXC500  0000:37:00.0\n    Utilization\n        GPU                                       : 37 %\n        VPUE                                      : 0 %\n        VPUD                                      : 0 %\n\nEnd of Log\n",
+            "stderr": ""
+          },
+          "ap_usage": {
+            "cmd": [
+              "mx-smi",
+              "--show-ap-usage"
+            ],
+            "returncode": 0,
+            "stdout": "mx-smi  version: 2.2.12\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 10:51:59 2026\n\nAttached GPUs                                     : 1\nGPU#0  MXC500  0000:37:00.0\n                         Ap Usage\nIndex  0   1   2   3   4   5   6   7   8   9   10  11  12  \ndpc0   38  37  38  37  38  37  38  37  37  37  37  37  37  \ndpc1   38  37  38  37  38  37  38  37  37  37  37  37  37  \ndpc2   38  37  38  37  38  37  38  37  37  37  37  37  37  \ndpc3   38  38  38  37  38  37  38  37  37  37  37  37  37  \ndpc4   39  37  38  37  38  37  38  37  37  37  37  37  37  \ndpc5   38  37  38  37  38  37  38  37  37  37  37  37  37  \ndpc6   38  37  38  37  38  37  38  37  37  37  37  37  37  \ndpc7   38  37  38  37  38  37  38  37  37  37  37  37  37  \n\nEnd of Log\n",
+            "stderr": ""
+          },
+          "hbm_bandwidth": {
+            "cmd": [
+              "mx-smi",
+              "--show-hbm-bandwidth"
+            ],
+            "returncode": 0,
+            "stdout": "mx-smi  version: 2.2.12\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 10:51:59 2026\n\nAttached GPUs                                     : 1\nGPU#0  MXC500  0000:37:00.0\n    Hbm Bandwidth\n        throughput                                : 530340 MBytes/s\n\nEnd of Log\n",
+            "stderr": ""
+          }
+        }
+      ],
+      "results": [
+        {
+          "idx": 0,
+          "concurrency": 2,
+          "status": 200,
+          "latency_ms": 252.93,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 209.544
+        },
+        {
+          "idx": 1,
+          "concurrency": 2,
+          "status": 200,
+          "latency_ms": 275.075,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 293,
+            "completion_tokens": 56,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取延迟与吞吐需求。",
+          "completion_tokens_per_s": 203.581
+        },
+        {
+          "idx": 2,
+          "concurrency": 2,
+          "status": 200,
+          "latency_ms": 252.506,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 209.896
+        },
+        {
+          "idx": 3,
+          "concurrency": 2,
+          "status": 200,
+          "latency_ms": 265.447,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 293,
+            "completion_tokens": 56,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取延迟与吞吐需求。",
+          "completion_tokens_per_s": 210.965
+        },
+        {
+          "idx": 4,
+          "concurrency": 2,
+          "status": 200,
+          "latency_ms": 253.003,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 209.484
+        },
+        {
+          "idx": 5,
+          "concurrency": 2,
+          "status": 200,
+          "latency_ms": 266.52,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 293,
+            "completion_tokens": 56,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取延迟与吞吐需求。",
+          "completion_tokens_per_s": 210.115
+        },
+        {
+          "idx": 6,
+          "concurrency": 2,
+          "status": 200,
+          "latency_ms": 271.14,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 293,
+            "completion_tokens": 56,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取延迟与吞吐需求。",
+          "completion_tokens_per_s": 206.535
+        },
+        {
+          "idx": 7,
+          "concurrency": 2,
+          "status": 200,
+          "latency_ms": 272.862,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 293,
+            "completion_tokens": 56,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取延迟与吞吐需求。",
+          "completion_tokens_per_s": 205.232
+        },
+        {
+          "idx": 8,
+          "concurrency": 2,
+          "status": 200,
+          "latency_ms": 268.758,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 293,
+            "completion_tokens": 56,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取延迟与吞吐需求。",
+          "completion_tokens_per_s": 208.366
+        },
+        {
+          "idx": 9,
+          "concurrency": 2,
+          "status": 200,
+          "latency_ms": 267.565,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 293,
+            "completion_tokens": 56,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取延迟与吞吐需求。",
+          "completion_tokens_per_s": 209.295
+        },
+        {
+          "idx": 10,
+          "concurrency": 2,
+          "status": 200,
+          "latency_ms": 268.408,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 293,
+            "completion_tokens": 56,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取延迟与吞吐需求。",
+          "completion_tokens_per_s": 208.637
+        },
+        {
+          "idx": 11,
+          "concurrency": 2,
+          "status": 200,
+          "latency_ms": 268.544,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 293,
+            "completion_tokens": 56,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取延迟与吞吐需求。",
+          "completion_tokens_per_s": 208.532
+        },
+        {
+          "idx": 12,
+          "concurrency": 2,
+          "status": 200,
+          "latency_ms": 270.055,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 293,
+            "completion_tokens": 56,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取延迟与吞吐需求。",
+          "completion_tokens_per_s": 207.365
+        },
+        {
+          "idx": 13,
+          "concurrency": 2,
+          "status": 200,
+          "latency_ms": 270.034,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 293,
+            "completion_tokens": 56,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取延迟与吞吐需求。",
+          "completion_tokens_per_s": 207.381
+        },
+        {
+          "idx": 14,
+          "concurrency": 2,
+          "status": 200,
+          "latency_ms": 270.03,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 293,
+            "completion_tokens": 56,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取延迟与吞吐需求。",
+          "completion_tokens_per_s": 207.384
+        },
+        {
+          "idx": 15,
+          "concurrency": 2,
+          "status": 200,
+          "latency_ms": 259.924,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 293,
+            "completion_tokens": 56,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取延迟与吞吐需求。",
+          "completion_tokens_per_s": 215.447
+        }
+      ]
+    },
+    {
+      "concurrency": 4,
+      "requests": 16,
+      "warmup_requests": 4,
+      "warmup_wall_s": 0.281,
+      "warmup_results": [
+        {
+          "idx": -4,
+          "concurrency": 4,
+          "status": 200,
+          "latency_ms": 274.68,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 192.951
+        },
+        {
+          "idx": -3,
+          "concurrency": 4,
+          "status": 200,
+          "latency_ms": 280.157,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 189.179
+        },
+        {
+          "idx": -2,
+          "concurrency": 4,
+          "status": 200,
+          "latency_ms": 279.703,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 189.487
+        },
+        {
+          "idx": -1,
+          "concurrency": 4,
+          "status": 200,
+          "latency_ms": 279.237,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 189.803
+        }
+      ],
+      "ok": 16,
+      "failed": 0,
+      "wall_s": 1.077,
+      "latency_ms": {
+        "count": 16,
+        "min": 265.516,
+        "p50": 268.199,
+        "p90": 275.617,
+        "p99": 275.986,
+        "max": 275.986,
+        "mean": 268.613
+      },
+      "prompt_tokens": 3792,
+      "completion_tokens": 848,
+      "total_tokens": 4640,
+      "completion_tokens_per_s_wall": 787.253,
+      "total_tokens_per_s_wall": 4307.612,
+      "mxsmi_samples": [
+        {
+          "ts": "2026-08-12T10:51:59+0800",
+          "usage": {
+            "cmd": [
+              "mx-smi",
+              "--show-usage"
+            ],
+            "returncode": 0,
+            "stdout": "mx-smi  version: 2.2.12\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 10:51:59 2026\n\nAttached GPUs                                     : 1\nGPU#0  MXC500  0000:37:00.0\n    Utilization\n        GPU                                       : 37 %\n        VPUE                                      : 0 %\n        VPUD                                      : 0 %\n\nEnd of Log\n",
+            "stderr": ""
+          },
+          "ap_usage": {
+            "cmd": [
+              "mx-smi",
+              "--show-ap-usage"
+            ],
+            "returncode": 0,
+            "stdout": "mx-smi  version: 2.2.12\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 10:51:59 2026\n\nAttached GPUs                                     : 1\nGPU#0  MXC500  0000:37:00.0\n                         Ap Usage\nIndex  0   1   2   3   4   5   6   7   8   9   10  11  12  \ndpc0   38  37  38  37  38  37  37  37  37  37  37  36  36  \ndpc1   38  37  38  37  38  37  37  37  37  37  37  36  36  \ndpc2   38  37  38  37  38  37  37  37  37  37  37  36  36  \ndpc3   38  37  38  37  38  37  37  37  37  37  37  36  36  \ndpc4   38  37  38  37  38  37  37  37  37  37  37  36  36  \ndpc5   38  37  38  37  38  37  37  37  37  37  37  36  36  \ndpc6   38  37  38  37  38  37  37  37  37  36  37  36  37  \ndpc7   38  37  38  37  38  37  37  37  37  37  37  36  36  \n\nEnd of Log\n",
+            "stderr": ""
+          },
+          "hbm_bandwidth": {
+            "cmd": [
+              "mx-smi",
+              "--show-hbm-bandwidth"
+            ],
+            "returncode": 0,
+            "stdout": "mx-smi  version: 2.2.12\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 10:51:59 2026\n\nAttached GPUs                                     : 1\nGPU#0  MXC500  0000:37:00.0\n    Hbm Bandwidth\n        throughput                                : 540301 MBytes/s\n\nEnd of Log\n",
+            "stderr": ""
+          }
+        },
+        {
+          "ts": "2026-08-12T10:52:00+0800",
+          "usage": {
+            "cmd": [
+              "mx-smi",
+              "--show-usage"
+            ],
+            "returncode": 0,
+            "stdout": "mx-smi  version: 2.2.12\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 10:52:00 2026\n\nAttached GPUs                                     : 1\nGPU#0  MXC500  0000:37:00.0\n    Utilization\n        GPU                                       : 37 %\n        VPUE                                      : 0 %\n        VPUD                                      : 0 %\n\nEnd of Log\n",
+            "stderr": ""
+          },
+          "ap_usage": {
+            "cmd": [
+              "mx-smi",
+              "--show-ap-usage"
+            ],
+            "returncode": 0,
+            "stdout": "mx-smi  version: 2.2.12\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 10:52:00 2026\n\nAttached GPUs                                     : 1\nGPU#0  MXC500  0000:37:00.0\n                         Ap Usage\nIndex  0   1   2   3   4   5   6   7   8   9   10  11  12  \ndpc0   38  37  38  37  38  37  38  37  37  37  37  37  37  \ndpc1   39  37  38  37  38  37  38  37  37  36  37  36  37  \ndpc2   39  37  38  37  38  37  37  37  37  37  37  36  37  \ndpc3   39  38  38  37  38  37  37  37  37  37  37  37  37  \ndpc4   38  38  38  37  38  37  37  37  37  37  37  36  37  \ndpc5   39  37  38  37  38  37  37  37  37  37  37  36  37  \ndpc6   38  37  38  37  38  37  37  37  37  37  37  37  37  \ndpc7   39  38  38  37  38  37  38  37  37  37  37  36  37  \n\nEnd of Log\n",
+            "stderr": ""
+          },
+          "hbm_bandwidth": {
+            "cmd": [
+              "mx-smi",
+              "--show-hbm-bandwidth"
+            ],
+            "returncode": 0,
+            "stdout": "mx-smi  version: 2.2.12\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 10:52:00 2026\n\nAttached GPUs                                     : 1\nGPU#0  MXC500  0000:37:00.0\n    Hbm Bandwidth\n        throughput                                : 465699 MBytes/s\n\nEnd of Log\n",
+            "stderr": ""
+          }
+        }
+      ],
+      "results": [
+        {
+          "idx": 0,
+          "concurrency": 4,
+          "status": 200,
+          "latency_ms": 275.617,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 192.296
+        },
+        {
+          "idx": 1,
+          "concurrency": 4,
+          "status": 200,
+          "latency_ms": 275.986,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 192.039
+        },
+        {
+          "idx": 2,
+          "concurrency": 4,
+          "status": 200,
+          "latency_ms": 269.329,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 196.785
+        },
+        {
+          "idx": 3,
+          "concurrency": 4,
+          "status": 200,
+          "latency_ms": 274.739,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 192.91
+        },
+        {
+          "idx": 4,
+          "concurrency": 4,
+          "status": 200,
+          "latency_ms": 265.952,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 199.284
+        },
+        {
+          "idx": 5,
+          "concurrency": 4,
+          "status": 200,
+          "latency_ms": 266.04,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 199.218
+        },
+        {
+          "idx": 6,
+          "concurrency": 4,
+          "status": 200,
+          "latency_ms": 266.315,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 199.012
+        },
+        {
+          "idx": 7,
+          "concurrency": 4,
+          "status": 200,
+          "latency_ms": 265.562,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 199.577
+        },
+        {
+          "idx": 8,
+          "concurrency": 4,
+          "status": 200,
+          "latency_ms": 265.86,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 199.353
+        },
+        {
+          "idx": 9,
+          "concurrency": 4,
+          "status": 200,
+          "latency_ms": 266.38,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 198.964
+        },
+        {
+          "idx": 10,
+          "concurrency": 4,
+          "status": 200,
+          "latency_ms": 266.398,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 198.95
+        },
+        {
+          "idx": 11,
+          "concurrency": 4,
+          "status": 200,
+          "latency_ms": 265.516,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 199.611
+        },
+        {
+          "idx": 12,
+          "concurrency": 4,
+          "status": 200,
+          "latency_ms": 268.928,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 197.079
+        },
+        {
+          "idx": 13,
+          "concurrency": 4,
+          "status": 200,
+          "latency_ms": 268.708,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 197.24
+        },
+        {
+          "idx": 14,
+          "concurrency": 4,
+          "status": 200,
+          "latency_ms": 268.282,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 197.553
+        },
+        {
+          "idx": 15,
+          "concurrency": 4,
+          "status": 200,
+          "latency_ms": 268.199,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 197.614
+        }
+      ]
+    },
+    {
+      "concurrency": 8,
+      "requests": 16,
+      "warmup_requests": 4,
+      "warmup_wall_s": 0.276,
+      "warmup_results": [
+        {
+          "idx": -4,
+          "concurrency": 8,
+          "status": 200,
+          "latency_ms": 269.727,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 196.495
+        },
+        {
+          "idx": -3,
+          "concurrency": 8,
+          "status": 200,
+          "latency_ms": 274.758,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 192.897
+        },
+        {
+          "idx": -2,
+          "concurrency": 8,
+          "status": 200,
+          "latency_ms": 274.48,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 193.092
+        },
+        {
+          "idx": -1,
+          "concurrency": 8,
+          "status": 200,
+          "latency_ms": 273.933,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 193.478
+        }
+      ],
+      "ok": 16,
+      "failed": 0,
+      "wall_s": 0.604,
+      "latency_ms": {
+        "count": 16,
+        "min": 291.935,
+        "p50": 298.28,
+        "p90": 305.468,
+        "p99": 306.786,
+        "max": 306.786,
+        "mean": 299.601
+      },
+      "prompt_tokens": 3792,
+      "completion_tokens": 848,
+      "total_tokens": 4640,
+      "completion_tokens_per_s_wall": 1404.785,
+      "total_tokens_per_s_wall": 7686.561,
+      "mxsmi_samples": [
+        {
+          "ts": "2026-08-12T10:52:00+0800",
+          "usage": {
+            "cmd": [
+              "mx-smi",
+              "--show-usage"
+            ],
+            "returncode": 0,
+            "stdout": "mx-smi  version: 2.2.12\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 10:52:00 2026\n\nAttached GPUs                                     : 1\nGPU#0  MXC500  0000:37:00.0\n    Utilization\n        GPU                                       : 37 %\n        VPUE                                      : 0 %\n        VPUD                                      : 0 %\n\nEnd of Log\n",
+            "stderr": ""
+          },
+          "ap_usage": {
+            "cmd": [
+              "mx-smi",
+              "--show-ap-usage"
+            ],
+            "returncode": 0,
+            "stdout": "mx-smi  version: 2.2.12\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 10:52:00 2026\n\nAttached GPUs                                     : 1\nGPU#0  MXC500  0000:37:00.0\n                         Ap Usage\nIndex  0   1   2   3   4   5   6   7   8   9   10  11  12  \ndpc0   38  37  38  37  38  37  38  37  37  37  37  37  37  \ndpc1   39  38  38  37  38  37  38  37  38  37  37  36  37  \ndpc2   39  38  38  37  38  37  37  37  37  37  37  37  37  \ndpc3   39  38  38  37  38  37  38  37  37  37  37  37  37  \ndpc4   39  38  38  37  38  37  38  37  37  37  37  37  37  \ndpc5   39  38  38  37  38  37  37  37  37  37  37  37  37  \ndpc6   39  38  38  37  38  37  37  37  37  37  37  37  37  \ndpc7   39  38  38  38  38  37  38  37  37  37  37  37  37  \n\nEnd of Log\n",
+            "stderr": ""
+          },
+          "hbm_bandwidth": {
+            "cmd": [
+              "mx-smi",
+              "--show-hbm-bandwidth"
+            ],
+            "returncode": 0,
+            "stdout": "mx-smi  version: 2.2.12\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 10:52:00 2026\n\nAttached GPUs                                     : 1\nGPU#0  MXC500  0000:37:00.0\n    Hbm Bandwidth\n        throughput                                : 481102 MBytes/s\n\nEnd of Log\n",
+            "stderr": ""
+          }
+        }
+      ],
+      "results": [
+        {
+          "idx": 0,
+          "concurrency": 8,
+          "status": 200,
+          "latency_ms": 298.28,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 177.685
+        },
+        {
+          "idx": 1,
+          "concurrency": 8,
+          "status": 200,
+          "latency_ms": 306.786,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 172.759
+        },
+        {
+          "idx": 2,
+          "concurrency": 8,
+          "status": 200,
+          "latency_ms": 305.398,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 173.544
+        },
+        {
+          "idx": 3,
+          "concurrency": 8,
+          "status": 200,
+          "latency_ms": 305.293,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 173.603
+        },
+        {
+          "idx": 4,
+          "concurrency": 8,
+          "status": 200,
+          "latency_ms": 305.468,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 173.504
+        },
+        {
+          "idx": 5,
+          "concurrency": 8,
+          "status": 200,
+          "latency_ms": 303.093,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 174.864
+        },
+        {
+          "idx": 6,
+          "concurrency": 8,
+          "status": 200,
+          "latency_ms": 303.07,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 174.877
+        },
+        {
+          "idx": 7,
+          "concurrency": 8,
+          "status": 200,
+          "latency_ms": 302.892,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 174.98
+        },
+        {
+          "idx": 8,
+          "concurrency": 8,
+          "status": 200,
+          "latency_ms": 291.935,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 181.547
+        },
+        {
+          "idx": 9,
+          "concurrency": 8,
+          "status": 200,
+          "latency_ms": 297.272,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 178.288
+        },
+        {
+          "idx": 10,
+          "concurrency": 8,
+          "status": 200,
+          "latency_ms": 296.981,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 178.462
+        },
+        {
+          "idx": 11,
+          "concurrency": 8,
+          "status": 200,
+          "latency_ms": 296.255,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 178.9
+        },
+        {
+          "idx": 12,
+          "concurrency": 8,
+          "status": 200,
+          "latency_ms": 296.33,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 178.855
+        },
+        {
+          "idx": 13,
+          "concurrency": 8,
+          "status": 200,
+          "latency_ms": 295.87,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 179.133
+        },
+        {
+          "idx": 14,
+          "concurrency": 8,
+          "status": 200,
+          "latency_ms": 294.359,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 180.052
+        },
+        {
+          "idx": 15,
+          "concurrency": 8,
+          "status": 200,
+          "latency_ms": 294.33,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 180.07
+        }
+      ]
+    },
+    {
+      "concurrency": 16,
+      "requests": 16,
+      "warmup_requests": 4,
+      "warmup_wall_s": 0.275,
+      "warmup_results": [
+        {
+          "idx": -4,
+          "concurrency": 16,
+          "status": 200,
+          "latency_ms": 269.136,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 196.926
+        },
+        {
+          "idx": -3,
+          "concurrency": 16,
+          "status": 200,
+          "latency_ms": 273.984,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 193.442
+        },
+        {
+          "idx": -2,
+          "concurrency": 16,
+          "status": 200,
+          "latency_ms": 273.674,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 193.661
+        },
+        {
+          "idx": -1,
+          "concurrency": 16,
+          "status": 200,
+          "latency_ms": 273.443,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 193.825
+        }
+      ],
+      "ok": 16,
+      "failed": 0,
+      "wall_s": 0.377,
+      "latency_ms": {
+        "count": 16,
+        "min": 352.305,
+        "p50": 358.87,
+        "p90": 369.228,
+        "p99": 371.049,
+        "max": 371.049,
+        "mean": 359.786
+      },
+      "prompt_tokens": 3792,
+      "completion_tokens": 854,
+      "total_tokens": 4646,
+      "completion_tokens_per_s_wall": 2265.893,
+      "total_tokens_per_s_wall": 12327.092,
+      "mxsmi_samples": [
+        {
+          "ts": "2026-08-12T10:52:01+0800",
+          "usage": {
+            "cmd": [
+              "mx-smi",
+              "--show-usage"
+            ],
+            "returncode": 0,
+            "stdout": "mx-smi  version: 2.2.12\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 10:52:01 2026\n\nAttached GPUs                                     : 1\nGPU#0  MXC500  0000:37:00.0\n    Utilization\n        GPU                                       : 38 %\n        VPUE                                      : 0 %\n        VPUD                                      : 0 %\n\nEnd of Log\n",
+            "stderr": ""
+          },
+          "ap_usage": {
+            "cmd": [
+              "mx-smi",
+              "--show-ap-usage"
+            ],
+            "returncode": 0,
+            "stdout": "mx-smi  version: 2.2.12\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 10:52:01 2026\n\nAttached GPUs                                     : 1\nGPU#0  MXC500  0000:37:00.0\n                         Ap Usage\nIndex  0   1   2   3   4   5   6   7   8   9   10  11  12  \ndpc0   39  38  39  38  38  38  38  37  38  37  37  37  37  \ndpc1   39  38  39  38  38  38  38  37  38  37  37  37  37  \ndpc2   39  38  39  38  39  38  38  37  38  37  37  37  37  \ndpc3   39  38  39  38  38  38  38  37  38  37  37  37  37  \ndpc4   39  38  39  38  38  38  38  38  38  37  37  37  37  \ndpc5   39  38  39  38  39  38  38  37  38  37  37  37  37  \ndpc6   39  38  39  38  38  38  38  37  38  37  38  37  37  \ndpc7   39  38  39  38  38  38  38  38  38  37  38  37  37  \n\nEnd of Log\n",
+            "stderr": ""
+          },
+          "hbm_bandwidth": {
+            "cmd": [
+              "mx-smi",
+              "--show-hbm-bandwidth"
+            ],
+            "returncode": 0,
+            "stdout": "mx-smi  version: 2.2.12\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 10:52:01 2026\n\nAttached GPUs                                     : 1\nGPU#0  MXC500  0000:37:00.0\n    Hbm Bandwidth\n        throughput                                : 235522 MBytes/s\n\nEnd of Log\n",
+            "stderr": ""
+          }
+        }
+      ],
+      "results": [
+        {
+          "idx": 0,
+          "concurrency": 16,
+          "status": 200,
+          "latency_ms": 352.305,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 150.438
+        },
+        {
+          "idx": 1,
+          "concurrency": 16,
+          "status": 200,
+          "latency_ms": 361.039,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 146.799
+        },
+        {
+          "idx": 2,
+          "concurrency": 16,
+          "status": 200,
+          "latency_ms": 359.857,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 147.281
+        },
+        {
+          "idx": 3,
+          "concurrency": 16,
+          "status": 200,
+          "latency_ms": 359.414,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 147.462
+        },
+        {
+          "idx": 4,
+          "concurrency": 16,
+          "status": 200,
+          "latency_ms": 358.523,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 147.829
+        },
+        {
+          "idx": 5,
+          "concurrency": 16,
+          "status": 200,
+          "latency_ms": 358.806,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 147.712
+        },
+        {
+          "idx": 6,
+          "concurrency": 16,
+          "status": 200,
+          "latency_ms": 358.026,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 148.034
+        },
+        {
+          "idx": 7,
+          "concurrency": 16,
+          "status": 200,
+          "latency_ms": 357.356,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 148.311
+        },
+        {
+          "idx": 8,
+          "concurrency": 16,
+          "status": 200,
+          "latency_ms": 355.693,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 149.005
+        },
+        {
+          "idx": 9,
+          "concurrency": 16,
+          "status": 200,
+          "latency_ms": 360.334,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 147.086
+        },
+        {
+          "idx": 10,
+          "concurrency": 16,
+          "status": 200,
+          "latency_ms": 359.934,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 147.249
+        },
+        {
+          "idx": 11,
+          "concurrency": 16,
+          "status": 200,
+          "latency_ms": 371.049,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 293,
+            "completion_tokens": 56,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取延迟与吞吐需求。",
+          "completion_tokens_per_s": 150.924
+        },
+        {
+          "idx": 12,
+          "concurrency": 16,
+          "status": 200,
+          "latency_ms": 358.87,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 147.686
+        },
+        {
+          "idx": 13,
+          "concurrency": 16,
+          "status": 200,
+          "latency_ms": 358.143,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 147.986
+        },
+        {
+          "idx": 14,
+          "concurrency": 16,
+          "status": 200,
+          "latency_ms": 357.992,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 290,
+            "completion_tokens": 53,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取效率与延迟影响。",
+          "completion_tokens_per_s": 148.048
+        },
+        {
+          "idx": 15,
+          "concurrency": 16,
+          "status": 200,
+          "latency_ms": 369.228,
+          "usage": {
+            "prompt_tokens": 237,
+            "total_tokens": 293,
+            "completion_tokens": 56,
+            "prompt_tokens_details": null
+          },
+          "content": "KV缓存通过存储中间结果提升推理服务的响应速度，减少重复计算。  \nKV缓存的使用在调度和显存分配中需权衡存取延迟与吞吐需求。",
+          "completion_tokens_per_s": 151.668
+        }
+      ]
+    }
+  ],
+  "finished_at": "2026-08-12T10:52:15+0800",
+  "server_log_tail": "py:47] Route: /v1/models, Methods: GET\n(APIServer pid=22629) INFO 08-12 10:51:50 [launcher.py:47] Route: /ping, Methods: GET\n(APIServer pid=22629) INFO 08-12 10:51:50 [launcher.py:47] Route: /ping, Methods: POST\n(APIServer pid=22629) INFO 08-12 10:51:50 [launcher.py:47] Route: /invocations, Methods: POST\n(APIServer pid=22629) INFO 08-12 10:51:50 [launcher.py:47] Route: /v1/chat/completions, Methods: POST\n(APIServer pid=22629) INFO 08-12 10:51:50 [launcher.py:47] Route: /v1/chat/completions/render, Methods: POST\n(APIServer pid=22629) INFO 08-12 10:51:50 [launcher.py:47] Route: /v1/responses, Methods: POST\n(APIServer pid=22629) INFO 08-12 10:51:50 [launcher.py:47] Route: /v1/responses/{response_id}, Methods: GET\n(APIServer pid=22629) INFO 08-12 10:51:50 [launcher.py:47] Route: /v1/responses/{response_id}/cancel, Methods: POST\n(APIServer pid=22629) INFO 08-12 10:51:50 [launcher.py:47] Route: /v1/completions, Methods: POST\n(APIServer pid=22629) INFO 08-12 10:51:50 [launcher.py:47] Route: /v1/completions/render, Methods: POST\n(APIServer pid=22629) INFO 08-12 10:51:50 [launcher.py:47] Route: /v1/messages, Methods: POST\n(APIServer pid=22629) INFO 08-12 10:51:50 [launcher.py:47] Route: /v1/messages/count_tokens, Methods: POST\n(APIServer pid=22629) INFO 08-12 10:51:50 [launcher.py:47] Route: /inference/v1/generate, Methods: POST\n(APIServer pid=22629) INFO 08-12 10:51:50 [launcher.py:47] Route: /scale_elastic_ep, Methods: POST\n(APIServer pid=22629) INFO 08-12 10:51:50 [launcher.py:47] Route: /is_scaling_elastic_ep, Methods: POST\n(APIServer pid=22629) INFO:     Started server process [22629]\n(APIServer pid=22629) INFO:     Waiting for application startup.\n(APIServer pid=22629) INFO:     Application startup complete.\n(APIServer pid=22629) INFO:     127.0.0.1:39390 - \"GET /v1/models HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:39404 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:39408 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:39412 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:39426 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:39436 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:39448 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:39462 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:39464 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:39466 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:39476 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:39486 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:39498 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:39508 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:39518 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:39530 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:39542 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:39550 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:39556 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:39566 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:39578 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:39584 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:39592 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:39594 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:39610 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:39618 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:39626 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:39634 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:39644 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:39656 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:39662 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:45954 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:45968 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:45976 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:45986 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:45996 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46010 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46022 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46026 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46028 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46030 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46046 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46050 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46064 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46066 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46072 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46084 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46068 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46100 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46102 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46130 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46118 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46140 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46146 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46174 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46160 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46184 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46186 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46198 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46202 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46208 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46222 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46226 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46228 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46232 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO 08-12 10:52:01 [loggers.py:259] Engine 000: Avg prompt throughput: 1589.8 tokens/s, Avg generation throughput: 355.3 tokens/s, Running: 8 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.4%, Prefix cache hit rate: 0.0%\n(APIServer pid=22629) INFO:     127.0.0.1:46236 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46244 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46248 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46252 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46268 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46270 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46276 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46282 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46284 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46288 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46304 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46308 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46314 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46290 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46330 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46346 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46360 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46368 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46382 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46384 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46398 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46390 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46404 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46406 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46420 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46436 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46440 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46444 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46448 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46454 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46468 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46470 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46476 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46484 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46464 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO:     127.0.0.1:46488 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=22629) INFO 08-12 10:52:02 [launcher.py:122] Shutting down FastAPI HTTP server.\n[rank0]:[W812 10:52:02.242682260 ProcessGroupNCCL.cpp:1544] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())\n(APIServer pid=22629) INFO:     Shutting down\n(APIServer pid=22629) INFO:     Waiting for application shutdown.\n(APIServer pid=22629) INFO:     Application shutdown complete.\n"
+}

@@ -14,6 +14,7 @@ import json
 import statistics
 import subprocess
 import sys
+import threading
 import time
 import urllib.error
 import urllib.request
@@ -61,10 +62,73 @@ def summarize_numbers(values: list[float]) -> dict[str, float | None]:
     }
 
 
+def build_prompt(base: str, target_tokens: int | None) -> str:
+    """Build a stable approximate-length prompt without depending on tokenizer APIs."""
+    if not target_tokens:
+        return base
+    # Chinese text tokenizes differently across models; this is intentionally approximate.
+    chunk = (
+        "请从推理系统角度分析一次请求的生命周期，包括 prefill、decode、KV cache、"
+        "调度、显存分配、图捕获和吞吐延迟权衡。"
+    )
+    # A mixed Chinese/English chunk keeps tokenizer behavior reasonably stable.
+    approx_tokens_per_chunk = 38
+    repeats = max(1, (target_tokens + approx_tokens_per_chunk - 1) // approx_tokens_per_chunk)
+    return base + "\n\n" + "\n".join(f"{i + 1}. {chunk}" for i in range(repeats))
+
+
+def run_command_text(cmd: list[str], timeout: int = 5) -> dict[str, Any]:
+    try:
+        proc = subprocess.run(cmd, check=False, capture_output=True, text=True, timeout=timeout)
+        return {
+            "cmd": cmd,
+            "returncode": proc.returncode,
+            "stdout": proc.stdout[-4000:],
+            "stderr": proc.stderr[-2000:],
+        }
+    except Exception as exc:  # noqa: BLE001
+        return {"cmd": cmd, "error": repr(exc)}
+
+
+class MxSmiSampler:
+    def __init__(self, enabled: bool, interval_s: float) -> None:
+        self.enabled = enabled
+        self.interval_s = interval_s
+        self._stop = threading.Event()
+        self.samples: list[dict[str, Any]] = []
+        self._thread: threading.Thread | None = None
+
+    def __enter__(self) -> "MxSmiSampler":
+        if not self.enabled:
+            return self
+        self._thread = threading.Thread(target=self._loop, daemon=True)
+        self._thread.start()
+        return self
+
+    def __exit__(self, exc_type: object, exc: object, tb: object) -> None:
+        self._stop.set()
+        if self._thread:
+            self._thread.join(timeout=max(2.0, self.interval_s * 2))
+
+    def _loop(self) -> None:
+        while not self._stop.is_set():
+            started = time.time()
+            self.samples.append(
+                {
+                    "ts": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
+                    "usage": run_command_text(["mx-smi", "--show-usage"]),
+                    "ap_usage": run_command_text(["mx-smi", "--show-ap-usage"]),
+                    "hbm_bandwidth": run_command_text(["mx-smi", "--show-hbm-bandwidth"]),
+                }
+            )
+            elapsed = time.time() - started
+            self._stop.wait(max(0.1, self.interval_s - elapsed))
+
+
 def request_once(args: argparse.Namespace, idx: int, concurrency: int) -> dict[str, Any]:
     body = {
         "model": args.model_name,
-        "messages": [{"role": "user", "content": args.prompt}],
+        "messages": [{"role": "user", "content": args.effective_prompt}],
         "max_tokens": args.max_tokens,
         "temperature": 0,
     }
@@ -85,29 +149,45 @@ def request_once(args: argparse.Namespace, idx: int, concurrency: int) -> dict[s
     return rec
 
 
-def run_group(args: argparse.Namespace, concurrency: int) -> dict[str, Any]:
-    requests = args.requests_per_concurrency
+def run_requests(args: argparse.Namespace, concurrency: int, requests: int, idx_offset: int = 0) -> tuple[float, list[dict[str, Any]]]:
     start = time.perf_counter()
     results: list[dict[str, Any]] = []
     with concurrent.futures.ThreadPoolExecutor(max_workers=concurrency) as pool:
-        futures = [pool.submit(request_once, args, i, concurrency) for i in range(requests)]
+        futures = [pool.submit(request_once, args, idx_offset + i, concurrency) for i in range(requests)]
         for fut in concurrent.futures.as_completed(futures):
             results.append(fut.result())
-    wall_s = time.perf_counter() - start
+    return time.perf_counter() - start, results
+
+
+def run_group(args: argparse.Namespace, concurrency: int) -> dict[str, Any]:
+    requests = args.requests_per_concurrency
+    warmup_results: list[dict[str, Any]] = []
+    warmup_wall_s = 0.0
+    if args.warmup_requests:
+        warmup_wall_s, warmup_results = run_requests(args, concurrency, args.warmup_requests, idx_offset=-args.warmup_requests)
+    with MxSmiSampler(args.sample_mxsmi, args.mxsmi_interval_s) as sampler:
+        wall_s, results = run_requests(args, concurrency, requests)
     ok = [r for r in results if r.get("status") == 200]
     latencies = [float(r["latency_ms"]) for r in ok]
     completion_tokens = sum((r.get("usage") or {}).get("completion_tokens") or 0 for r in ok)
     prompt_tokens = sum((r.get("usage") or {}).get("prompt_tokens") or 0 for r in ok)
+    total_tokens = prompt_tokens + completion_tokens
     return {
         "concurrency": concurrency,
         "requests": requests,
+        "warmup_requests": args.warmup_requests,
+        "warmup_wall_s": round(warmup_wall_s, 3),
+        "warmup_results": sorted(warmup_results, key=lambda x: x["idx"]),
         "ok": len(ok),
         "failed": requests - len(ok),
         "wall_s": round(wall_s, 3),
         "latency_ms": summarize_numbers(latencies),
         "prompt_tokens": prompt_tokens,
         "completion_tokens": completion_tokens,
+        "total_tokens": total_tokens,
         "completion_tokens_per_s_wall": round(completion_tokens / wall_s, 3) if wall_s else None,
+        "total_tokens_per_s_wall": round(total_tokens / wall_s, 3) if wall_s else None,
+        "mxsmi_samples": sampler.samples,
         "results": sorted(results, key=lambda x: x["idx"]),
     }
 
@@ -152,16 +232,21 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max-tokens", type=int, default=32)
     parser.add_argument("--concurrency", default="1,2,4,8")
     parser.add_argument("--requests-per-concurrency", type=int, default=4)
+    parser.add_argument("--warmup-requests", type=int, default=0)
     parser.add_argument("--prompt", default="用两句话解释 KV cache 对推理服务并发的影响。")
+    parser.add_argument("--prompt-token-len", type=int, default=0, help="Approximate prompt token length target.")
     parser.add_argument("--port", type=int, default=18000)
     parser.add_argument("--ready-timeout-s", type=int, default=300)
     parser.add_argument("--request-timeout-s", type=int, default=120)
+    parser.add_argument("--sample-mxsmi", action="store_true", help="Poll mx-smi during each measured concurrency group.")
+    parser.add_argument("--mxsmi-interval-s", type=float, default=1.0)
     parser.add_argument("--enforce-eager", action="store_true")
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
+    args.effective_prompt = build_prompt(args.prompt, args.prompt_token_len)
     output = Path(args.output)
     output.parent.mkdir(parents=True, exist_ok=True)
     log_path = output.with_suffix(".server.log")
@@ -170,6 +255,7 @@ def main() -> None:
         "model": args.model_name,
         "model_path": args.model,
         "params": vars(args),
+        "effective_prompt_chars": len(args.effective_prompt),
         "server_pid": proc.pid,
         "started_at": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
         "server_log": str(log_path),
@@ -212,7 +298,7 @@ def main() -> None:
         "ready": record.get("ready"),
         "startup_s": record.get("startup_s"),
         "groups": [
-            {k: g.get(k) for k in ["concurrency", "ok", "failed", "wall_s", "completion_tokens_per_s_wall", "latency_ms"]}
+            {k: g.get(k) for k in ["concurrency", "ok", "failed", "wall_s", "completion_tokens_per_s_wall", "total_tokens_per_s_wall", "latency_ms"]}
             for g in record.get("groups", [])
         ],
     }, ensure_ascii=False))
