@@ -12,6 +12,7 @@
 
 - `ARCHIVE-2026-08-12.md`
 - `RESUME-PADDLE-C500.md`
+- `RESUME-PADDLE-C500-CN.md`
 
 ### MetaX C500
 
