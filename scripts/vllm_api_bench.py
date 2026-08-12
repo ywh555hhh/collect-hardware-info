@@ -34,6 +34,72 @@ def post_json(url: str, body: dict[str, Any], timeout: int) -> tuple[int, str]:
         return 0, repr(exc)
 
 
+def post_stream_json(url: str, body: dict[str, Any], timeout: int) -> dict[str, Any]:
+    data = json.dumps(body, ensure_ascii=False).encode("utf-8")
+    req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"}, method="POST")
+    t0 = time.perf_counter()
+    rec: dict[str, Any] = {
+        "status": 0,
+        "first_event_ms": None,
+        "first_content_ms": None,
+        "latency_ms": None,
+        "event_count": 0,
+        "content_chunk_count": 0,
+        "content_chars": 0,
+        "content_head": "",
+        "usage": None,
+        "finish_reason": None,
+        "stream_parse_errors": [],
+        "content_chunk_gap_ms": [],
+    }
+    last_content_ms: float | None = None
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:  # noqa: S310 - local server only
+            rec["status"] = resp.status
+            for raw_line in resp:
+                line = raw_line.decode("utf-8", errors="replace").strip()
+                if not line or not line.startswith("data:"):
+                    continue
+                payload = line[len("data:"):].strip()
+                if payload == "[DONE]":
+                    break
+                now_ms = (time.perf_counter() - t0) * 1000
+                if rec["first_event_ms"] is None:
+                    rec["first_event_ms"] = round(now_ms, 3)
+                rec["event_count"] += 1
+                try:
+                    parsed = json.loads(payload)
+                except json.JSONDecodeError as exc:
+                    rec["stream_parse_errors"].append({"error": str(exc), "payload_head": payload[:300]})
+                    continue
+                if parsed.get("usage"):
+                    rec["usage"] = parsed.get("usage")
+                choice = (parsed.get("choices") or [{}])[0]
+                if choice.get("finish_reason"):
+                    rec["finish_reason"] = choice.get("finish_reason")
+                delta = choice.get("delta") or {}
+                content = delta.get("content") or ""
+                if content:
+                    if rec["first_content_ms"] is None:
+                        rec["first_content_ms"] = round(now_ms, 3)
+                    if last_content_ms is not None:
+                        rec["content_chunk_gap_ms"].append(round(now_ms - last_content_ms, 3))
+                    last_content_ms = now_ms
+                    rec["content_chunk_count"] += 1
+                    rec["content_chars"] += len(content)
+                    if len(rec["content_head"]) < 300:
+                        rec["content_head"] = (rec["content_head"] + content)[:300]
+    except urllib.error.HTTPError as exc:
+        rec["status"] = exc.code
+        rec["response_head"] = exc.read().decode("utf-8", errors="replace")[:500]
+    except Exception as exc:  # noqa: BLE001
+        rec["error"] = repr(exc)
+    finally:
+        dt_ms = (time.perf_counter() - t0) * 1000
+        rec["latency_ms"] = round(dt_ms, 3)
+    return rec
+
+
 def get_text(url: str, timeout: int = 5) -> tuple[int, str]:
     try:
         with urllib.request.urlopen(url, timeout=timeout) as resp:  # noqa: S310 - local server only
@@ -132,6 +198,21 @@ def request_once(args: argparse.Namespace, idx: int, concurrency: int) -> dict[s
         "max_tokens": args.max_tokens,
         "temperature": 0,
     }
+    if args.stream:
+        body["stream"] = True
+        body["stream_options"] = {"include_usage": True}
+        rec = post_stream_json(f"http://127.0.0.1:{args.port}/v1/chat/completions", body, args.request_timeout_s)
+        rec.update({"idx": idx, "concurrency": concurrency})
+        usage = rec.get("usage") or {}
+        completion = usage.get("completion_tokens") or 0
+        latency_ms = rec.get("latency_ms") or 0
+        first_content_ms = rec.get("first_content_ms")
+        if completion and latency_ms:
+            rec["completion_tokens_per_s"] = round(completion / (latency_ms / 1000), 3)
+        if completion > 1 and first_content_ms is not None:
+            rec["tpot_ms"] = round((latency_ms - float(first_content_ms)) / (completion - 1), 3)
+        rec["chunk_gap_ms"] = summarize_numbers([float(x) for x in rec.get("content_chunk_gap_ms", [])])
+        return rec
     t0 = time.perf_counter()
     status, text = post_json(f"http://127.0.0.1:{args.port}/v1/chat/completions", body, args.request_timeout_s)
     dt_ms = (time.perf_counter() - t0) * 1000
@@ -169,6 +250,9 @@ def run_group(args: argparse.Namespace, concurrency: int) -> dict[str, Any]:
         wall_s, results = run_requests(args, concurrency, requests)
     ok = [r for r in results if r.get("status") == 200]
     latencies = [float(r["latency_ms"]) for r in ok]
+    first_event_ms = [float(r["first_event_ms"]) for r in ok if r.get("first_event_ms") is not None]
+    first_content_ms = [float(r["first_content_ms"]) for r in ok if r.get("first_content_ms") is not None]
+    tpot_ms = [float(r["tpot_ms"]) for r in ok if r.get("tpot_ms") is not None]
     completion_tokens = sum((r.get("usage") or {}).get("completion_tokens") or 0 for r in ok)
     prompt_tokens = sum((r.get("usage") or {}).get("prompt_tokens") or 0 for r in ok)
     total_tokens = prompt_tokens + completion_tokens
@@ -182,6 +266,9 @@ def run_group(args: argparse.Namespace, concurrency: int) -> dict[str, Any]:
         "failed": requests - len(ok),
         "wall_s": round(wall_s, 3),
         "latency_ms": summarize_numbers(latencies),
+        "first_event_ms": summarize_numbers(first_event_ms),
+        "first_content_ms": summarize_numbers(first_content_ms),
+        "tpot_ms": summarize_numbers(tpot_ms),
         "prompt_tokens": prompt_tokens,
         "completion_tokens": completion_tokens,
         "total_tokens": total_tokens,
@@ -238,6 +325,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--port", type=int, default=18000)
     parser.add_argument("--ready-timeout-s", type=int, default=300)
     parser.add_argument("--request-timeout-s", type=int, default=120)
+    parser.add_argument("--stream", action="store_true", help="Use OpenAI streaming and record TTFT-like metrics.")
     parser.add_argument("--sample-mxsmi", action="store_true", help="Poll mx-smi during each measured concurrency group.")
     parser.add_argument("--mxsmi-interval-s", type=float, default=1.0)
     parser.add_argument("--enforce-eager", action="store_true")
@@ -298,7 +386,7 @@ def main() -> None:
         "ready": record.get("ready"),
         "startup_s": record.get("startup_s"),
         "groups": [
-            {k: g.get(k) for k in ["concurrency", "ok", "failed", "wall_s", "completion_tokens_per_s_wall", "total_tokens_per_s_wall", "latency_ms"]}
+            {k: g.get(k) for k in ["concurrency", "ok", "failed", "wall_s", "completion_tokens_per_s_wall", "total_tokens_per_s_wall", "latency_ms", "first_content_ms", "tpot_ms"]}
             for g in record.get("groups", [])
         ],
     }, ensure_ascii=False))

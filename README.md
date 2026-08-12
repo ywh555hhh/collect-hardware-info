@@ -66,6 +66,8 @@ raw/
     api_bench_lfm25_warm/       # LFM2.5 eager warm steady-state API benchmark
     api_bench_lfm25_non_eager_warm/
                                   # LFM2.5 torch.compile / CUDAGraph warm API benchmark
+    api_bench_lfm25_stream/       # LFM2.5 streaming TTFT / TPOT benchmark
+    api_bench_qwen3_stream/       # Qwen3-0.6B streaming TTFT / TPOT baseline
     non_eager_probe/            # LFM2.5 torch.compile / CUDAGraph probe
 
 probes/
@@ -86,6 +88,7 @@ scripts/
 - lifecycle：拆 `download/config/tokenizer -> model load -> backend selection -> KV cache -> warmup -> request`。
 - KV/cache sweep：扫 `max_model_len` 和 `gpu_memory_utilization`，观察 cache tokens 和 max concurrency。
 - API steady-state：常驻 OpenAI-compatible server，比较 eager 和 non-eager，并扫 prompt length。
+- Streaming TTFT/TPOT：拆 first token 和 per-output-token latency，对比 LFM2.5 / Qwen3。
 
 入口文档：
 
@@ -93,6 +96,7 @@ scripts/
 - `notes/metax-c500-vllm-lifecycle-and-kv-cache.md`
 - `notes/metax-c500-vllm-deeper-exploration.md`
 - `notes/metax-c500-vllm-api-steady-state.md`
+- `notes/metax-c500-vllm-streaming-ttft-tpot.md`
 
 ## 复现方式
 
