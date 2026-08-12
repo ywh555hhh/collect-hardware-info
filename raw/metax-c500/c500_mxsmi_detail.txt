@@ -1,0 +1,723 @@
+# mx-smi detailed exposure 2026-08-12T08:29:29+08:00
+
+## mx-smi -j
+mx-smi  version: 2.2.12
+{
+    "timestamp": "Wed Aug 12 08:29:29 2026",
+    "smi_version": "2.2.12",
+    "maca_version": "3.5.3.20",
+    "driver_version": "3.8.30",
+    "attached_gpus": 1,
+    "0000:37:00.0": {
+        "device_id": 0,
+        "vbios_version": "1.33.5.0",
+        "unavailable_reason": "",
+        "hotspot": "38.500",
+        "utilization": 0,
+        "clocks": {
+            "XCORE": 1125,
+            "MC": 1800,
+            "VPUE": 535,
+            "VPUD": 525
+        },
+        "ras_status": {
+            "PCIE register0": "0xd000",
+            "MCCTL0 register0": "0xff3000",
+            "MCCTL1 register0": "0xea3000",
+            "MCCTL2 register0": "0xf73000",
+            "MCCTL3 register0": "0xff3000",
+            "SMP0 register0": "0x0",
+            "SMP1 register0": "0x1000",
+            "FUSE register0": "0x2000",
+            "INT register0": "0x9000",
+            "INT register1": "0xa000",
+            "CCX0 register0": "0xc000",
+            "CCX0 register1": "0xa000",
+            "CCX1 register0": "0xc000",
+            "CCX1 register1": "0xa000",
+            "CCX2 register0": "0xc000",
+            "CCX2 register1": "0xa000",
+            "DHUB1 register0": "0xe000",
+            "DHUB2 register0": "0xe000",
+            "DHUB3 register0": "0xe000",
+            "DHUB4 register0": "0xe000",
+            "DHUB5 register0": "0xe000",
+            "DHUB6 register0": "0xe000",
+            "DHUB7 register0": "0xe000",
+            "VPUE0 register0": "0xa000",
+            "VPUD0 register0": "0xa000",
+            "VPUD1 register0": "0xa000",
+            "VPUD2 register0": "0xa000",
+            "VPUD3 register0": "0xa000",
+            "VPUD4 register0": "0xa000",
+            "VPUD5 register0": "0xa000",
+            "VPUD6 register0": "0xa000",
+            "VPUD7 register0": "0xa000",
+            "HAG register0": "0xa000",
+            "DMA0 register0": "0x9000",
+            "DMA0 register1": "0xa000",
+            "DMA1 register0": "0x9000",
+            "DMA1 register1": "0xa000",
+            "DMA2 register0": "0x9000",
+            "DMA2 register1": "0xa000",
+            "DMA3 register0": "0x9000",
+            "DMA3 register1": "0xa000",
+            "DMA4 register0": "0x9000",
+            "DMA4 register1": "0xa000",
+            "ATH register0": "0xa000",
+            "ATUL20 register0": "0xa000",
+            "ATUL20 register1": "0xa000",
+            "ATUL21 register0": "0xa000",
+            "ATUL21 register1": "0xa000",
+            "XSC register0": "0x7000",
+            "CE register0": "0x7000"
+        },
+        "ras_count": {
+            "uncorrected_error": {},
+            "corrected_error": {}
+        },
+        "board_power": {
+            "voltage": {
+                "Way0": "11.984",
+                "Way1": "11.984",
+                "Way2": "11.968"
+            },
+            "current": {
+                "Way0": "2.152",
+                "Way1": "2.224",
+                "Way2": "0.792"
+            },
+            "power": {
+                "Way0": "25.789",
+                "Way1": "26.652",
+                "Way2": "9.478"
+            }
+        },
+        "pci_event_info": {
+            "aer_ue": [],
+            "aer_ce": [],
+            "synfld": [],
+            "dbe": [],
+            "mmio": []
+        },
+        "sgpu_count": 1,
+        "sgpu_info": [
+            {
+                "minor": 22,
+                "parent_deviceId": 0,
+                "sgpu_id": 3,
+                "compute_quota": 25,
+                "vram_quota": 16000,
+                "vram_used": "0",
+                "utilization": "0%"
+            }
+        ]
+    }
+}
+
+## mx-smi -L
+mx-smi  version: 2.2.12
+GPU#0    MXC500      0000:37:00.0   Available (UUID: GPU-df110ed1-56d2-e35b-d97b-e23bca667d75)
+  SGPU#3   25% 15.625gb   Available (UUID: GPU-9989eeaf-e8b6-b0c7-a313-c2c978ea5031) sgpu-1786493570
+GPU#1    MXC500      0000:0e:00.0   Not Available(MetaX Sysfs File Unaccessible)
+GPU#2    MXC500      0000:0f:00.0   Not Available(MetaX Sysfs File Unaccessible)
+GPU#3    MXC500      0000:10:00.0   Not Available(MetaX Sysfs File Unaccessible)
+GPU#4    MXC500      0000:12:00.0   Not Available(MetaX Sysfs File Unaccessible)
+GPU#5    MXC500      0000:35:00.0   Not Available(MetaX Sysfs File Unaccessible)
+GPU#6    MXC500      0000:36:00.0   Not Available(MetaX Sysfs File Unaccessible)
+GPU#7    MXC500      0000:38:00.0   Not Available(MetaX Sysfs File Unaccessible)
+
+
+## mx-smi --summary
+mx-smi  version: 2.2.12
+
+=================== MetaX System Management Interface Log ===================
+Timestamp                                         : Wed Aug 12 08:29:31 2026
+
+Attached GPUs                                     : 1
+GPU#0  MXC500  0000:37:00.0
+    Version
+        MACA                                      : 3.5.3.20 
+        BIOS                                      : 1.33.5.0 
+        KMD                                       : 3.8.30 
+        SMP0                                      : 1.33.5.0 
+        SMP1                                      : 1.33.5.0 
+        CCX0                                      : 1.33.0.0 
+        CCX1                                      : 1.33.0.0 
+        CCX2                                      : 1.33.0.0 
+        VR0                                       : 0.13.0.5 
+        VR1                                       : 0.13.0.5 
+        MCU                                       : 1.2.6.0 
+
+    Serial Number
+        chip serial                               : TP6B24_15_3_2 
+        board serial                              : AENA2424001065 
+
+    Utilization
+        GPU                                       : 0 %
+        VPUE                                      : 0 %
+        VPUD                                      : 0 %
+
+    Chip Temperature
+        hotspot(sensor1)                          :  38.50 C
+    Board Temperature
+        DrMOS_soc                                 :  31.00 C
+        DrMOS_core                                :  29.00 C
+        tdiode                                    :  33.37 C
+        air-inlet                                 :  28.62 C
+        air-outlet                                :  32.00 C
+
+    Pmbus Voltage
+        soc                                       :  0.738 V
+        core                                      :  0.722 V
+        hbm                                       :  1.218 V
+        pcie                                      :  0.902 V
+    Pmbus Current
+        soc                                       : 21.000 A
+        core                                      : 18.000 A
+        hbm                                       :  3.000 A
+        pcie                                      :  7.000 A
+    Pmbus Power
+        soc                                       : 16.000 W
+        core                                      : 16.000 W
+        hbm                                       :  4.000 W
+        pcie                                      :  6.000 W
+
+    Board Voltage
+        Way 0                                     :  11.984 V
+        Way 1                                     :  11.984 V
+        Way 2                                     :  11.968 V
+    Board Current
+        Way 0                                     :   2.152 A
+        Way 1                                     :   2.232 A
+        Way 2                                     :   0.792 A
+    Board Power
+        Way 0                                     :  25.789 W
+        Way 1                                     :  26.748 W
+        Way 2                                     :   9.478 W
+        Total                                     :  62.015 W
+        Limit                                     : 350.000 W
+
+    DPM current performance level
+        xcore                                     : 9 
+        mc                                        : 3 
+        soc                                       : 2 
+        dnoc                                      : 1 
+        vpue                                      : 0 
+        vpud                                      : 0 
+        ccx                                       : 0 
+
+    Clocks
+        CSC
+            CSC_SMPCLK                            : 457 MHz
+            CSC_RNOCCLK                           : 457 MHz
+            GLB_RISCV_APBCLK                      : 160 MHz
+            GLB_REFCLK100                         : 100 MHz
+        XCORE
+            XCORE_CLK                             : 1125 MHz
+        MC1
+            MC1_DFICLK                            : 1800 MHz
+            MC1_BYPASSCLK                         : 642 MHz
+        MC0
+            MC0_DFICLK                            : 1800 MHz
+            MC0_BYPASSCLK                         : 642 MHz
+        VPUE
+            VPU_ENCCLK                            : 535 MHz
+        VPUD
+            VPU_DECCLK0                           : 525 MHz
+            VPU_DECCLK1                           : 525 MHz
+            VPU_DECCLK2                           : 525 MHz
+            VPU_DECCLK3                           : 525 MHz
+        SOC
+            SOC_CLK                               : 1200 MHz
+        DNOC
+            DNOC_CLK                              : 1200 MHz
+        CCX
+            CCX_CLK                               : 535 MHz
+
+    Memory
+        vis_vram total                            : 67108864 KB
+        vis_vram used                             : 15518872 KB
+        vis_vram usage                            : 23.1 %
+        vram total                                : 67108864 KB
+        vram used                                 : 15518872 KB
+        vram usage                                : 23.1 %
+        xtt total                                 : 1585052298 KB
+        xtt used                                  : 207256 KB
+        xtt usage                                 : 0 %
+
+End of Log
+
+## mx-smi --show-hwinfo
+mx-smi  version: 2.2.12
+
+=================== MetaX System Management Interface Log ===================
+Timestamp                                         : Wed Aug 12 08:29:31 2026
+
+Attached GPUs                                     : 1
+GPU#0  MXC500  0000:37:00.0
+    Hardware Info
+        Model Name                                : MetaX C500 
+        Chip Name                                 : MXC500 
+        Manufacturer                              : MetaX Integrated Circuites 
+        Board Serial Number                       : AENA2424001065 
+        Board Part Number                         : 702-M01301 
+        Chip Serial Number                        : TP6B24_15_3_2 
+        Memory Type                               : HBM2e 
+        Memory Capacity                           : 64GB 
+
+End of Log
+
+## mx-smi --show-sysinfo
+mx-smi  version: 2.2.12
+
+=================== MetaX System Management Interface Log ===================
+Timestamp                                         : Wed Aug 12 08:29:32 2026
+
+Attached GPUs                                     : 1
+GPU#0  MXC500  0000:37:00.0
+    Sys info
+        driver gpu id                             : 0 
+        node id                                   : 8 
+        render id                                 :  
+        card id                                   :  
+
+End of Log
+
+## mx-smi --show-version
+mx-smi  version: 2.2.12
+
+=================== MetaX System Management Interface Log ===================
+Timestamp                                         : Wed Aug 12 08:29:32 2026
+
+Attached GPUs                                     : 1
+GPU#0  MXC500  0000:37:00.0
+    Version
+        MACA                                      : 3.5.3.20 
+        BIOS                                      : 1.33.5.0 
+        KMD                                       : 3.8.30 
+        SMP0                                      : 1.33.5.0 
+        SMP1                                      : 1.33.5.0 
+        CCX0                                      : 1.33.0.0 
+        CCX1                                      : 1.33.0.0 
+        CCX2                                      : 1.33.0.0 
+        VR0                                       : 0.13.0.5 
+        VR1                                       : 0.13.0.5 
+        MCU                                       : 1.2.6.0 
+
+End of Log
+
+## mx-smi --show-memory
+mx-smi  version: 2.2.12
+
+=================== MetaX System Management Interface Log ===================
+Timestamp                                         : Wed Aug 12 08:29:33 2026
+
+Attached GPUs                                     : 1
+GPU#0  MXC500  0000:37:00.0
+    Memory
+        vis_vram total                            : 67108864 KB
+        vis_vram used                             : 15518872 KB
+        vis_vram usage                            : 23.1 %
+        vram total                                : 67108864 KB
+        vram used                                 : 15518872 KB
+        vram usage                                : 23.1 %
+        xtt total                                 : 1585052298 KB
+        xtt used                                  : 207256 KB
+        xtt usage                                 : 0 %
+
+End of Log
+
+## mx-smi --show-clock
+mx-smi  version: 2.2.12
+
+=================== MetaX System Management Interface Log ===================
+Timestamp                                         : Wed Aug 12 08:29:34 2026
+
+Attached GPUs                                     : 1
+GPU#0  MXC500  0000:37:00.0
+    Clock
+        XCORE                                     : 1125 MHz
+        MC                                        : 1800 MHz
+        VPUE                                      : 535 MHz
+        VPUD                                      : 525 MHz
+
+End of Log
+
+## mx-smi --show-clocks all
+mx-smi  version: 2.2.12
+
+=================== MetaX System Management Interface Log ===================
+Timestamp                                         : Wed Aug 12 08:29:34 2026
+
+Attached GPUs                                     : 1
+GPU#0  MXC500  0000:37:00.0
+    Clocks
+        CSC
+            CSC_SMPCLK                            : 457 MHz
+            CSC_RNOCCLK                           : 457 MHz
+            GLB_RISCV_APBCLK                      : 160 MHz
+            GLB_REFCLK100                         : 100 MHz
+        XCORE
+            XCORE_CLK                             : 1125 MHz
+        MC1
+            MC1_DFICLK                            : 1800 MHz
+            MC1_BYPASSCLK                         : 642 MHz
+        MC0
+            MC0_DFICLK                            : 1800 MHz
+            MC0_BYPASSCLK                         : 642 MHz
+        VPUE
+            VPU_ENCCLK                            : 535 MHz
+        VPUD
+            VPU_DECCLK0                           : 525 MHz
+            VPU_DECCLK1                           : 525 MHz
+            VPU_DECCLK2                           : 525 MHz
+            VPU_DECCLK3                           : 525 MHz
+        SOC
+            SOC_CLK                               : 1200 MHz
+        DNOC
+            DNOC_CLK                              : 1200 MHz
+        CCX
+            CCX_CLK                               : 535 MHz
+
+End of Log
+
+## mx-smi --show-dpm all
+mx-smi  version: 2.2.12
+
+=================== MetaX System Management Interface Log ===================
+Timestamp                                         : Wed Aug 12 08:29:35 2026
+
+Attached GPUs                                     : 1
+GPU#0  MXC500  0000:37:00.0
+    DPM performance levels
+        levels              0       1       2       3       4       5       6       7       8       9       
+        clock(MHz) xcore    429     600     686     750     800     900     960     1000    1067    1125    
+        clock(MHz) mc       400     666     1600    1800    
+        clock(MHz) soc      514     720     1200    
+        clock(MHz) dnoc     525     1200    1400    
+        clock(MHz) vpue     536     833     1071    
+        clock(MHz) vpud     525     840     1050    
+        clock(MHz) ccx      536     833     1250    
+        voltage(mV) xcore   720     720     720     720     720     720     720     720     720     720     
+        voltage(mV) mc      700     700     700     700     
+        voltage(mV) soc     738     738     738     
+        voltage(mV) dnoc    738     738     752     
+        voltage(mV) vpue    738     738     738     
+        voltage(mV) vpud    738     738     738     
+        voltage(mV) ccx     738     738     738     
+
+End of Log
+
+## mx-smi --show-dpm cur
+mx-smi  version: 2.2.12
+
+=================== MetaX System Management Interface Log ===================
+Timestamp                                         : Wed Aug 12 08:29:35 2026
+
+Attached GPUs                                     : 1
+GPU#0  MXC500  0000:37:00.0
+    DPM current performance level
+        xcore                                     : 9 
+        mc                                        : 3 
+        soc                                       : 2 
+        dnoc                                      : 1 
+        vpue                                      : 0 
+        vpud                                      : 0 
+        ccx                                       : 0 
+
+End of Log
+
+## mx-smi --show-core-usage
+mx-smi  version: 2.2.12
+
+=================== MetaX System Management Interface Log ===================
+Timestamp                                         : Wed Aug 12 08:29:36 2026
+
+Attached GPUs                                     : 1
+GPU#0  MXC500  0000:37:00.0
+    Single Core Usage
+        Core Index          0       1       2       3       4       5       6       7       
+        VPUE                0 %     
+        VPUD                0 %     0 %     0 %     0 %     0 %     0 %     0 %     0 %     
+        CCX                 1 %     1 %     1 %     
+
+End of Log
+
+## mx-smi --show-ap-usage
+mx-smi  version: 2.2.12
+
+=================== MetaX System Management Interface Log ===================
+Timestamp                                         : Wed Aug 12 08:29:37 2026
+
+Attached GPUs                                     : 1
+GPU#0  MXC500  0000:37:00.0
+                         Ap Usage
+Index  0   1   2   3   4   5   6   7   8   9   10  11  12  
+dpc0   0   0   0   0   0   0   0   0   0   0   0   0   0   
+dpc1   0   0   0   0   0   0   0   0   0   0   0   0   0   
+dpc2   0   0   0   0   0   0   0   0   0   0   0   0   0   
+dpc3   0   0   0   0   0   0   0   0   0   0   0   0   0   
+dpc4   0   0   0   0   0   0   0   0   0   0   0   0   0   
+dpc5   0   0   0   0   0   0   0   0   0   0   0   0   0   
+dpc6   0   0   0   0   0   0   0   0   0   0   0   0   0   
+dpc7   0   0   0   0   0   0   0   0   0   0   0   0   0   
+
+End of Log
+
+## mx-smi --show-hbm-bandwidth
+mx-smi  version: 2.2.12
+
+=================== MetaX System Management Interface Log ===================
+Timestamp                                         : Wed Aug 12 08:29:37 2026
+
+Attached GPUs                                     : 1
+GPU#0  MXC500  0000:37:00.0
+    Hbm Bandwidth
+        throughput                                : 1 MBytes/s
+
+End of Log
+
+## mx-smi --show-pcie
+mx-smi  version: 2.2.12
+
+=================== MetaX System Management Interface Log ===================
+Timestamp                                         : Wed Aug 12 08:29:38 2026
+
+Attached GPUs                                     : 1
+GPU#0  MXC500  0000:37:00.0
+    Pcie Info
+        Current Speed                             : 32 GT/s
+        Current Width                             : x16 
+        Max Speed                                 : 32 GT/s
+        Max Width                                 : x16 
+
+End of Log
+
+## mx-smi --show-pcie-bandwidth
+mx-smi  version: 2.2.12
+
+=================== MetaX System Management Interface Log ===================
+Timestamp                                         : Wed Aug 12 08:29:38 2026
+
+Attached GPUs                                     : 1
+GPU#0  MXC500  0000:37:00.0
+    Pcie Bandwidth
+        RX                                        : 0 MBytes/s
+        TX                                        : 0 MBytes/s
+
+End of Log
+
+## mx-smi --show-pcie-slot
+mx-smi  version: 2.2.12
+
+=================== MetaX System Management Interface Log ===================
+Timestamp                                         : Wed Aug 12 08:29:39 2026
+
+Attached GPUs                                     : 1
+GPU#0  MXC500  0000:37:00.0
+GPU#0 show-pcie-slot Sysfs error: No such file or directory
+End of Log
+
+## mx-smi --show-pptable-version
+mx-smi  version: 2.2.12
+
+=================== MetaX System Management Interface Log ===================
+Timestamp                                         : Wed Aug 12 08:29:40 2026
+
+Attached GPUs                                     : 1
+GPU#0  MXC500  0000:37:00.0
+    Pptable Version
+        Version                                   : 0105 
+
+End of Log
+
+## mx-smi --show-ecc-state
+mx-smi  version: 2.2.12
+
+=================== MetaX System Management Interface Log ===================
+Timestamp                                         : Wed Aug 12 08:29:40 2026
+
+Attached GPUs                                     : 1
+GPU#0  MXC500  0000:37:00.0
+    Ecc state
+        state                                     : Enable 
+
+End of Log
+
+## mx-smi --count-ecc
+mx-smi  version: 2.2.12
+
+=================== MetaX System Management Interface Log ===================
+Timestamp                                         : Wed Aug 12 08:29:41 2026
+
+Attached GPUs                                     : 1
+GPU#0  MXC500  0000:37:00.0
+    ECC Errors
+        SRAM Correctable                          : 0 
+        SRAM Uncorrectable                        : 0 
+        DRAM Correctable                          : 0 
+        DRAM Uncorrectable                        : 0 
+    Retired Pages
+        Double Bit ECC                            : 0 
+
+End of Log
+
+## mx-smi --show-temperature
+mx-smi  version: 2.2.12
+
+=================== MetaX System Management Interface Log ===================
+Timestamp                                         : Wed Aug 12 08:29:42 2026
+
+Attached GPUs                                     : 1
+GPU#0  MXC500  0000:37:00.0
+    Chip Temperature
+        hotspot(sensor5)                          :  38.50 C
+    Board Temperature
+        DrMOS_soc                                 :  31.00 C
+        DrMOS_core                                :  29.00 C
+        tdiode                                    :  33.25 C
+        air-inlet                                 :  28.50 C
+        air-outlet                                :  32.00 C
+
+End of Log
+
+## mx-smi --show-board-power
+mx-smi  version: 2.2.12
+
+=================== MetaX System Management Interface Log ===================
+Timestamp                                         : Wed Aug 12 08:29:43 2026
+
+Attached GPUs                                     : 1
+GPU#0  MXC500  0000:37:00.0
+    Board Voltage
+        Way 0                                     :  11.984 V
+        Way 1                                     :  11.984 V
+        Way 2                                     :  11.968 V
+    Board Current
+        Way 0                                     :   2.152 A
+        Way 1                                     :   2.224 A
+        Way 2                                     :   0.800 A
+    Board Power
+        Way 0                                     :  25.789 W
+        Way 1                                     :  26.652 W
+        Way 2                                     :   9.574 W
+        Total                                     :  62.015 W
+        Limit                                     : 350.000 W
+
+End of Log
+
+## mx-smi --show-power-state
+mx-smi  version: 2.2.12
+
+=================== MetaX System Management Interface Log ===================
+Timestamp                                         : Wed Aug 12 08:29:43 2026
+
+Attached GPUs                                     : 1
+GPU#0  MXC500  0000:37:00.0
+    xcore power state
+        xcore                                     : Active 
+    vpue power state
+        vpue                                      : Idle 
+    vpud power state
+        core0                                     : Idle 
+        core1                                     : Idle 
+        core2                                     : Idle 
+        core3                                     : Idle 
+        core4                                     : Idle 
+        core5                                     : Idle 
+        core6                                     : Idle 
+        core7                                     : Idle 
+    hbm power state
+        hbm                                       : Active 
+    pci power state
+        pci                                       : D0 
+
+End of Log
+
+## mx-smi --show-clk-tr
+mx-smi  version: 2.2.12
+
+=================== MetaX System Management Interface Log ===================
+Timestamp                                         : Wed Aug 12 08:29:44 2026
+
+Attached GPUs                                     : 1
+GPU#0  MXC500  0000:37:00.0
+    Xcore Clocks Throttle Reason
+        Idle                                      : Not Active 
+        Applications Limit                        : Not Active 
+        Over Power                                : Not Active 
+        Chip Over Temperature                     : Not Active 
+        VR Over Temperature                       : Not Active 
+        Hbm Over Temperature                      : Not Active 
+        Thermal Over Temperature                  : Not Active 
+        Pcc                                       : Not Active 
+        Power Brake                               : Not Active 
+        Didt                                      : Not Active 
+        Low Usage                                 : Not Active 
+        Other                                     : Not Active 
+
+End of Log
+
+## mx-smi --show-vbios
+mx-smi  version: 2.2.12
+
+=================== MetaX System Management Interface Log ===================
+Timestamp                                         : Wed Aug 12 08:29:44 2026
+
+Attached GPUs                                     : 1
+GPU#0  MXC500  0000:37:00.0
+    Vbios info
+        SRIOV                                     : Not Support 
+
+End of Log
+
+## mx-smi --show-sn
+mx-smi  version: 2.2.12
+
+=================== MetaX System Management Interface Log ===================
+Timestamp                                         : Wed Aug 12 08:29:45 2026
+
+Attached GPUs                                     : 1
+GPU#0  MXC500  0000:37:00.0
+    Serial Number
+        chip serial                               : TP6B24_15_3_2 
+        board serial                              : AENA2424001065 
+
+End of Log
+
+## mx-smi --show-process
+mx-smi  version: 2.2.12
+
+=================== MetaX System Management Interface Log ===================
+Timestamp                                         : Wed Aug 12 08:29:46 2026
+
+Attached GPUs                                     : 1
+
++---------------------------------------------------------------------------------+
+| Process:                                                                        |
+|  GPU                    PID         Process Name                 GPU Memory     |
+|                                                                  Usage(MiB)     |
+|=================================================================================|
+|  no process found                                                               |
++---------------------------------------------------------------------------------+
+
+End of Log
+
+## mx-smi --show-all-process
+mx-smi  version: 2.2.12
+
+=================== MetaX System Management Interface Log ===================
+Timestamp                                         : Wed Aug 12 08:29:46 2026
+
+Attached GPUs                                     : 1
+
++---------------------------------------------------------------------------------+
+| Process:                                                                        |
+|  GPU                    PID         Process Name                 GPU Memory     |
+|                                                                  Usage(MiB)     |
+|=================================================================================|
+|  no process found                                                               |
++---------------------------------------------------------------------------------+
+
+End of Log

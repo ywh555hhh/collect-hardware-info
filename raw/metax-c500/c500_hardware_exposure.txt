@@ -1,0 +1,803 @@
+# MetaX C500 hardware exposure survey 2026-08-12T08:28:45+08:00
+
+## mx-smi help
+
+USAGE: 
+
+   mx-smi  [-hjLrsvy] [--count-ecc] [--show-ap-usage]
+           [--show-apusage-toggle] [--show-board-power] [--show-clk-tr]
+           [--show-clock] [--show-core-usage] [--show-eeprom]
+           [--show-fan-speed] [--show-hbm-bandwidth] [--show-hwinfo]
+           [--show-memory] [--show-metaxlink-bandwidth]
+           [--show-pcie-bandwidth] [--show-pcie-slot] [--show-pmbus-power]
+           [--show-power-state] [--show-pptable-version] [--show-sn]
+           [--show-sysinfo] [--show-temperature]
+           [--show-unavailable-reason] [--show-usage] [--show-vbios]
+           [--show-version] [--show-vpu] [--set-pci-speed <[1, 5]>|
+           --show-pcie] [--kill-all-process|--show-all-process|
+           --show-process] [--flr|--vfflr] [--set-ecc-state <[0, 1]>|
+           --show-ecc-state] [-U <bin>|-u <bin>|--force-vbios-flash <bin>]
+           [--set-op-mode <[0, 1]>|--show-op-mode] [--set-persistence-mode
+           <[0, 1]>|--show-persistence-mode] [--set-dpm-max <DPM IP,DPM
+           level>|--show-dpm-max] [--set-power-mode <[0, 1]>|
+           --show-power-mode] [-i <deviceId>] [-l <ms>] [-o <output.csv>]
+           [-t <[60, 36000]>] [--die <dieId>] [--dump-vbios <>]
+           [--set-apusage-toggle <[0, 1]>] [--show-clocks <all|clock IP>]
+           [--show-dpm <all|cur>] [--show-event <aer_ue|aer_ce|synfld|dbe|
+           mmio|all>] [subsystem]
+
+
+Where: 
+
+   --show-temperature
+     Display temperature
+
+   --show-pmbus-power
+     Display pmbus voltage, current and power
+
+   --show-board-power
+     Display board voltage, current and power
+
+   --show-sn
+     Display chip serial
+
+   --show-memory
+     Display memory information in KBytes
+
+   --show-eeprom
+     Display eeprom information
+
+   --show-version
+     Display maca, bios, driver, firmware version
+
+   --show-usage
+     Display VPUE,VPUD,GPU usage
+
+   --show-power-state
+     Display power state
+
+   -L,  --list
+     List all devices discovered on the host
+
+   --show-unavailable-reason
+     Display device unavailable reason
+
+   --show-hbm-bandwidth
+     Display hbm bandwidth in MBytes/s
+
+   --show-vpu
+     Display encoder and decoder codec status
+
+   --show-pcie-bandwidth
+     Display pcie bandwidth in MBytes/s
+
+   -s,  --summary
+     Display device summary information
+
+   --show-core-usage
+     Display single core usage
+
+   --show-vbios
+     Display vbios information
+
+   --show-pcie-slot
+     Display the device pcie slot
+
+   --show-fan-speed
+     Display fan speed information
+
+   --show-hwinfo
+     Display hardware information
+
+   -j,  --json
+     Display gpu information in json format
+
+   -y,  --yes
+     Automatic yes to prompts for PF warm reset and run non-interactively
+
+   --show-clock
+     Display brief clock frequency
+
+   --show-sysinfo
+     Display device system info
+
+   --show-clk-tr
+     Display current clocks throttling reason(only support C-class device)
+
+   -o <output.csv>,  --output <output.csv>
+     Write show commands' data to file in csv format 
+     supported show commands:
+         show-temperature, show-board-power, show-version,
+         show-usage, show-memory, show-pcie, show-dpm cur,
+         show-pmbus-power, show-vpu, show-fan-speed,
+         show-metaxlink-bandwidth, show-pcie-bandwidth
+
+   --show-dpm <all|cur>
+     Display DPM performance levels
+
+   -l <ms>,  --loop <ms>
+     Display until Ctrl+C at specified millisecond interval
+
+   -i <deviceId>,  --index <deviceId>
+     Target specific devices. The specified id may be the GPU's index in
+     the natural enumeration, chip serial number, uuid, or PCI bus ID(as
+     domain:bus:device.function in hex). Multiple devices can be combined
+     as '0,1,5', '0-2' '0-4,6', 'GPU-2f8ab36b-882a-0248-494e-0da5d8ae9698,
+     0000:03:00.0', 'all'
+
+   --die <dieId>
+     Target specific die index.
+
+   --dump-vbios <>
+     Dump vbios data
+         Usage: mx-smi --dump-vbios ./mxvbios-xxx.bin -t 90
+                mx-smi --dump-vbios ./mxvbios-xxx.bin # default time limit
+     is 60s
+
+   -t <[60, 36000]>,  --timelimit <[60, 36000]>
+     Time limit for upgrade or dump command, unit: second
+
+   --show-event <aer_ue|aer_ce|synfld|dbe|mmio|all>
+     Display kmd events info
+
+   --show-clocks <all|clock IP>
+     Display target IPs' clocks
+        clock IP: csc, xcore, mc0, mc1, vpue, vpud, soc, dnoc, ccx
+        clock IP(MXC600): csc, xcore, soc, dnoc
+            multiple IPs can be combined with comma
+
+   --set-apusage-toggle <[0, 1]>
+     Disable/enable collecting xcore ap usage
+            state: 0(disable) 1(enable)
+     Note: The device must be specified by -i, --index.
+
+   -r,  --reset
+     Trigger warm reset of the gpu. Reset operations are not guaranteed to
+     work in all cases and should be used with caution.
+
+   --show-metaxlink-bandwidth
+     Display MetaXLink bandwidth in MBytes/s
+
+   --show-pptable-version
+     Display pptable version
+
+   --show-ap-usage
+     Show xcore ap usage
+
+   --show-apusage-toggle
+     Show xcore ap usage toggle states
+
+   --count-ecc
+     Display Ecc error count
+
+   Either of:
+      --show-pcie
+        Display pcie speed and width
+
+      --set-pci-speed <[1, 5]>
+        Set pci speed by changing pci generation(only support N-class
+        device)
+
+   Either of:
+      --show-process
+        Show process currently running
+
+      --show-all-process
+        show all process opening device file
+
+      --kill-all-process
+        Kill all process opening device file
+
+   Either of:
+      --flr
+        Function level reset
+
+      --vfflr
+        Perform VF function level reset from PF
+
+   Either of:
+      --show-ecc-state
+        Display ecc's state
+
+      --set-ecc-state <[0, 1]>
+        Disable/enable ecc
+            ecc state: 0(disable) 1(enable)
+        Note: The device must be specified by -i, --index.
+
+   Either of:
+      -u <bin>,  --vbios-upgrade <bin>
+        Upgrade vbios for all devices
+        Use -U/--force-vbios-upgrade to update specified devices
+            Usage: mx-smi -u ./mxvbios-xxx.bin -t 90
+                   mx-smi -u ./mxvbios-xxx.bin # default time limit is 60s
+
+      -U <bin>,  --force-vbios-upgrade <bin>
+        Force upgrade vbios
+            Usage: mx-smi -U ./mxvbios-xxx.bin -t 90
+                   mx-smi -U ./mxvbios-xxx.bin # default time limit is 60s
+
+      --force-vbios-flash <bin>
+        Force flash vbios for not available devices
+            Usage: mx-smi --force-vbios-flash ./mxvbios-xxx.bin
+
+   Either of:
+
+## mx-smi plain
+mx-smi  version: 2.2.12
+
+=================== MetaX System Management Interface Log ===================
+Timestamp                                         : Wed Aug 12 08:28:45 2026
+
+Attached GPUs                                     : 1
++---------------------------------------------------------------------------------+
+| MX-SMI 2.2.12                      Kernel Mode Driver Version: 3.8.30           |
+| MACA Version: 3.5.3.20             BIOS Version: 1.33.5.0                       |
+|------------------+-----------------+---------------------+----------------------|
+| Board       Name | GPU   Persist-M | Bus-id              | GPU-Util      sGPU-M |
+| Pwr:Usage/Cap    | Temp       Perf | Memory-Usage        | GPU-State            |
+|==================+=================+=====================+======================|
+| 0     MetaX C500 | 0           Off | 0000:37:00.0        | 0%           Enabled |
+| 61W / 350W       | 38C          P9 | 15155/65536 MiB     | Available            |
++------------------+-----------------+---------------------+----------------------+
+
++---------------------------------------------------------------------------------+
+| Sliced GPU                                                                      |
+|------------------------------------+---------------------+----------------------|
+| Minor    GPU    sGPU-Id    Compute | Vram Quota          | sGPU-Util            |
+|====================================+=====================+======================|
+| 022      0      3          25%     | 0/16000 MiB         | 0%                   |
++------------------------------------+---------------------+----------------------+
+
++---------------------------------------------------------------------------------+
+| Process:                                                                        |
+|  GPU                    PID         Process Name                 GPU Memory     |
+|                                                                  Usage(MiB)     |
+|=================================================================================|
+|  no process found                                                               |
++---------------------------------------------------------------------------------+
+
+End of Log
+
+## mx-smi query variants
+
+### mx-smi -q
+PARSE ERROR: Argument: -q
+             Couldn't find match for argument
+
+Brief USAGE: 
+   mx-smi  [-hjLrsvy] [--count-ecc] [--show-ap-usage]
+           [--show-apusage-toggle] [--show-board-power] [--show-clk-tr]
+           [--show-clock] [--show-core-usage] [--show-eeprom]
+           [--show-fan-speed] [--show-hbm-bandwidth] [--show-hwinfo]
+           [--show-memory] [--show-metaxlink-bandwidth]
+           [--show-pcie-bandwidth] [--show-pcie-slot] [--show-pmbus-power]
+           [--show-power-state] [--show-pptable-version] [--show-sn]
+           [--show-sysinfo] [--show-temperature]
+           [--show-unavailable-reason] [--show-usage] [--show-vbios]
+           [--show-version] [--show-vpu] [--set-pci-speed <[1, 5]>|
+           --show-pcie] [--kill-all-process|--show-all-process|
+           --show-process] [--flr|--vfflr] [--set-ecc-state <[0, 1]>|
+           --show-ecc-state] [-U <bin>|-u <bin>|--force-vbios-flash <bin>]
+           [--set-op-mode <[0, 1]>|--show-op-mode] [--set-persistence-mode
+           <[0, 1]>|--show-persistence-mode] [--set-dpm-max <DPM IP,DPM
+           level>|--show-dpm-max] [--set-power-mode <[0, 1]>|
+           --show-power-mode] [-i <deviceId>] [-l <ms>] [-o <output.csv>]
+           [-t <[60, 36000]>] [--die <dieId>] [--dump-vbios <>]
+           [--set-apusage-toggle <[0, 1]>] [--show-clocks <all|clock IP>]
+           [--show-dpm <all|cur>] [--show-event <aer_ue|aer_ce|synfld|dbe|
+           mmio|all>] [subsystem]
+
+For complete USAGE and HELP type: 
+   mx-smi --help
+
+
+### mx-smi --query
+PARSE ERROR: Argument: --query
+             Couldn't find match for argument
+
+Brief USAGE: 
+   mx-smi  [-hjLrsvy] [--count-ecc] [--show-ap-usage]
+           [--show-apusage-toggle] [--show-board-power] [--show-clk-tr]
+           [--show-clock] [--show-core-usage] [--show-eeprom]
+           [--show-fan-speed] [--show-hbm-bandwidth] [--show-hwinfo]
+           [--show-memory] [--show-metaxlink-bandwidth]
+           [--show-pcie-bandwidth] [--show-pcie-slot] [--show-pmbus-power]
+           [--show-power-state] [--show-pptable-version] [--show-sn]
+           [--show-sysinfo] [--show-temperature]
+           [--show-unavailable-reason] [--show-usage] [--show-vbios]
+           [--show-version] [--show-vpu] [--set-pci-speed <[1, 5]>|
+           --show-pcie] [--kill-all-process|--show-all-process|
+           --show-process] [--flr|--vfflr] [--set-ecc-state <[0, 1]>|
+           --show-ecc-state] [-U <bin>|-u <bin>|--force-vbios-flash <bin>]
+           [--set-op-mode <[0, 1]>|--show-op-mode] [--set-persistence-mode
+           <[0, 1]>|--show-persistence-mode] [--set-dpm-max <DPM IP,DPM
+           level>|--show-dpm-max] [--set-power-mode <[0, 1]>|
+           --show-power-mode] [-i <deviceId>] [-l <ms>] [-o <output.csv>]
+           [-t <[60, 36000]>] [--die <dieId>] [--dump-vbios <>]
+           [--set-apusage-toggle <[0, 1]>] [--show-clocks <all|clock IP>]
+           [--show-dpm <all|cur>] [--show-event <aer_ue|aer_ce|synfld|dbe|
+           mmio|all>] [subsystem]
+
+For complete USAGE and HELP type: 
+   mx-smi --help
+
+
+### mx-smi -a
+PARSE ERROR: Argument: -a
+             Couldn't find match for argument
+
+Brief USAGE: 
+   mx-smi  [-hjLrsvy] [--count-ecc] [--show-ap-usage]
+           [--show-apusage-toggle] [--show-board-power] [--show-clk-tr]
+           [--show-clock] [--show-core-usage] [--show-eeprom]
+           [--show-fan-speed] [--show-hbm-bandwidth] [--show-hwinfo]
+           [--show-memory] [--show-metaxlink-bandwidth]
+           [--show-pcie-bandwidth] [--show-pcie-slot] [--show-pmbus-power]
+           [--show-power-state] [--show-pptable-version] [--show-sn]
+           [--show-sysinfo] [--show-temperature]
+           [--show-unavailable-reason] [--show-usage] [--show-vbios]
+           [--show-version] [--show-vpu] [--set-pci-speed <[1, 5]>|
+           --show-pcie] [--kill-all-process|--show-all-process|
+           --show-process] [--flr|--vfflr] [--set-ecc-state <[0, 1]>|
+           --show-ecc-state] [-U <bin>|-u <bin>|--force-vbios-flash <bin>]
+           [--set-op-mode <[0, 1]>|--show-op-mode] [--set-persistence-mode
+           <[0, 1]>|--show-persistence-mode] [--set-dpm-max <DPM IP,DPM
+           level>|--show-dpm-max] [--set-power-mode <[0, 1]>|
+           --show-power-mode] [-i <deviceId>] [-l <ms>] [-o <output.csv>]
+           [-t <[60, 36000]>] [--die <dieId>] [--dump-vbios <>]
+           [--set-apusage-toggle <[0, 1]>] [--show-clocks <all|clock IP>]
+           [--show-dpm <all|cur>] [--show-event <aer_ue|aer_ce|synfld|dbe|
+           mmio|all>] [subsystem]
+
+For complete USAGE and HELP type: 
+   mx-smi --help
+
+
+### mx-smi --showall
+PARSE ERROR: Argument: --showall
+             Couldn't find match for argument
+
+Brief USAGE: 
+   mx-smi  [-hjLrsvy] [--count-ecc] [--show-ap-usage]
+           [--show-apusage-toggle] [--show-board-power] [--show-clk-tr]
+           [--show-clock] [--show-core-usage] [--show-eeprom]
+           [--show-fan-speed] [--show-hbm-bandwidth] [--show-hwinfo]
+           [--show-memory] [--show-metaxlink-bandwidth]
+           [--show-pcie-bandwidth] [--show-pcie-slot] [--show-pmbus-power]
+           [--show-power-state] [--show-pptable-version] [--show-sn]
+           [--show-sysinfo] [--show-temperature]
+           [--show-unavailable-reason] [--show-usage] [--show-vbios]
+           [--show-version] [--show-vpu] [--set-pci-speed <[1, 5]>|
+           --show-pcie] [--kill-all-process|--show-all-process|
+           --show-process] [--flr|--vfflr] [--set-ecc-state <[0, 1]>|
+           --show-ecc-state] [-U <bin>|-u <bin>|--force-vbios-flash <bin>]
+           [--set-op-mode <[0, 1]>|--show-op-mode] [--set-persistence-mode
+           <[0, 1]>|--show-persistence-mode] [--set-dpm-max <DPM IP,DPM
+           level>|--show-dpm-max] [--set-power-mode <[0, 1]>|
+           --show-power-mode] [-i <deviceId>] [-l <ms>] [-o <output.csv>]
+           [-t <[60, 36000]>] [--die <dieId>] [--dump-vbios <>]
+           [--set-apusage-toggle <[0, 1]>] [--show-clocks <all|clock IP>]
+           [--show-dpm <all|cur>] [--show-event <aer_ue|aer_ce|synfld|dbe|
+           mmio|all>] [subsystem]
+
+For complete USAGE and HELP type: 
+   mx-smi --help
+
+
+### mx-smi topo -m
+mx-smi  version: 2.2.12
+
+=================== MetaX System Management Interface Log ===================
+Timestamp                                         : Wed Aug 12 08:28:48 2026
+
+Attached GPUs                                     : 1
+Device link type matrix
+        GPU0    Node Affinity  CPU Affinity
+GPU0    X       0              0-31,64-95
+
+Legend:
+  X    = Self
+  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)
+  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node
+  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)
+  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)
+  PIX  = Connection traversing at most a single PCIe bridge
+  MX   = Connection traversing MetaXLink
+  ETH  = Connection traversing Eth
+  NA   = Connection type is unknown
+
+
+### mx-smi --topo
+PARSE ERROR: Argument: --topo
+             Couldn't find match for argument
+
+Brief USAGE: 
+   mx-smi  [-hjLrsvy] [--count-ecc] [--show-ap-usage]
+           [--show-apusage-toggle] [--show-board-power] [--show-clk-tr]
+           [--show-clock] [--show-core-usage] [--show-eeprom]
+           [--show-fan-speed] [--show-hbm-bandwidth] [--show-hwinfo]
+           [--show-memory] [--show-metaxlink-bandwidth]
+           [--show-pcie-bandwidth] [--show-pcie-slot] [--show-pmbus-power]
+           [--show-power-state] [--show-pptable-version] [--show-sn]
+           [--show-sysinfo] [--show-temperature]
+           [--show-unavailable-reason] [--show-usage] [--show-vbios]
+           [--show-version] [--show-vpu] [--set-pci-speed <[1, 5]>|
+           --show-pcie] [--kill-all-process|--show-all-process|
+           --show-process] [--flr|--vfflr] [--set-ecc-state <[0, 1]>|
+           --show-ecc-state] [-U <bin>|-u <bin>|--force-vbios-flash <bin>]
+           [--set-op-mode <[0, 1]>|--show-op-mode] [--set-persistence-mode
+           <[0, 1]>|--show-persistence-mode] [--set-dpm-max <DPM IP,DPM
+           level>|--show-dpm-max] [--set-power-mode <[0, 1]>|
+           --show-power-mode] [-i <deviceId>] [-l <ms>] [-o <output.csv>]
+           [-t <[60, 36000]>] [--die <dieId>] [--dump-vbios <>]
+           [--set-apusage-toggle <[0, 1]>] [--show-clocks <all|clock IP>]
+           [--show-dpm <all|cur>] [--show-event <aer_ue|aer_ce|synfld|dbe|
+           mmio|all>] [subsystem]
+
+For complete USAGE and HELP type: 
+   mx-smi --help
+
+
+### mx-smi dmon -c 1
+dev die hottemp drmossoctemp drmoscoretemp power gpu vpue vpud visvram vram xtt 
+idx idx C       C            C             W     %   %    %    %       %    %   
+0   0   38      31           29            61    0   0    0    23      23   0   
+
+### mx-smi -L
+mx-smi  version: 2.2.12
+GPU#0    MXC500      0000:37:00.0   Available (UUID: GPU-df110ed1-56d2-e35b-d97b-e23bca667d75)
+  SGPU#3   25% 15.625gb   Available (UUID: GPU-9989eeaf-e8b6-b0c7-a313-c2c978ea5031) sgpu-1786493570
+GPU#1    MXC500      0000:0e:00.0   Not Available(MetaX Sysfs File Unaccessible)
+GPU#2    MXC500      0000:0f:00.0   Not Available(MetaX Sysfs File Unaccessible)
+GPU#3    MXC500      0000:10:00.0   Not Available(MetaX Sysfs File Unaccessible)
+GPU#4    MXC500      0000:12:00.0   Not Available(MetaX Sysfs File Unaccessible)
+GPU#5    MXC500      0000:35:00.0   Not Available(MetaX Sysfs File Unaccessible)
+GPU#6    MXC500      0000:36:00.0   Not Available(MetaX Sysfs File Unaccessible)
+GPU#7    MXC500      0000:38:00.0   Not Available(MetaX Sysfs File Unaccessible)
+
+
+## driver/proc/sysfs likely files
+/proc/irq/2178/METAX
+/proc/irq/2193/METAX
+/proc/irq/2194/METAX
+/proc/irq/2195/METAX
+/proc/irq/2196/METAX
+/proc/irq/2197/METAX
+/proc/irq/2198/METAX
+/proc/irq/2199/METAX
+/sys/bus/pci/drivers/METAX
+/sys/bus/platform/devices/metax_mc.10.auto
+/sys/bus/platform/devices/metax_mc.11.auto
+/sys/bus/platform/devices/metax_mc.12.auto
+/sys/bus/platform/devices/metax_mc.13.auto
+/sys/bus/platform/devices/metax_mc.14.auto
+/sys/bus/platform/devices/metax_mc.7.auto
+/sys/bus/platform/devices/metax_mc.8.auto
+/sys/bus/platform/devices/metax_mc.9.auto
+/sys/bus/platform/drivers/metax_fw_pm
+/sys/bus/platform/drivers/metax_mc
+/sys/class/mxcd
+/sys/class/mxcd/mxcd
+/sys/class/tty/ptmx
+/sys/devices/virtual/mxcd
+/sys/devices/virtual/mxcd/mxcd
+/sys/devices/virtual/tty/ptmx
+/sys/kernel/mm/memory_peers/mxcd
+/sys/kernel/slab/metax_fence
+/sys/kernel/slab/metax_sched_fence
+/sys/module/drm/holders/metax
+/sys/module/metax
+/sys/module/metax/drivers/pci:METAX
+/sys/module/metax/drivers/platform:metax_fw_pm
+/sys/module/metax/drivers/platform:metax_mc
+/sys/module/metax/parameters/eth_no_maca
+/sys/module/metax/parameters/metax_layout_enable
+/sys/module/metax/parameters/mxcd_log_flags
+/sys/module/metax/parameters/mxcd_log_level
+/sys/module/metax/parameters/mxme_size
+/sys/module/ttm/holders/metax
+
+## MACA headers with device prop symbols
+/opt/maca/include/common/__clang_maca_mckl_lib_header.h:203:extern TYPE_DEVICE CONSTATTR int MC_KERN_FUNC(mul24_i32)(int x, int y);
+/opt/maca/include/common/__clang_maca_mckl_lib_header.h:204:extern TYPE_DEVICE CONSTATTR uint MC_KERN_FUNC(mul24_u32)(uint x, uint y);
+/opt/maca/include/common/__clang_maca_mcml_lib_header.h:531:extern TYPE_DEVICE float MC_MATH_FUNC(__ll2float_rd)(const long long i);
+/opt/maca/include/common/__clang_maca_mcml_lib_header.h:532:extern TYPE_DEVICE float MC_MATH_FUNC(__ll2float_rn)(const long long i);
+/opt/maca/include/common/__clang_maca_mcml_lib_header.h:533:extern TYPE_DEVICE float MC_MATH_FUNC(__ll2float_ru)(const long long i);
+/opt/maca/include/common/__clang_maca_mcml_lib_header.h:534:extern TYPE_DEVICE float MC_MATH_FUNC(__ll2float_rz)(const long long i);
+/opt/maca/include/common/__clang_maca_mcml_lib_header.h:536:    MC_MATH_FUNC(__ull2float_rd)(const unsigned long long i);
+/opt/maca/include/common/__clang_maca_mcml_lib_header.h:538:    MC_MATH_FUNC(__ull2float_rn)(const unsigned long long i);
+/opt/maca/include/common/__clang_maca_mcml_lib_header.h:540:    MC_MATH_FUNC(__ull2float_ru)(const unsigned long long i);
+/opt/maca/include/common/__clang_maca_mcml_lib_header.h:542:    MC_MATH_FUNC(__ull2float_rz)(const unsigned long long i);
+/opt/maca/include/common/__clang_maca_mcml_lib_header.h:543:extern TYPE_DEVICE double MC_MATH_FUNC(__ll2double_rd)(const long long i);
+/opt/maca/include/common/__clang_maca_mcml_lib_header.h:544:extern TYPE_DEVICE double MC_MATH_FUNC(__ll2double_rn)(const long long i);
+/opt/maca/include/common/__clang_maca_mcml_lib_header.h:545:extern TYPE_DEVICE double MC_MATH_FUNC(__ll2double_ru)(const long long i);
+/opt/maca/include/common/__clang_maca_mcml_lib_header.h:546:extern TYPE_DEVICE double MC_MATH_FUNC(__ll2double_rz)(const long long i);
+/opt/maca/include/common/__clang_maca_mcml_lib_header.h:548:    MC_MATH_FUNC(__ull2double_rd)(const unsigned long long i);
+/opt/maca/include/common/__clang_maca_mcml_lib_header.h:550:    MC_MATH_FUNC(__ull2double_rn)(const unsigned long long i);
+/opt/maca/include/common/__clang_maca_mcml_lib_header.h:552:    MC_MATH_FUNC(__ull2double_ru)(const unsigned long long i);
+/opt/maca/include/common/__clang_maca_mcml_lib_header.h:554:    MC_MATH_FUNC(__ull2double_rz)(const unsigned long long i);
+/opt/maca/include/common/__clang_macac_math.h:1044:// warpSize), find the n-th(given by offset) set bit in the exec mask from the
+/opt/maca/include/common/__clang_macac_math.h:1134:__device__ static inline int __mul24(int x, int y) {
+/opt/maca/include/common/__clang_macac_math.h:1135:  return __mckl_mul24_i32(x, y);
+/opt/maca/include/common/__clang_macac_math.h:1174:__device__ static inline unsigned int __umul24(unsigned int x, unsigned int y) {
+/opt/maca/include/common/__clang_macac_math.h:1175:  return __mckl_mul24_u32(x, y);
+/opt/maca/include/common/__clang_macac_math.h:1423:__device__ static inline double __ll2double_rn(long long int x) {
+/opt/maca/include/common/__clang_macac_math.h:1424:  return MC_MATH_FUNC(__ll2double_rn)(x);
+/opt/maca/include/common/__clang_macac_math.h:1427:__device__ static inline double __ll2double_ru(long long int x) {
+/opt/maca/include/common/__clang_macac_math.h:1428:  return MC_MATH_FUNC(__ll2double_ru)(x);
+/opt/maca/include/common/__clang_macac_math.h:1431:__device__ static inline double __ll2double_rd(long long int x) {
+/opt/maca/include/common/__clang_macac_math.h:1432:  return MC_MATH_FUNC(__ll2double_rd)(x);
+/opt/maca/include/common/__clang_macac_math.h:1435:__device__ static inline double __ll2double_rz(long long int x) {
+/opt/maca/include/common/__clang_macac_math.h:1436:  return MC_MATH_FUNC(__ll2double_rz)(x);
+/opt/maca/include/common/__clang_macac_math.h:1439:__device__ static inline float __ll2float_rn(long long int x) {
+/opt/maca/include/common/__clang_macac_math.h:1440:  return MC_MATH_FUNC(__ll2float_rn)(x);
+/opt/maca/include/common/__clang_macac_math.h:1443:__device__ static inline float __ll2float_ru(long long int x) {
+/opt/maca/include/common/__clang_macac_math.h:1444:  return MC_MATH_FUNC(__ll2float_ru)(x);
+/opt/maca/include/common/__clang_macac_math.h:1447:__device__ static inline float __ll2float_rd(long long int x) {
+/opt/maca/include/common/__clang_macac_math.h:1448:  return MC_MATH_FUNC(__ll2float_rd)(x);
+/opt/maca/include/common/__clang_macac_math.h:1451:__device__ static inline float __ll2float_rz(long long int x) {
+/opt/maca/include/common/__clang_macac_math.h:1452:  return MC_MATH_FUNC(__ll2float_rz)(x);
+/opt/maca/include/common/__clang_macac_math.h:1483:__device__ static inline double __ull2double_rn(unsigned long long int x) {
+/opt/maca/include/common/__clang_macac_math.h:1484:  return MC_MATH_FUNC(__ull2double_rn)(x);
+/opt/maca/include/common/__clang_macac_math.h:1487:__device__ static inline double __ull2double_ru(unsigned long long int x) {
+/opt/maca/include/common/__clang_macac_math.h:1488:  return MC_MATH_FUNC(__ull2double_ru)(x);
+/opt/maca/include/common/__clang_macac_math.h:1491:__device__ static inline double __ull2double_rd(unsigned long long int x) {
+/opt/maca/include/common/__clang_macac_math.h:1492:  return MC_MATH_FUNC(__ull2double_rd)(x);
+/opt/maca/include/common/__clang_macac_math.h:1495:__device__ static inline double __ull2double_rz(unsigned long long int x) {
+/opt/maca/include/common/__clang_macac_math.h:1496:  return MC_MATH_FUNC(__ull2double_rz)(x);
+/opt/maca/include/common/__clang_macac_math.h:1499:__device__ static inline float __ull2float_rn(unsigned long long int x) {
+/opt/maca/include/common/__clang_macac_math.h:1500:  return MC_MATH_FUNC(__ull2float_rn)(x);
+/opt/maca/include/common/__clang_macac_math.h:1568:__device__ static inline double ll2double(long long int a,
+/opt/maca/include/common/__clang_macac_math.h:1570:  return mode == mcRoundZero     ? __ll2double_rz(a)
+/opt/maca/include/common/__clang_macac_math.h:1571:         : mode == mcRoundPosInf ? __ll2double_ru(a)
+/opt/maca/include/common/__clang_macac_math.h:1572:         : mode == mcRoundMinInf ? __ll2double_rd(a)
+/opt/maca/include/common/__clang_macac_math.h:1573:                                 : __ll2double_rn(a);
+/opt/maca/include/common/__clang_macac_math.h:1576:__device__ static inline double ull2double(unsigned long long int a,
+/opt/maca/include/common/__clang_macac_math.h:1578:  return mode == mcRoundZero     ? __ull2double_rz(a)
+/opt/maca/include/common/__clang_macac_math.h:1579:         : mode == mcRoundPosInf ? __ull2double_ru(a)
+/opt/maca/include/common/__clang_macac_math.h:1580:         : mode == mcRoundMinInf ? __ull2double_rd(a)
+/opt/maca/include/common/__clang_macac_math.h:1581:                                 : __ull2double_rn(a);
+/opt/maca/include/common/__clang_macac_math.h:1597:__device__ static inline float __ull2float_ru(unsigned long long int x) {
+/opt/maca/include/common/__clang_macac_math.h:1598:  return MC_MATH_FUNC(__ull2float_ru)(x);
+/opt/maca/include/common/__clang_macac_math.h:1601:__device__ static inline float __ull2float_rd(unsigned long long int x) {
+/opt/maca/include/common/__clang_macac_math.h:1602:  return MC_MATH_FUNC(__ull2float_rd)(x);
+/opt/maca/include/common/__clang_macac_math.h:1605:__device__ static inline float __ull2float_rz(unsigned long long int x) {
+/opt/maca/include/common/__clang_macac_math.h:1606:  return MC_MATH_FUNC(__ull2float_rz)(x);
+/opt/maca/include/common/maca_bfloat16.h:443:__MACA_HOSTDEVICE_BF16_DECL__ __maca_bfloat16 __ull2bfloat16_rn(const unsigned long long int i);
+/opt/maca/include/common/maca_bfloat16.h:476:__MACA_HOSTDEVICE_BF16_DECL__ __maca_bfloat16 __ll2bfloat16_rn(const long long int i);
+/opt/maca/include/common/maca_bfloat16.h:928:__MACA_BF16_DECL__ __maca_bfloat16 __ull2bfloat16_rz(const unsigned long long int i);
+/opt/maca/include/common/maca_bfloat16.h:944:__MACA_BF16_DECL__ __maca_bfloat16 __ull2bfloat16_rd(const unsigned long long int i);
+/opt/maca/include/common/maca_bfloat16.h:960:__MACA_BF16_DECL__ __maca_bfloat16 __ull2bfloat16_ru(const unsigned long long int i);
+/opt/maca/include/common/maca_bfloat16.h:1022:__MACA_BF16_DECL__ __maca_bfloat16 __ll2bfloat16_rz(const long long int i);
+/opt/maca/include/common/maca_bfloat16.h:1038:__MACA_BF16_DECL__ __maca_bfloat16 __ll2bfloat16_rd(const long long int i);
+/opt/maca/include/common/maca_bfloat16.h:1054:__MACA_BF16_DECL__ __maca_bfloat16 __ll2bfloat16_ru(const long long int i);
+/opt/maca/include/common/maca_bfloat16.h:1422:#if !defined warpSize && !defined __local_warpSize
+/opt/maca/include/common/maca_bfloat16.h:1423:#define warpSize    64
+/opt/maca/include/common/maca_bfloat16.h:1424:#define __local_warpSize
+/opt/maca/include/common/maca_bfloat16.h:1432:* If width is less than warpSize then each subsection of the warp behaves as a separate
+/opt/maca/include/common/maca_bfloat16.h:1437:* warpSize.
+/opt/maca/include/common/maca_bfloat16.h:1451:__MACA_BF16_DECL__ __maca_bfloat162 __shfl_sync(const maca_uint64_t mask, const __maca_bfloat162 var, const int delta, const int width = warpSize);
+/opt/maca/include/common/maca_bfloat16.h:1457:* The width is fixed at 16. If width is less than warpSize then each subsection of the warp behaves as a separate
+/opt/maca/include/common/maca_bfloat16.h:1462:* warpSize.
+/opt/maca/include/common/maca_bfloat16.h:1482:* the warp by delta threads. If width is less than warpSize then each subsection of the warp
+/opt/maca/include/common/maca_bfloat16.h:1486:* or is a number greater than warpSize.
+/opt/maca/include/common/maca_bfloat16.h:1500:__MACA_BF16_DECL__ __maca_bfloat162 __shfl_up_sync(const maca_uint64_t mask, const __maca_bfloat162 var, const unsigned int delta, const int width = warpSize);
+/opt/maca/include/common/maca_bfloat16.h:1507:* the warp by delta threads. The width is fixed at 16. If width is less than warpSize then each subsection of the warp
+/opt/maca/include/common/maca_bfloat16.h:1510:* results are undefined if width is a number greater than warpSize.
+/opt/maca/include/common/maca_bfloat16.h:1530:* of shifting var down the warp by delta threads. If width is less than warpSize then
+/opt/maca/include/common/maca_bfloat16.h:1548:__MACA_BF16_DECL__ __maca_bfloat162 __shfl_down_sync(const maca_uint64_t mask, const __maca_bfloat162 var, const unsigned int delta, const int width = warpSize);
+/opt/maca/include/common/maca_bfloat16.h:1555:* of shifting var down the warp by delta threads. The width is fixed at 16. If width is less than warpSize then
+/opt/maca/include/common/maca_bfloat16.h:1578:* the value of var held by the resulting thread ID is returned. If width is less than warpSize then each
+/opt/maca/include/common/maca_bfloat16.h:1596:__MACA_BF16_DECL__ __maca_bfloat162 __shfl_xor_sync(const maca_uint64_t mask, const __maca_bfloat162 var, const int delta, const int width = warpSize);
+/opt/maca/include/common/maca_bfloat16.h:1602:* If width is less than warpSize then each subsection of the warp behaves as a separate
+/opt/maca/include/common/maca_bfloat16.h:1607:* warpSize.
+/opt/maca/include/common/maca_bfloat16.h:1621:__MACA_BF16_DECL__ __maca_bfloat16 __shfl_sync(const maca_uint64_t mask, const __maca_bfloat16 var, const int delta, const int width = warpSize);
+/opt/maca/include/common/maca_bfloat16.h:1627:* The width is fixed at 16. If width is less than warpSize then each subsection of the warp behaves as a separate
+/opt/maca/include/common/maca_bfloat16.h:1631:* warpSize.
+/opt/maca/include/common/maca_bfloat16.h:1650:* the warp by delta threads. If width is less than warpSize then each subsection of the warp
+/opt/maca/include/common/maca_bfloat16.h:1654:* or is a number greater than warpSize.
+/opt/maca/include/common/maca_bfloat16.h:1668:__MACA_BF16_DECL__ __maca_bfloat16 __shfl_up_sync(const maca_uint64_t mask, const __maca_bfloat16 var, const unsigned int delta, const int width = warpSize);
+/opt/maca/include/common/maca_bfloat16.h:1674:* the warp by delta threads. The width is fixed at 16. If width is less than warpSize then each subsection of the warp
+/opt/maca/include/common/maca_bfloat16.h:1678:* or is a number greater than warpSize.
+/opt/maca/include/common/maca_bfloat16.h:1699:* of shifting var down the warp by delta threads. If width is less than warpSize then
+/opt/maca/include/common/maca_bfloat16.h:1717:__MACA_BF16_DECL__ __maca_bfloat16 __shfl_down_sync(const maca_uint64_t mask, const __maca_bfloat16 var, const unsigned int delta, const int width = warpSize);
+/opt/maca/include/common/maca_bfloat16.h:1724:* of shifting var down the warp by delta threads. The width is fixed at 16. If width is less than warpSize then
+/opt/maca/include/common/maca_bfloat16.h:1747:* the value of var held by the resulting thread ID is returned. If width is less than warpSize then each
+/opt/maca/include/common/maca_bfloat16.h:1765:__MACA_BF16_DECL__ __maca_bfloat16 __shfl_xor_sync(const maca_uint64_t mask, const __maca_bfloat16 var, const int delta, const int width = warpSize);
+/opt/maca/include/common/maca_bfloat16.h:1767:#if defined(__local_warpSize)
+/opt/maca/include/common/maca_bfloat16.h:1768:#undef warpSize
+/opt/maca/include/common/maca_bfloat16.h:1769:#undef __local_warpSize
+/opt/maca/include/common/maca_bfloat16.h:2205:__MACA_BF16_DECL__ __maca_bfloat162 __hmul2(const __maca_bfloat162 a, const __maca_bfloat162 b);
+/opt/maca/include/common/maca_bfloat16.h:2266:__MACA_BF16_DECL__ __maca_bfloat162 __hmul2_rn(const __maca_bfloat162 a, const __maca_bfloat162 b);
+/opt/maca/include/common/maca_bfloat16.h:2361:__MACA_BF16_DECL__ __maca_bfloat162 __hmul2_sat(const __maca_bfloat162 a, const __maca_bfloat162 b);
+/opt/maca/include/common/maca_bfloat16.h:3848:extern EXPORT_API __host__ __maca_bfloat16 MC_MATH_FUNC_HOST(__ll2bfloat16_rn)(const long long int i);
+/opt/maca/include/common/maca_bfloat16.h:3851:extern EXPORT_API __host__ __maca_bfloat16 MC_MATH_FUNC_HOST(__ull2bfloat16_rn)(const unsigned long long int i);
+/opt/maca/include/common/maca_bfloat16.h:3915:extern __device__ __maca_bfloat162 MC_MATH_FUNC(__hmul2)(const __maca_bfloat162 a,
+/opt/maca/include/common/maca_bfloat16.h:3917:extern __device__ __maca_bfloat162 MC_MATH_FUNC(__hmul2_sat)(const __maca_bfloat162 a,
+/opt/maca/include/common/maca_bfloat16.h:3919:extern __device__ __maca_bfloat162 MC_MATH_FUNC(__hmul2_rn)(const __maca_bfloat162 a,
+/opt/maca/include/common/maca_bfloat16.h:4097:    __maca_bfloat16 MC_MATH_FUNC(__ll2bfloat16_rd)(const long long int i);
+/opt/maca/include/common/maca_bfloat16.h:4098:extern __device__ __maca_bfloat16 MC_MATH_FUNC(__ll2bfloat16_rn)(const long long int i);
+/opt/maca/include/common/maca_bfloat16.h:4100:    __maca_bfloat16 MC_MATH_FUNC(__ll2bfloat16_ru)(const long long int i);
+/opt/maca/include/common/maca_bfloat16.h:4102:    __maca_bfloat16 MC_MATH_FUNC(__ll2bfloat16_rz)(const long long int i);
+/opt/maca/include/common/maca_bfloat16.h:4191:    __maca_bfloat16 MC_MATH_FUNC(__ull2bfloat16_rd)(const unsigned long long int i);
+/opt/maca/include/common/maca_bfloat16.h:4192:extern __device__ __maca_bfloat16 MC_MATH_FUNC(__ull2bfloat16_rn)(const unsigned long long int i);
+/opt/maca/include/common/maca_bfloat16.h:4194:    __maca_bfloat16 MC_MATH_FUNC(__ull2bfloat16_ru)(const unsigned long long int i);
+/opt/maca/include/common/maca_bfloat16.h:4196:    __maca_bfloat16 MC_MATH_FUNC(__ull2bfloat16_rz)(const unsigned long long int i);
+/opt/maca/include/common/maca_bfloat16.hpp:133:    __MACA_HOSTDEVICE__ __maca_bfloat16(long long val) { __x = __ll2bfloat16_rn(val).__x;  }
+/opt/maca/include/common/maca_bfloat16.hpp:134:    __MACA_HOSTDEVICE__ __maca_bfloat16(unsigned long long val) { __x = __ull2bfloat16_rn(val).__x; }
+/opt/maca/include/common/maca_bfloat16.hpp:150:    __MACA_HOSTDEVICE__ __maca_bfloat16 &operator=(long long val) { __x = __ll2bfloat16_rn(val).__x; return *this; }
+/opt/maca/include/common/maca_bfloat16.hpp:153:    __MACA_HOSTDEVICE__ __maca_bfloat16 &operator=(unsigned long long val) { __x = __ull2bfloat16_rn(val).__x; return *this; }
+/opt/maca/include/common/maca_bfloat16.hpp:407:__device__ __forceinline__ __maca_bfloat162 operator*(const __maca_bfloat162 &lh, const __maca_bfloat162 &rh) { return MC_MATH_FUNC(__hmul2)(lh, rh); }
+/opt/maca/include/common/maca_bfloat16.hpp:412:__device__ __forceinline__ __maca_bfloat162& operator*=(__maca_bfloat162 &lh, const __maca_bfloat162 &rh) { lh = MC_MATH_FUNC(__hmul2)(lh, rh); return lh; }
+/opt/maca/include/common/maca_bfloat16.hpp:732:__MACA_HOSTDEVICE_BF16_DECL__ __maca_bfloat16 __ll2bfloat16_rn(const long long int i) {
+/opt/maca/include/common/maca_bfloat16.hpp:734:    return MC_MATH_FUNC(__ll2bfloat16_rn)(i);
+/opt/maca/include/common/maca_bfloat16.hpp:736:    return MC_MATH_FUNC_HOST(__ll2bfloat16_rn)(i);
+/opt/maca/include/common/maca_bfloat16.hpp:753:__MACA_HOSTDEVICE_BF16_DECL__ __maca_bfloat16 __ull2bfloat16_rn(const unsigned long long int i) {
+/opt/maca/include/common/maca_bfloat16.hpp:755:    return MC_MATH_FUNC(__ull2bfloat16_rn)(i);
+/opt/maca/include/common/maca_bfloat16.hpp:757:    return MC_MATH_FUNC_HOST(__ull2bfloat16_rn)(i);
+/opt/maca/include/common/maca_bfloat16.hpp:1045:__MACA_BF16_DECL__ __maca_bfloat162 __hmul2(const __maca_bfloat162 a,
+/opt/maca/include/common/maca_bfloat16.hpp:1047:  return MC_MATH_FUNC(__hmul2)(a, b);
+/opt/maca/include/common/maca_bfloat16.hpp:1049:__MACA_BF16_DECL__ __maca_bfloat162 __hmul2_sat(const __maca_bfloat162 a,
+/opt/maca/include/common/maca_bfloat16.hpp:1051:  return MC_MATH_FUNC(__hmul2_sat)(a, b);
+/opt/maca/include/common/maca_bfloat16.hpp:1053:__MACA_BF16_DECL__ __maca_bfloat162 __hmul2_rn(const __maca_bfloat162 a,
+/opt/maca/include/common/maca_bfloat16.hpp:1055:  return MC_MATH_FUNC(__hmul2_rn)(a, b);
+/opt/maca/include/common/maca_bfloat16.hpp:1360:__MACA_BF16_DECL__ __maca_bfloat16 __ll2bfloat16_rd(const long long int i) {
+/opt/maca/include/common/maca_bfloat16.hpp:1361:  return MC_MATH_FUNC(__ll2bfloat16_rd)(i);
+/opt/maca/include/common/maca_bfloat16.hpp:1363:__MACA_BF16_DECL__ __maca_bfloat16 __ll2bfloat16_ru(const long long int i) {
+/opt/maca/include/common/maca_bfloat16.hpp:1364:  return MC_MATH_FUNC(__ll2bfloat16_ru)(i);
+/opt/maca/include/common/maca_bfloat16.hpp:1366:__MACA_BF16_DECL__ __maca_bfloat16 __ll2bfloat16_rz(const long long int i) {
+/opt/maca/include/common/maca_bfloat16.hpp:1367:  return MC_MATH_FUNC(__ll2bfloat16_rz)(i);
+/opt/maca/include/common/maca_bfloat16.hpp:1573:__ull2bfloat16_rd(const unsigned long long int i) {
+/opt/maca/include/common/maca_bfloat16.hpp:1574:  return MC_MATH_FUNC(__ull2bfloat16_rd)(i);
+/opt/maca/include/common/maca_bfloat16.hpp:1577:__ull2bfloat16_ru(const unsigned long long int i) {
+/opt/maca/include/common/maca_bfloat16.hpp:1578:  return MC_MATH_FUNC(__ull2bfloat16_ru)(i);
+/opt/maca/include/common/maca_bfloat16.hpp:1581:__ull2bfloat16_rz(const unsigned long long int i) {
+/opt/maca/include/common/maca_bfloat16.hpp:1582:  return MC_MATH_FUNC(__ull2bfloat16_rz)(i);
+/opt/maca/include/common/maca_fp16.h:865:__ull2half_rn(const unsigned long long int i);
+/opt/maca/include/common/maca_fp16.h:882:__MACA_FP16_DECL__ __half __ull2half_rz(const unsigned long long int i);
+/opt/maca/include/common/maca_fp16.h:898:__MACA_FP16_DECL__ __half __ull2half_rd(const unsigned long long int i);
+/opt/maca/include/common/maca_fp16.h:914:__MACA_FP16_DECL__ __half __ull2half_ru(const unsigned long long int i);
+/opt/maca/include/common/maca_fp16.h:1000:__MACA_HOSTDEVICE_FP16_DECL__ __half __ll2half_rn(const long long int i);
+/opt/maca/include/common/maca_fp16.h:1012:__MACA_FP16_DECL__ __half __ll2half_rz(const long long int i);
+/opt/maca/include/common/maca_fp16.h:1028:__MACA_FP16_DECL__ __half __ll2half_rd(const long long int i);
+/opt/maca/include/common/maca_fp16.h:1044:__MACA_FP16_DECL__ __half __ll2half_ru(const long long int i);
+/opt/maca/include/common/maca_fp16.h:1406:                                                 const int width = warpSize);
+/opt/maca/include/common/maca_fp16.h:1409:                                                    const int width = warpSize);
+/opt/maca/include/common/maca_fp16.h:1411:    const __half2 var, const unsigned int delta, const int width = warpSize);
+/opt/maca/include/common/maca_fp16.h:1413:__shfl_xor(const __half2 var, const int delta, const int width = warpSize);
+/opt/maca/include/common/maca_fp16.h:1416:                                                const int width = warpSize);
+/opt/maca/include/common/maca_fp16.h:1419:                                                   const int width = warpSize);
+/opt/maca/include/common/maca_fp16.h:1421:    const __half var, const unsigned int delta, const int width = warpSize);
+/opt/maca/include/common/maca_fp16.h:1424:                                                    const int width = warpSize);
+/opt/maca/include/common/maca_fp16.h:1432: * delta. If width is less than warpSize then each subsection of the warp
+/opt/maca/include/common/maca_fp16.h:1437: * is not a power of 2, or is a number greater than warpSize. \param[in] mask -
+/opt/maca/include/common/maca_fp16.h:1451:                                       const int width = warpSize);
+/opt/maca/include/common/maca_fp16.h:1458: * delta. The width is fixed at 16. If width is less than warpSize then each
+/opt/maca/include/common/maca_fp16.h:1464: * warpSize. \param[in] mask - unsigned int. Is only being read. \param[in] var
+/opt/maca/include/common/maca_fp16.h:1484: * warpSize then each subsection of the warp behaves as a separate entity with a
+/opt/maca/include/common/maca_fp16.h:1488: * is not a power of 2, or is a number greater than warpSize. \param[in] mask -
+/opt/maca/include/common/maca_fp16.h:1505:                                          const int width = warpSize);
+/opt/maca/include/common/maca_fp16.h:1514: * at 16. If width is less than warpSize then each subsection of the warp
+/opt/maca/include/common/maca_fp16.h:1519: * number greater than warpSize. \param[in] mask - unsigned int. Is only being
+/opt/maca/include/common/maca_fp16.h:1543: * than warpSize then each subsection of the warp behaves as a separate entity
+/opt/maca/include/common/maca_fp16.h:1563:                                            const int width = warpSize);
+/opt/maca/include/common/maca_fp16.h:1572: * at 16. If width is less than warpSize then each subsection of the warp
+/opt/maca/include/common/maca_fp16.h:1598: * ID is returned. If width is less than warpSize then each group of width
+/opt/maca/include/common/maca_fp16.h:1619:                                           const int width = warpSize);
+/opt/maca/include/common/maca_fp16.h:1626: * delta. If width is less than warpSize then each subsection of the warp
+/opt/maca/include/common/maca_fp16.h:1631: * is not a power of 2, or is a number greater than warpSize. \param[in] mask -
+/opt/maca/include/common/maca_fp16.h:1647:                                      const int width = warpSize);
+/opt/maca/include/common/maca_fp16.h:1654: * delta. The width is fixed at 16. If width is less than warpSize then each
+/opt/maca/include/common/maca_fp16.h:1660: * warpSize. \param[in] mask - unsigned int. Is only being read. \param[in] var
+/opt/maca/include/common/maca_fp16.h:1680: * threads. If width is less than warpSize then each subsection of the warp
+/opt/maca/include/common/maca_fp16.h:1685: * number greater than warpSize. \param[in] mask - unsigned int. Is only being
+/opt/maca/include/common/maca_fp16.h:1701:                                         const int width = warpSize);
+/opt/maca/include/common/maca_fp16.h:1709: * warpSize then each subsection of the warp behaves as a separate entity with a
+/opt/maca/include/common/maca_fp16.h:1713: * is not a power of 2, or is a number greater than warpSize. \param[in] mask -
+/opt/maca/include/common/maca_fp16.h:1737: * than warpSize then each subsection of the warp behaves as a separate entity
+/opt/maca/include/common/maca_fp16.h:1757:                                           const int width = warpSize);
+/opt/maca/include/common/maca_fp16.h:1766: * at 16. If width is less than warpSize then each subsection of the warp
+/opt/maca/include/common/maca_fp16.h:1792: * ID is returned. If width is less than warpSize then each group of width
+/opt/maca/include/common/maca_fp16.h:1813:                                          const int width = warpSize);
+/opt/maca/include/common/maca_fp16.h:2214:__MACA_FP16_DECL__ __half2 __hmul2(const __half2 a, const __half2 b);
+/opt/maca/include/common/maca_fp16.h:2273:__MACA_FP16_DECL__ __half2 __hmul2_rn(const __half2 a, const __half2 b);
+/opt/maca/include/common/maca_fp16.h:2362:__MACA_FP16_DECL__ __half2 __hmul2_sat(const __half2 a, const __half2 b);
+/opt/maca/include/common/maca_fp16.h:3818:extern TYPE_DEVICE __half MC_MATH_FUNC(__ll2half_rd)(const long long i);
+/opt/maca/include/common/maca_fp16.h:3819:extern TYPE_DEVICE __half MC_MATH_FUNC(__ll2half_rn)(const long long i);
+/opt/maca/include/common/maca_fp16.h:3820:extern TYPE_DEVICE __half MC_MATH_FUNC(__ll2half_ru)(const long long i);
+/opt/maca/include/common/maca_fp16.h:3821:extern TYPE_DEVICE __half MC_MATH_FUNC(__ll2half_rz)(const long long i);
+/opt/maca/include/common/maca_fp16.h:3831:extern TYPE_DEVICE __half MC_MATH_FUNC(__ull2half_rd)(const unsigned long long i);
+/opt/maca/include/common/maca_fp16.h:3832:extern TYPE_DEVICE __half MC_MATH_FUNC(__ull2half_rn)(const unsigned long long i);
+/opt/maca/include/common/maca_fp16.h:3833:extern TYPE_DEVICE __half MC_MATH_FUNC(__ull2half_ru)(const unsigned long long i);
+/opt/maca/include/common/maca_fp16.h:3834:extern TYPE_DEVICE __half MC_MATH_FUNC(__ull2half_rz)(const unsigned long long i);
+/opt/maca/include/common/maca_fp16.h:3861:extern EXPORT_API TYPE_HOST __half MC_MATH_FUNC_HOST(__ll2half_rn)(const long long i);
+/opt/maca/include/common/maca_fp16.h:3864:extern EXPORT_API TYPE_HOST __half MC_MATH_FUNC_HOST(__ull2half_rn)(const unsigned long long i);
+/opt/maca/include/common/maca_fp16.hpp:215:        __x = __ll2half_rn(val).__x;
+/opt/maca/include/common/maca_fp16.hpp:218:      __x = __ll2half_rn(val).__x;
+/opt/maca/include/common/maca_fp16.hpp:226:        __x = __ll2half_rn(val).__x;
+/opt/maca/include/common/maca_fp16.hpp:229:      __x = __ll2half_rn(val).__x;
+/opt/maca/include/common/maca_fp16.hpp:237:        __x = __ull2half_rn(val).__x;
+/opt/maca/include/common/maca_fp16.hpp:240:      __x = __ull2half_rn(val).__x;
+/opt/maca/include/common/maca_fp16.hpp:337:        __x = __ll2half_rn(val).__x;
+/opt/maca/include/common/maca_fp16.hpp:340:      __x = __ll2half_rn(val).__x;
+/opt/maca/include/common/maca_fp16.hpp:353:        __x = __ull2half_rn(val).__x;
+/opt/maca/include/common/maca_fp16.hpp:356:      __x = __ull2half_rn(val).__x;
+/opt/maca/include/common/maca_fp16.hpp:633:  return __hmul2(lh, rh);
+/opt/maca/include/common/maca_fp16.hpp:649:  lh = __hmul2(lh, rh);
+/opt/maca/include/common/maca_fp16.hpp:1450:__MACA_HOSTDEVICE_FP16_DECL__ __half __ull2half_rn(const unsigned long long x) {
+/opt/maca/include/common/maca_fp16.hpp:1452:  return MC_MATH_FUNC(__ull2half_rn)(x);
+/opt/maca/include/common/maca_fp16.hpp:1454:  return MC_MATH_FUNC_HOST(__ull2half_rn)(x);
+/opt/maca/include/common/maca_fp16.hpp:1458:__MACA_FP16_DECL__ __half __ull2half_rz(const unsigned long long x) {
+/opt/maca/include/common/maca_fp16.hpp:1459:  return MC_MATH_FUNC(__ull2half_rz)(x);
+/opt/maca/include/common/maca_fp16.hpp:1462:__MACA_FP16_DECL__ __half __ull2half_rd(const unsigned long long x) {
+/opt/maca/include/common/maca_fp16.hpp:1463:  return MC_MATH_FUNC(__ull2half_rd)(x);
+/opt/maca/include/common/maca_fp16.hpp:1466:__MACA_FP16_DECL__ __half __ull2half_ru(const unsigned long long x) {
+/opt/maca/include/common/maca_fp16.hpp:1467:  return MC_MATH_FUNC(__ull2half_ru)(x);
+/opt/maca/include/common/maca_fp16.hpp:1482:__MACA_HOSTDEVICE_FP16_DECL__ __half __ll2half_rn(const long long x) {
+/opt/maca/include/common/maca_fp16.hpp:1484:  return MC_MATH_FUNC(__ll2half_rn)(x);
+/opt/maca/include/common/maca_fp16.hpp:1486:  return MC_MATH_FUNC_HOST(__ll2half_rn)(x);
+/opt/maca/include/common/maca_fp16.hpp:1490:__MACA_FP16_DECL__ __half __ll2half_rz(const long long x) {
+/opt/maca/include/common/maca_fp16.hpp:1491:  return MC_MATH_FUNC(__ll2half_rz)(x);
+
+## PyTorch cuda properties
+torch 2.8.0+metax3.5.3.9 cuda 11.6
+available True count 1
+repr _CudaDeviceProperties(name='MetaX C500', major=8, minor=0, total_memory=15584MB, multi_processor_count=104, uuid=9989eeaf-e8b6-b0c7-a313-c2c978ea5031, pci_bus_id=55, pci_device_id=0, pci_domain_id=0, L2_cache_size=8MB)
+L2_cache_size 8388608
+gcnArchName MetaX C500
+is_integrated 0
+is_multi_gpu_board 0
+major 8
+max_threads_per_multi_processor 2048
+minor 0
+multi_processor_count 104
+name MetaX C500
+pci_bus_id 55
+pci_device_id 0
+pci_domain_id 0
+regs_per_multiprocessor 131072
+shared_memory_per_block 65536
+shared_memory_per_block_optin 65536
+shared_memory_per_multiprocessor 65536
+total_memory 16341008384
+uuid 9989eeaf-e8b6-b0c7-a313-c2c978ea5031
+warp_size 64
+
+## mcGetDeviceProperties probe rc=0
+
+### build log
+
+### run log
+mc_device_count=1
+device=0
+name=MetaX C500
+totalGlobalMem=16341008384
+sharedMemPerBlock=65536
+regsPerBlock=131072
+warpSize=64
+memPitch=1073741823
+maxThreadsPerBlock=1024
+maxThreadsDim=1024,1024,1024
+maxGridSize=2147483647,2147483647,2147483647
+clockRate=1600000
+totalConstMem=2147483647
+major=10
+minor=0
+textureAlignment=256
+deviceOverlap=1
+multiProcessorCount=104
+kernelExecTimeoutEnabled=0
+integrated=0
+canMapHostMemory=1
+computeMode=0
+concurrentKernels=1
+ECCEnabled=1
+pciBusID=55
+pciDeviceID=0
+pciDomainID=0
+memoryClockRate=1800000
+memoryBusWidth=4096
+l2CacheSize=8388608
+maxThreadsPerMultiProcessor=2048
+isMultiGpuBoard=0
+multiGpuBoardGroupID=0
