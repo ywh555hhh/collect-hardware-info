@@ -26,6 +26,7 @@ These are safe to use now, based on current repository evidence:
 - Implemented a mini GraphNet-style graph replay harness in Paddle, comparing dynamic graph execution against `paddle.jit.save/load` static graph execution on MetaX C500.
 - Profiled dense and sparse-ish graph blocks across matmul, gelu, layernorm, gather, scatter, projection, and reduction; observed dynamic avg latency of 0.333 ms for dense block, 0.878 ms for gather/scatter block, and 1.268 ms for mixed graph block on `Place(gpu:0)`.
 - Verified JIT export/load for dense and mixed graph blocks, with dense block improving from 0.333 ms dynamic to 0.255 ms JIT path, and mixed block from 1.268 ms dynamic to 1.122 ms JIT path.
+- Exported fixed-shape dense and mixed graph blocks to Paddle Inference and validated `PaddleInferPredictor` execution on C500, observing 1.515 ms and 2.670 ms average end-to-end predictor latency for the two blocks.
 - Evaluated the current C500 Paddle image's suitability for compiler benchmarking, finding that it supports runtime/operator/static-graph analysis but cannot directly run CINN acceleration because CINN is not compiled in.
 
 ## Stronger Bullets After Next Phase
@@ -52,6 +53,8 @@ A good 60-second version:
 | Paddle op raw output | `raw/metax-c500-paddle/paddle_op_probe.json` |
 | Mini GraphNet-style workload script | `scripts/paddle_mini_graphnet_probe.py` |
 | Mini GraphNet-style raw output | `raw/metax-c500-paddle/mini_graphnet/mini_graphnet_probe.json` |
+| Paddle Inference predictor script | `scripts/paddle_inference_graphnet_probe.py` |
+| Paddle Inference predictor raw output | `raw/metax-c500-paddle/paddle_inference_graphnet/paddle_inference_graphnet_probe.json` |
 | Technical note | `notes/metax-c500-paddle-backend-graphnet-probe.md` |
 
 ## What Not To Overclaim Yet
@@ -67,6 +70,7 @@ Current true claim:
 
 - completed backend capability and op coverage probe
 - completed mini GraphNet-style dynamic/static graph workload probe
+- completed Paddle Inference predictor probe for dense/mixed graph blocks
 - identified image-level compiler limitation (`CINN=False`)
 - established a concrete path toward real GraphNet and vendor-profiler follow-up
 
@@ -77,5 +81,5 @@ The highest-return next tasks:
 1. Read GraphNet data format and benchmark driver.
 2. Run one real GraphNet sample in Paddle if dependencies fit the image.
 3. Add repeated-run statistics across several graph sizes.
-4. Try Paddle Inference predictor execution from the saved `.pdmodel` artifacts.
-5. Add vendor-profiler or `mx-smi` time-series sampling around each graph block.
+4. Add vendor-profiler or `mx-smi` time-series sampling around each graph block.
+5. Compare predictor latency under larger graph sizes and batched/repeated request patterns.

@@ -80,6 +80,8 @@ raw/
     paddle_op_probe.json        # Paddle core op compatibility/perf smoke
     mini_graphnet/
       mini_graphnet_probe.json  # Paddle mini GraphNet-style dynamic/JIT workload
+    paddle_inference_graphnet/
+      paddle_inference_graphnet_probe.json # Paddle Inference predictor workload
 
 probes/
   metax-c500/
@@ -94,6 +96,7 @@ scripts/
   paddle_backend_probe.py       # Paddle backend/device capability 探针
   paddle_op_probe.py            # Paddle op coverage / latency smoke 探针
   paddle_mini_graphnet_probe.py # GraphNet-style dense/sparse/mixed graph workload
+  paddle_inference_graphnet_probe.py # Paddle Inference predictor probe
 ```
 
 ## vLLM 推理实验
@@ -132,6 +135,15 @@ scripts/
 | sparse gather/scatter block | 0.878 | n/a | gather -> elementwise scale -> scatter |
 | mixed graph block | 1.268 | 1.122 | dense + sparse + projection |
 | graph readout reduce | 1.341 | n/a | mixed block -> mean reduction |
+
+Paddle Inference predictor 也已跑通固定形状导出的 dense/mixed graph block：
+
+| Workload | Predictor avg ms | 输入 | 输出 |
+| --- | ---: | --- | --- |
+| dense block | 1.515 | `x` | `[8192, 256]` |
+| mixed graph block | 2.670 | `x`, `src`, `dst` | `[8192, 256]` |
+
+Predictor 计时包含 input feed / output fetch 的端到端调用成本，不能和动态图/JIT 的纯执行时间直接等价比较；它的价值是证明 Paddle Inference 部署路径在 C500 Paddle 镜像上可用。
 
 这个结果说明：当前镜像不适合直接做 CINN compiler speedup，但适合做 Paddle runtime / operator coverage / static graph export / inference path 的后端研究。
 

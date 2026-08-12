@@ -29,12 +29,14 @@ Raw data:
 - `raw/metax-c500-paddle/paddle_backend_probe.json`
 - `raw/metax-c500-paddle/paddle_op_probe.json`
 - `raw/metax-c500-paddle/mini_graphnet/mini_graphnet_probe.json`
+- `raw/metax-c500-paddle/paddle_inference_graphnet/paddle_inference_graphnet_probe.json`
 
 Scripts:
 
 - `scripts/paddle_backend_probe.py`
 - `scripts/paddle_op_probe.py`
 - `scripts/paddle_mini_graphnet_probe.py`
+- `scripts/paddle_inference_graphnet_probe.py`
 
 Environment observed:
 
@@ -127,6 +129,28 @@ Interpretation:
 - The sparse-ish gather/scatter block is slower than the dense block despite less arithmetic density, which makes it a good follow-up target for memory traffic and irregular-write analysis.
 - This still does not prove full official GraphNet benchmark support; it is a controlled approximation that de-risks the backend/operator/static graph path first.
 
+## Paddle Inference Predictor Path
+
+The next probe exports fixed-shape dense and mixed graph blocks to `.pdmodel/.pdiparams`, then loads them through `paddle.inference.Config` and `PaddleInferPredictor` with GPU enabled.
+
+Raw data:
+
+- `raw/metax-c500-paddle/paddle_inference_graphnet/paddle_inference_graphnet_probe.json`
+
+Parameters match the mini GraphNet-style workload: 8192 nodes, 65536 edges, hidden size 256, 10 warmup iterations, and 50 measured iterations.
+
+| Workload | Predictor path | avg ms | p50 ms | p90 ms | Inputs | Output |
+| --- | --- | ---: | ---: | ---: | --- | --- |
+| dense block | GPU predictor | 1.515 | 1.502 | 1.555 | `x` | `[8192, 256]` |
+| mixed graph block | GPU predictor | 2.670 | 2.664 | 2.691 | `x`, `src`, `dst` | `[8192, 256]` |
+
+Important interpretation:
+
+- Predictor timing includes input handle reshape, CPU-to-predictor feed, `predictor.run()`, and output fetch, so it is an end-to-end deployment-path timing rather than a pure GPU-kernel timing.
+- Paddle Inference logs show the analysis predictor running IR passes including matmul mapping/fusion passes, `fc_fuse_pass`, `fc_elementwise_layernorm_fuse_pass`, `auto_mixed_precision_pass`, `inplace_op_var_pass`, `memory_optimize_pass`, and GPU parameter sync.
+- The dense predictor graph reports roughly 0.5MB persistable params, while the mixed graph reports roughly 8.8MB persistable params and larger temporary buffers for gather/scatter intermediates.
+- This makes the image useful for studying Paddle Inference graph optimization and deployment-path overhead on a non-NVIDIA backend, even without CINN.
+
 ## Resume-Grade Project Direction
 
 Recommended project framing:
@@ -141,6 +165,7 @@ Suggested resume bullets after deeper completion:
 - Validated Paddle Inference availability and core operator coverage on C500, including fp32/fp16 matmul, conv2d, layernorm, softmax, gather, and scatter.
 - Connected PaddlePaddle GraphNet-style computation graph workloads to backend/kernel coverage by profiling dense, sparse-ish, mixed, and readout graph blocks relevant to tensor compiler benchmarks.
 - Verified `paddle.jit.save/load` static graph execution for dense and mixed GraphNet-style blocks on C500.
+- Exported fixed-shape graph blocks to Paddle Inference and validated `PaddleInferPredictor` execution on C500.
 - Identified a key compiler limitation in the current image: CINN is not compiled in, so this image is suitable for runtime/operator/inference analysis but not direct CINN-vs-baseline compiler benchmarking.
 
 ## How This Relates to Inference
@@ -163,8 +188,8 @@ For interviews, the unifying story is:
 
 1. Clone/read PaddlePaddle/GraphNet and summarize its graph format and benchmark pipeline.
 2. Run one minimal GraphNet benchmark path if dependencies fit the C500 Paddle image.
-3. Try Paddle Inference predictor execution from the saved `.pdmodel` artifacts.
-4. Add repeated graph-size sweeps and `mx-smi` sampling around Paddle op groups.
+3. Add repeated graph-size sweeps and `mx-smi` sampling around Paddle op groups.
+4. Try to run Paddle Inference predictor under larger graph sizes and repeated request patterns.
 5. Try to find or build a Paddle image with CINN enabled; current image reports `is_compiled_with_cinn() = False`.
 
 ## Concrete Project Plan
@@ -220,10 +245,11 @@ Completed:
 - sparse-ish gather/scatter op smoke
 - mini GraphNet-style dynamic graph workload
 - `paddle.jit.save/load` static graph smoke for dense and mixed blocks
+- Paddle Inference predictor smoke for dense and mixed graph blocks
 
 Not completed yet:
 
 - full GraphNet workload replay
 - CINN benchmark comparison
-- Paddle Inference predictor latency comparison
+- full deployment benchmark with repeated request patterns
 - repeated runs across multiple graph sizes

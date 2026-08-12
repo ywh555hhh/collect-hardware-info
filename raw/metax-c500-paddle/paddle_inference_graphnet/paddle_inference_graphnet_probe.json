@@ -1,0 +1,121 @@
+{
+  "started_at": "2026-08-12T17:26:31+0800",
+  "params": {
+    "output": "/data/reports/paddle_inference_graphnet/paddle_inference_graphnet_probe.json",
+    "device": "gpu:0",
+    "nodes": 8192,
+    "edges": 65536,
+    "hidden": 256,
+    "warmup": 10,
+    "iters": 50,
+    "gpu_mem_mb": 2048,
+    "keep_model_dir": "/data/reports/paddle_inference_graphnet/models",
+    "sample_mxsmi": true
+  },
+  "python": "3.10.10 | packaged by conda-forge | (main, Mar 24 2023, 20:08:06) [GCC 11.3.0]",
+  "executable": "/opt/conda/bin/python3",
+  "paddle_version": "2.6.0",
+  "env": {
+    "LD_LIBRARY_PATH": "/opt/conda/lib/python3.10/site-packages/cv2/../../lib64:/opt/maca/lib:/opt/maca/ompi/lib:/opt/maca/ucx/lib:/opt/mxdriver/lib:/opt/maca/lib:/opt/maca/ompi/lib:/opt/maca/ucx/lib:/opt/mxdriver/lib:/opt/maca/lib:/opt/maca/ompi/lib:/opt/maca/ucx/lib:/opt/mxdriver/lib:",
+    "MACA_CLANG_PATH": "/opt/maca/mxgpu_llvm/bin",
+    "MACA_PATH": "/opt/maca"
+  },
+  "device": "gpu:0",
+  "mxsmi_before": {
+    "cmd": [
+      "mx-smi"
+    ],
+    "returncode": 0,
+    "stdout": "mx-smi  version: 2.2.6\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 17:26:31 2026\n\nAttached GPUs                                     : 1\n+---------------------------------------------------------------------------------+\n| MX-SMI 2.2.6                        Kernel Mode Driver Version: 3.8.30          |\n| MACA Version: 3.0.0.8               BIOS Version: 1.33.5.0                      |\n|------------------------------------+---------------------+----------------------+\n| GPU     NAME         Persistence-M | Bus-id              | GPU-Util      sGPU-M |\n| Temp    Pwr:Usage/Cap         Perf | Memory-Usage        | GPU-State            |\n|====================================+=====================+======================|\n| 0       MetaX C500             Off | 0000:37:00.0        | 0%             *sGPU |\n| 37C     57W / 350W              P0 | 828/65536 MiB       | Available            |\n+------------------------------------+---------------------+----------------------+\n\n+---------------------------------------------------------------------------------+\n| Sliced GPU                                                                      |\n|------------------------------------+---------------------+----------------------+\n| Minor    GPU    sGPU-Id    Compute | Vram Quota          | sGPU-Util            |\n|====================================+=====================+======================|\n| 022      0      3          25%     | 0/16000 MiB         | 0%                   |\n+------------------------------------+---------------------+----------------------+\n\n+---------------------------------------------------------------------------------+\n| Process:                                                                        |\n|  GPU                    PID         Process Name                 GPU Memory     |\n|                                                                  Usage(MiB)     |\n|=================================================================================|\n|  no process found                                                               |\n+---------------------------------------------------------------------------------+\n\nEnd of Log\n",
+    "stderr": ""
+  },
+  "exports": {
+    "dense_block": {
+      "name": "dense_block",
+      "ok": true,
+      "prefix": "/data/reports/paddle_inference_graphnet/models/dense_block/model",
+      "model_file": "/data/reports/paddle_inference_graphnet/models/dense_block/model.pdmodel",
+      "params_file": "/data/reports/paddle_inference_graphnet/models/dense_block/model.pdiparams",
+      "files": [
+        "model.pdiparams",
+        "model.pdiparams.info",
+        "model.pdmodel"
+      ]
+    },
+    "mixed_graph_block": {
+      "name": "mixed_graph_block",
+      "ok": true,
+      "prefix": "/data/reports/paddle_inference_graphnet/models/mixed_graph_block/model",
+      "model_file": "/data/reports/paddle_inference_graphnet/models/mixed_graph_block/model.pdmodel",
+      "params_file": "/data/reports/paddle_inference_graphnet/models/mixed_graph_block/model.pdiparams",
+      "files": [
+        "model.pdiparams",
+        "model.pdiparams.info",
+        "model.pdmodel"
+      ]
+    }
+  },
+  "predictor_results": {
+    "dense_block_gpu": {
+      "name": "dense_block",
+      "use_gpu": true,
+      "warmup": 10,
+      "iters": 50,
+      "ok": true,
+      "input_names": [
+        "x"
+      ],
+      "output_names": [
+        "save_infer_model/scale_0.tmp_0"
+      ],
+      "avg_ms": 1.5148,
+      "min_ms": 1.489,
+      "p50_ms": 1.5024,
+      "p90_ms": 1.5554,
+      "max_ms": 1.6078,
+      "output_shape": [
+        8192,
+        256
+      ],
+      "output_dtype": "float32",
+      "output_sum": -0.00022426247596740723
+    },
+    "mixed_graph_block_gpu": {
+      "name": "mixed_graph_block",
+      "use_gpu": true,
+      "warmup": 10,
+      "iters": 50,
+      "ok": true,
+      "input_names": [
+        "x",
+        "src",
+        "dst"
+      ],
+      "output_names": [
+        "save_infer_model/scale_0.tmp_1"
+      ],
+      "avg_ms": 2.6702,
+      "min_ms": 2.6137,
+      "p50_ms": 2.664,
+      "p90_ms": 2.6913,
+      "max_ms": 2.7657,
+      "output_shape": [
+        8192,
+        256
+      ],
+      "output_dtype": "float32",
+      "output_sum": 62485.8203125
+    }
+  },
+  "mxsmi_after": {
+    "cmd": [
+      "mx-smi"
+    ],
+    "returncode": 0,
+    "stdout": "mx-smi  version: 2.2.6\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 17:26:33 2026\n\nAttached GPUs                                     : 1\n+---------------------------------------------------------------------------------+\n| MX-SMI 2.2.6                        Kernel Mode Driver Version: 3.8.30          |\n| MACA Version: 3.0.0.8               BIOS Version: 1.33.5.0                      |\n|------------------------------------+---------------------+----------------------+\n| GPU     NAME         Persistence-M | Bus-id              | GPU-Util      sGPU-M |\n| Temp    Pwr:Usage/Cap         Perf | Memory-Usage        | GPU-State            |\n|====================================+=====================+======================|\n| 0       MetaX C500             Off | 0000:37:00.0        | 3%             *sGPU |\n| 37C     91W / 350W              P9 | 1066/65536 MiB      | Available            |\n+------------------------------------+---------------------+----------------------+\n\n+---------------------------------------------------------------------------------+\n| Sliced GPU                                                                      |\n|------------------------------------+---------------------+----------------------+\n| Minor    GPU    sGPU-Id    Compute | Vram Quota          | sGPU-Util            |\n|====================================+=====================+======================|\n| 022      0      3          25%     | 238/16000 MiB       | 3%                   |\n+------------------------------------+---------------------+----------------------+\n\n+---------------------------------------------------------------------------------+\n| Process:                                                                        |\n|  GPU                    PID         Process Name                 GPU Memory     |\n|                                                                  Usage(MiB)     |\n|=================================================================================|\n|  0-s3                  3224         python3                      238            |\n+---------------------------------------------------------------------------------+\n\nEnd of Log\n",
+    "stderr": ""
+  },
+  "ok": true,
+  "model_root": "/data/reports/paddle_inference_graphnet/models",
+  "finished_at": "2026-08-12T17:26:33+0800"
+}
