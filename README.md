@@ -60,7 +60,10 @@ raw/
     c500_mxsmi_detail.txt       # mx-smi 各 show 子命令详细输出
   metax-c500-vllm/
     c500_lfm25_lifecycle.json   # LFM2.5 vLLM offline lifecycle
-    kv_sweep_lfm25/             # KV cache / concurrency sweep raw data
+    kv_sweep_lfm25/             # LFM2.5 KV cache / concurrency sweep raw data
+    kv_sweep_qwen3_0p6b/        # Qwen3-0.6B pure-attention baseline sweep
+    api_bench_lfm25/            # LFM2.5 warm API server concurrency smoke
+    non_eager_probe/            # LFM2.5 torch.compile / CUDAGraph probe
 
 probes/
   metax-c500/
@@ -70,6 +73,7 @@ probes/
 scripts/
   vllm_lifecycle_probe.py       # 采集 vLLM 模型生命周期
   vllm_kv_sweep.py              # 扫 max_model_len / gpu_memory_utilization
+  vllm_api_bench.py             # OpenAI-compatible API server 并发 smoke
 ```
 
 ## 复现方式

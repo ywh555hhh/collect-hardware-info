@@ -1,0 +1,177 @@
+[
+  {
+    "phase": "offline_llm",
+    "started_at": "2026-08-12T10:28:30+0800",
+    "model": "LFM2.5-1.2B-Instruct",
+    "model_path": "/data/models/LFM2.5-1.2B-Instruct",
+    "config": {
+      "model_type": "lfm2",
+      "architectures": [
+        "Lfm2ForCausalLM"
+      ],
+      "hidden_size": 2048,
+      "num_hidden_layers": 16,
+      "num_attention_heads": 32,
+      "num_key_value_heads": 8,
+      "intermediate_size": 12288,
+      "max_position_embeddings": 128000,
+      "rope_theta": 1000000.0
+    },
+    "generation_config": {
+      "bos_token_id": 1,
+      "eos_token_id": 7,
+      "pad_token_id": 0
+    },
+    "params": {
+      "dtype": "float16",
+      "max_model_len": 2048,
+      "gpu_memory_utilization": 0.7,
+      "max_tokens": 16,
+      "batch_size": 1,
+      "enforce_eager": false
+    },
+    "hardware_before": {
+      "mx_smi_rc": 0,
+      "mx_smi": "mx-smi  version: 2.2.12\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 10:28:30 2026\n\nAttached GPUs                                     : 1\n+---------------------------------------------------------------------------------+\n| MX-SMI 2.2.12                      Kernel Mode Driver Version: 3.8.30           |\n| MACA Version: 3.5.3.20             BIOS Version: 1.33.5.0                       |\n|------------------+-----------------+---------------------+----------------------|\n| Board       Name | GPU   Persist-M | Bus-id              | GPU-Util      sGPU-M |\n| Pwr:Usage/Cap    | Temp       Perf | Memory-Usage        | GPU-State            |\n|==================+=================+=====================+======================|\n| 0     MetaX C500 | 0           Off | 0000:37:00.0        | 0%           Enabled |\n| 70W / 350W       | 38C          P9 | 15155/65536 MiB     | Available            |\n+------------------+-----------------+---------------------+----------------------+\n\n+---------------------------------------------------------------------------------+\n| Sliced GPU                                                                      |\n|------------------------------------+---------------------+----------------------|\n| Minor    GPU    sGPU-Id    Compute | Vram Quota          | sGPU-Util            |\n|====================================+=====================+======================|\n| 022      0      3          25%     | 0/16000 MiB         | 0%                   |\n+------------------------------------+---------------------+----------------------+\n\n+---------------------------------------------------------------------------------+\n| Process:                                                                        |\n|  GPU                    PID         Process Name                 GPU Memory     |\n|                                                                  Usage(MiB)     |\n|=================================================================================|\n|  no process found                                                               |\n+---------------------------------------------------------------------------------+\n\nEnd of Log\n",
+      "torch": {
+        "version": "2.8.0+metax3.5.3.9",
+        "cuda_version": "11.6",
+        "cuda_available": true,
+        "device_count": 1,
+        "device_name": "MetaX C500",
+        "visible_memory_bytes": 16341008384,
+        "multi_processor_count": 104,
+        "warp_size": 64,
+        "l2_cache_size": 8388608
+      }
+    },
+    "load_wall_s": 75.477,
+    "generate_wall_s": 0.639,
+    "new_tokens": [
+      16
+    ],
+    "total_new_tokens": 16,
+    "aggregate_tok_s": 25.04,
+    "sample": "  vLLM 的生命周期测试 确保模型在不同场",
+    "ok": true,
+    "logs": "INFO 08-12 10:28:41 [__init__.py:44] Available plugins for group vllm.platform_plugins:\nINFO 08-12 10:28:41 [__init__.py:46] - metax -> vllm_metax:register\nINFO 08-12 10:28:41 [__init__.py:49] All plugins in this group will be loaded. Set `VLLM_PLUGINS` to control which plugins to load.\nINFO 08-12 10:28:41 [__init__.py:212] Platform plugin metax is activated\nINFO 08-12 10:28:41 [envs.py:104] Plugin sets VLLM_USE_FLASHINFER_SAMPLER to False. Reason: flashinfer sampler are not supported on maca\nINFO 08-12 10:28:41 [envs.py:104] Plugin sets VLLM_ENGINE_READY_TIMEOUT_S to 3600. Reason: set timeout to 3600s for model loading\nINFO 08-12 10:28:41 [envs.py:104] Plugin sets VLLM_DISABLE_SHARED_EXPERTS_STREAM to True. Reason: no used on maca\nINFO Print the version information of mcoplib during compilation.\n\nVersion info:Mcoplib_Version = '0.4.2'\nBuild_Maca_Version = '3.5.3.20'\nGIT_BRANCH = 'HEAD'\nGIT_COMMIT = 'e482051'\nVllm Op Version = 0.17.0\nSGlang Op Version  = 0.5.8 && 0.5.9 \n\nINFO Staring Check the current MACA version of the operating environment.\n\nINFO: Release major.minor matching,  successful:3.5. \n\nWARNING 08-12 10:28:46 [__init__.py:80] The quantization method 'awq' already exists and will be overwritten by the quantization config <class 'vllm_metax.quant_config.awq.MacaAWQConfig'>.\nWARNING 08-12 10:28:46 [__init__.py:80] The quantization method 'awq_marlin' already exists and will be overwritten by the quantization config <class 'vllm_metax.quant_config.awq_marlin.MacaAWQMarlinConfig'>.\nWARNING 08-12 10:28:46 [__init__.py:80] The quantization method 'compressed-tensors' already exists and will be overwritten by the quantization config <class 'vllm_metax.quant_config.compressed_tensors.MacaCompressedTensorsConfig'>.\nWARNING 08-12 10:28:46 [__init__.py:80] The quantization method 'gptq' already exists and will be overwritten by the quantization config <class 'vllm_metax.quant_config.gptq.MacaGPTQConfig'>.\nWARNING 08-12 10:28:46 [__init__.py:80] The quantization method 'gptq_marlin' already exists and will be overwritten by the quantization config <class 'vllm_metax.quant_config.gptq_marlin.MacaGPTQMarlinConfig'>.\nWARNING 08-12 10:28:46 [__init__.py:80] The quantization method 'moe_wna16' already exists and will be overwritten by the quantization config <class 'vllm_metax.quant_config.moe_wna16.MacaMoeWNA16Config'>.\nWARNING 08-12 10:28:47 [registry.py:886] Model architecture DeepSeekMTPModel is already registered, and will be overwritten by the new model class vllm_metax.models.deepseek_mtp:DeepSeekMTP.\nWARNING 08-12 10:28:47 [registry.py:886] Model architecture DeepseekV2ForCausalLM is already registered, and will be overwritten by the new model class vllm_metax.models.deepseek_v2:DeepseekV2ForCausalLM.\nWARNING 08-12 10:28:47 [registry.py:886] Model architecture DeepseekV3ForCausalLM is already registered, and will be overwritten by the new model class vllm_metax.models.deepseek_v2:DeepseekV3ForCausalLM.\nWARNING 08-12 10:28:47 [registry.py:886] Model architecture DeepseekV32ForCausalLM is already registered, and will be overwritten by the new model class vllm_metax.models.deepseek_v2:DeepseekV3ForCausalLM.\nWARNING 08-12 10:28:47 [registry.py:886] Model architecture KimiK25ForConditionalGeneration is already registered, and will be overwritten by the new model class vllm_metax.models.kimi_k25:KimiK25ForConditionalGeneration.\nWARNING 08-12 10:28:47 [registry.py:886] Model architecture GlmMoeDsaForCausalLM is already registered, and will be overwritten by the new model class vllm_metax.models.deepseek_v2:GlmMoeDsaForCausalLM.\nWARNING 08-12 10:28:47 [registry.py:886] Model architecture Step3p5MTP is already registered, and will be overwritten by the new model class vllm_metax.models.step3p5_mtp:Step3p5MTP.\nINFO 08-12 10:28:47 [utils.py:238] non-default args: {'trust_remote_code': True, 'dtype': 'float16', 'max_model_len': 2048, 'gpu_memory_utilization': 0.7, 'disable_log_stats': True, 'model': '/data/models/LFM2.5-1.2B-Instruct'}\nThe argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.\nThe argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.\nINFO 08-12 10:28:47 [model.py:531] Resolved architecture: Lfm2ForCausalLM\nWARNING 08-12 10:28:47 [model.py:1892] Casting torch.bfloat16 to torch.float16.\nINFO 08-12 10:28:47 [model.py:1554] Using max model len 2048\nINFO 08-12 10:28:47 [scheduler.py:231] Chunked prefill is enabled with max_num_batched_tokens=8192.\nINFO 08-12 10:28:47 [config.py:544] Setting attention block size to 16 tokens to ensure that attention page size is >= mamba page size.\nINFO 08-12 10:28:47 [config.py:575] Padding mamba page size by 300.00% to ensure that mamba page size and attention page size are exactly equal.\nINFO 08-12 10:28:47 [vllm.py:747] Asynchronous scheduling is enabled.\nINFO 08-12 10:28:47 [envs.py:104] Plugin sets VLLM_TUNED_CONFIG_FOLDER to /opt/conda/lib/python3.10/site-packages/vllm_metax/model_executor/layers/fused_moe/configs/H=2048. Reason: set FusedMoE tuned config dir by hidden_size=2048\nWARNING 08-12 10:28:47 [system_utils.py:152] We must use the `spawn` multiprocessing start method. Overriding VLLM_WORKER_MULTIPROC_METHOD to 'spawn'. See https://docs.vllm.ai/en/latest/usage/troubleshooting.html#python-multiprocessing for more information. Reasons: CUDA is initialized\nINFO 08-12 10:30:00 [llm.py:388] Supported tasks: ['generate']\n\rRendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]\rRendering prompts: 100%|##########| 1/1 [00:00<00:00, 61.75it/s]\n\rProcessed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]\rProcessed prompts: 100%|##########| 1/1 [00:00<00:00,  1.61it/s, est. speed input: 32.19 toks/s, output: 25.75 toks/s]\rProcessed prompts: 100%|##########| 1/1 [00:00<00:00,  1.61it/s, est. speed input: 32.19 toks/s, output: 25.75 toks/s]\rProcessed prompts: 100%|##########| 1/1 [00:00<00:00,  1.61it/s, est. speed input: 32.19 toks/s, output: 25.75 toks/s]\n",
+    "events": {
+      "resolved_architecture": [
+        "Lfm2ForCausalLM"
+      ],
+      "casting_dtype": [
+        "torch.bfloat16 to torch.float16"
+      ],
+      "max_model_len": [
+        "2048"
+      ],
+      "chunked_prefill": [
+        "8192"
+      ],
+      "mamba_page_alignment": [
+        "INFO 08-12 10:28:47 [config.py:544] Setting attention block size to 16 tokens to ensure that attention page size is >= mamba page size.",
+        "INFO 08-12 10:28:47 [config.py:575] Padding mamba page size by 300.00% to ensure that mamba page size and attention page size are exactly equal."
+      ]
+    },
+    "hardware_after": {
+      "mx_smi_rc": 0,
+      "mx_smi": "mx-smi  version: 2.2.12\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 10:30:00 2026\n\nAttached GPUs                                     : 1\n+---------------------------------------------------------------------------------+\n| MX-SMI 2.2.12                      Kernel Mode Driver Version: 3.8.30           |\n| MACA Version: 3.5.3.20             BIOS Version: 1.33.5.0                       |\n|------------------+-----------------+---------------------+----------------------|\n| Board       Name | GPU   Persist-M | Bus-id              | GPU-Util      sGPU-M |\n| Pwr:Usage/Cap    | Temp       Perf | Memory-Usage        | GPU-State            |\n|==================+=================+=====================+======================|\n| 0     MetaX C500 | 0           Off | 0000:37:00.0        | 0%           Enabled |\n| 77W / 350W       | 40C          P9 | 26313/65536 MiB     | Available            |\n+------------------+-----------------+---------------------+----------------------+\n\n+---------------------------------------------------------------------------------+\n| Sliced GPU                                                                      |\n|------------------------------------+---------------------+----------------------|\n| Minor    GPU    sGPU-Id    Compute | Vram Quota          | sGPU-Util            |\n|====================================+=====================+======================|\n| 022      0      3          25%     | 11158/16000 MiB     | 0%                   |\n+------------------------------------+---------------------+----------------------+\n\n+---------------------------------------------------------------------------------+\n| Process:                                                                        |\n|  GPU                    PID         Process Name                 GPU Memory     |\n|                                                                  Usage(MiB)     |\n|=================================================================================|\n|  0-s3                 17268         VLLM::EngineCor              11158          |\n+---------------------------------------------------------------------------------+\n\nEnd of Log\n",
+      "torch": {
+        "version": "2.8.0+metax3.5.3.9",
+        "cuda_version": "11.6",
+        "cuda_available": true,
+        "device_count": 1,
+        "device_name": "MetaX C500",
+        "visible_memory_bytes": 16341008384,
+        "multi_processor_count": 104,
+        "warp_size": 64,
+        "l2_cache_size": 8388608
+      }
+    },
+    "finished_at": "2026-08-12T10:30:00+0800"
+  },
+  {
+    "phase": "api_server",
+    "started_at": "2026-08-12T10:30:05+0800",
+    "model": "LFM2.5-1.2B-Instruct",
+    "model_path": "/data/models/LFM2.5-1.2B-Instruct",
+    "port": 18020,
+    "pid": 19685,
+    "models_response": "{\"object\":\"list\",\"data\":[{\"id\":\"LFM2.5-1.2B-Instruct\",\"object\":\"model\",\"created\":1786501888,\"owned_by\":\"vllm\",\"root\":\"/data/models/LFM2.5-1.2B-Instruct\",\"parent\":null,\"max_model_len\":2048,\"permission\":[{\"id\":\"modelperm-bb7d2d22ecb232b3\",\"object\":\"model_permission\",\"created\":1786501888,\"allow_create_engine\":false,\"allow_sampling\":true,\"allow_logprobs\":true,\"allow_search_indices\":false,\"allow_view\":true,\"allow_fine_tuning\":false,\"organization\":\"*\",\"group\":null,\"is_blocking\":false}]}]}",
+    "ready": true,
+    "startup_s": 82.884,
+    "request_ms": 441.6,
+    "request_rc": 0,
+    "usage": {
+      "prompt_tokens": 28,
+      "total_tokens": 44,
+      "completion_tokens": 16,
+      "prompt_tokens_details": null
+    },
+    "content": "vLLM模型生命周期测试的意义在于确保模型",
+    "log_path": "/data/reports/non_eager_probe/lfm25_non_eager.api_server.log",
+    "response_path": "/data/reports/non_eager_probe/lfm25_non_eager.api_response.json",
+    "logs_tail": "s=False, enable_logging_iteration_details=False), seed=0, served_model_name=LFM2.5-1.2B-Instruct, enable_prefix_caching=False, enable_chunked_prefill=True, pooler_config=None, compilation_config={'level': None, 'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::kda_attention', 'vllm::sparse_attn_indexer', 'vllm::rocm_aiter_sparse_attn_indexer', 'vllm::mx_sparse_attn_indexer', 'vllm::unified_kv_cache_update', 'vllm::unified_mla_kv_cache_update'], 'compile_mm_encoder': False, 'compile_sizes': [], 'compile_ranges_split_points': [2048], 'inductor_compile_config': {'enable_auto_functionalized_v2': False}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': True, 'static_all_moe_layers': []}\n(EngineCore_DP0 pid=19864) INFO 08-12 10:30:39 [parallel_state.py:1393] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://10.254.12.33:49299 backend=nccl\n(EngineCore_DP0 pid=19864) INFO 08-12 10:30:39 [parallel_state.py:1715] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank N/A, EPLB rank N/A\n(EngineCore_DP0 pid=19864) INFO 08-12 10:30:40 [base.py:106] Offloader set to NoopOffloader\n(EngineCore_DP0 pid=19864) INFO 08-12 10:30:40 [gpu_model_runner.py:4255] Starting to load model /data/models/LFM2.5-1.2B-Instruct...\n(EngineCore_DP0 pid=19864) [rank0]:W0812 10:30:40.765000 19864 site-packages/torch/utils/cpp_extension.py:2527] TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. \n(EngineCore_DP0 pid=19864) [rank0]:W0812 10:30:40.765000 19864 site-packages/torch/utils/cpp_extension.py:2527] If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'] to specific architectures.\n(EngineCore_DP0 pid=19864) INFO 08-12 10:30:40 [platform.py:475] Valid backends: ['FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'TREE_ATTN', 'FLEX_ATTENTION']\n(EngineCore_DP0 pid=19864) INFO 08-12 10:30:40 [platform.py:484] Using FLASH_ATTN attention backend out of potential backends: ('FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'TREE_ATTN', 'FLEX_ATTENTION')\n(EngineCore_DP0 pid=19864) INFO 08-12 10:30:40 [fa_utils.py:21] Using Maca version of flash attention, which only supports version 2.\n(EngineCore_DP0 pid=19864) \nLoading safetensors checkpoint shards:   0% Completed | 0/1 [00:00<?, ?it/s]\n(EngineCore_DP0 pid=19864) \nLoading safetensors checkpoint shards: 100% Completed | 1/1 [00:22<00:00, 22.72s/it]\n(EngineCore_DP0 pid=19864) \nLoading safetensors checkpoint shards: 100% Completed | 1/1 [00:22<00:00, 22.72s/it]\n(EngineCore_DP0 pid=19864) \n(EngineCore_DP0 pid=19864) INFO 08-12 10:31:03 [default_loader.py:293] Loading weights took 22.90 seconds\n(EngineCore_DP0 pid=19864) INFO 08-12 10:31:04 [gpu_model_runner.py:4338] Model loading took 2.2 GiB memory and 23.134834 seconds\n(EngineCore_DP0 pid=19864) INFO 08-12 10:31:07 [backends.py:916] Using cache directory: /root/.cache/vllm/torch_compile_cache/68f441f407/rank_0_0/backbone for vLLM's torch.compile\n(EngineCore_DP0 pid=19864) INFO 08-12 10:31:07 [backends.py:976] Dynamo bytecode transform time: 3.25 s\n(EngineCore_DP0 pid=19864) INFO 08-12 10:31:09 [fix_compilation_backend.py:107] Cache the graph of compile range (1, 2048) for later use\n(EngineCore_DP0 pid=19864) INFO 08-12 10:31:21 [fix_compilation_backend.py:123] Compiling a graph for compile range (1, 2048) takes 13.31 s\n(EngineCore_DP0 pid=19864) INFO 08-12 10:31:21 [monitor.py:35] torch.compile takes 17.26 s in total\n(EngineCore_DP0 pid=19864) INFO 08-12 10:31:22 [gpu_worker.py:424] Available KV cache memory: 7.48 GiB\n(EngineCore_DP0 pid=19864) WARNING 08-12 10:31:22 [kv_cache_utils.py:1054] Add 2 padding layers, may waste at most 20.00% KV cache memory\n(EngineCore_DP0 pid=19864) INFO 08-12 10:31:22 [kv_cache_utils.py:1314] GPU KV cache size: 217,952 tokens\n(EngineCore_DP0 pid=19864) INFO 08-12 10:31:22 [kv_cache_utils.py:1319] Maximum concurrency for 2,048 tokens per request: 314.35x\n(EngineCore_DP0 pid=19864) \nCapturing CUDA graphs (mixed prefill-decode, PIECEWISE):   0%|          | 0/51 [00:00<?, ?it/s]\nCapturing CUDA graphs (mixed prefill-decode, PIECEWISE):  10%|▉         | 5/51 [00:00<00:01, 41.84it/s]\nCapturing CUDA graphs (mixed prefill-decode, PIECEWISE):  20%|█▉        | 10/51 [00:00<00:00, 43.35it/s]\nCapturing CUDA graphs (mixed prefill-decode, PIECEWISE):  29%|██▉       | 15/51 [00:00<00:00, 44.91it/s]\nCapturing CUDA graphs (mixed prefill-decode, PIECEWISE):  39%|███▉      | 20/51 [00:00<00:00, 44.41it/s]\nCapturing CUDA graphs (mixed prefill-decode, PIECEWISE):  49%|████▉     | 25/51 [00:00<00:00, 44.35it/s]\nCapturing CUDA graphs (mixed prefill-decode, PIECEWISE):  59%|█████▉    | 30/51 [00:00<00:00, 44.22it/s]\nCapturing CUDA graphs (mixed prefill-decode, PIECEWISE):  69%|██████▊   | 35/51 [00:00<00:00, 44.71it/s]\nCapturing CUDA graphs (mixed prefill-decode, PIECEWISE):  80%|████████  | 41/51 [00:00<00:00, 46.98it/s]\nCapturing CUDA graphs (mixed prefill-decode, PIECEWISE):  92%|█████████▏| 47/51 [00:01<00:00, 48.61it/s]\nCapturing CUDA graphs (mixed prefill-decode, PIECEWISE): 100%|██████████| 51/51 [00:01<00:00, 43.15it/s]\n(EngineCore_DP0 pid=19864) \nCapturing CUDA graphs (decode, FULL):   0%|          | 0/35 [00:00<?, ?it/s]\nCapturing CUDA graphs (decode, FULL):   3%|▎         | 1/35 [00:00<00:07,  4.42it/s]\nCapturing CUDA graphs (decode, FULL):   6%|▌         | 2/35 [00:00<00:07,  4.60it/s]\nCapturing CUDA graphs (decode, FULL):  20%|██        | 7/35 [00:00<00:01, 16.15it/s]\nCapturing CUDA graphs (decode, FULL):  34%|███▍      | 12/35 [00:00<00:00, 23.86it/s]\nCapturing CUDA graphs (decode, FULL):  46%|████▌     | 16/35 [00:00<00:00, 28.18it/s]\nCapturing CUDA graphs (decode, FULL):  60%|██████    | 21/35 [00:00<00:00, 32.22it/s]\nCapturing CUDA graphs (decode, FULL):  74%|███████▍  | 26/35 [00:01<00:00, 34.83it/s]\nCapturing CUDA graphs (decode, FULL):  89%|████████▊ | 31/35 [00:01<00:00, 36.67it/s]\nCapturing CUDA graphs (decode, FULL): 100%|██████████| 35/35 [00:01<00:00, 25.01it/s]\nCapturing CUDA graphs (decode, FULL): 100%|██████████| 35/35 [00:01<00:00, 24.25it/s]\n(EngineCore_DP0 pid=19864) INFO 08-12 10:31:26 [gpu_model_runner.py:5360] Graph capturing finished in 4 secs, took 0.15 GiB\n(EngineCore_DP0 pid=19864) INFO 08-12 10:31:26 [core.py:282] init engine (profile, create kv cache, warmup model) took 22.02 seconds\n(EngineCore_DP0 pid=19864) INFO 08-12 10:31:27 [vllm.py:747] Asynchronous scheduling is disabled.\n(EngineCore_DP0 pid=19864) INFO 08-12 10:31:27 [envs.py:104] Plugin sets VLLM_TUNED_CONFIG_FOLDER to /opt/conda/lib/python3.10/site-packages/vllm_metax/model_executor/layers/fused_moe/configs/H=2048. Reason: set FusedMoE tuned config dir by hidden_size=2048\n(APIServer pid=19685) INFO 08-12 10:31:27 [api_server.py:495] Supported tasks: ['generate']\n(APIServer pid=19685) INFO 08-12 10:31:27 [serving.py:185] Warming up chat template processing...\n(APIServer pid=19685) INFO 08-12 10:31:27 [hf.py:318] Detected the chat template content format to be 'string'. You can set `--chat-template-content-format` to override this.\n(APIServer pid=19685) INFO 08-12 10:31:27 [serving.py:210] Chat template warmup completed in 233.8ms\n(APIServer pid=19685) INFO 08-12 10:31:27 [api_server.py:500] Starting vLLM API server 0 on http://127.0.0.1:18020\n(APIServer pid=19685) INFO 08-12 10:31:27 [launcher.py:38] Available routes are:\n(APIServer pid=19685) INFO 08-12 10:31:27 [launcher.py:47] Route: /openapi.json, Methods: HEAD, GET\n(APIServer pid=19685) INFO 08-12 10:31:27 [launcher.py:47] Route: /docs, Methods: HEAD, GET\n(APIServer pid=19685) INFO 08-12 10:31:27 [launcher.py:47] Route: /docs/oauth2-redirect, Methods: HEAD, GET\n(APIServer pid=19685) INFO 08-12 10:31:27 [launcher.py:47] Route: /redoc, Methods: HEAD, GET\n(APIServer pid=19685) INFO 08-12 10:31:27 [launcher.py:47] Route: /tokenize, Methods: POST\n(APIServer pid=19685) INFO 08-12 10:31:27 [launcher.py:47] Route: /detokenize, Methods: POST\n(APIServer pid=19685) INFO 08-12 10:31:27 [launcher.py:47] Route: /load, Methods: GET\n(APIServer pid=19685) INFO 08-12 10:31:27 [launcher.py:47] Route: /version, Methods: GET\n(APIServer pid=19685) INFO 08-12 10:31:27 [launcher.py:47] Route: /health, Methods: GET\n(APIServer pid=19685) INFO 08-12 10:31:27 [launcher.py:47] Route: /metrics, Methods: GET\n(APIServer pid=19685) INFO 08-12 10:31:27 [launcher.py:47] Route: /v1/models, Methods: GET\n(APIServer pid=19685) INFO 08-12 10:31:27 [launcher.py:47] Route: /ping, Methods: GET\n(APIServer pid=19685) INFO 08-12 10:31:27 [launcher.py:47] Route: /ping, Methods: POST\n(APIServer pid=19685) INFO 08-12 10:31:27 [launcher.py:47] Route: /invocations, Methods: POST\n(APIServer pid=19685) INFO 08-12 10:31:27 [launcher.py:47] Route: /v1/chat/completions, Methods: POST\n(APIServer pid=19685) INFO 08-12 10:31:27 [launcher.py:47] Route: /v1/chat/completions/render, Methods: POST\n(APIServer pid=19685) INFO 08-12 10:31:27 [launcher.py:47] Route: /v1/responses, Methods: POST\n(APIServer pid=19685) INFO 08-12 10:31:27 [launcher.py:47] Route: /v1/responses/{response_id}, Methods: GET\n(APIServer pid=19685) INFO 08-12 10:31:27 [launcher.py:47] Route: /v1/responses/{response_id}/cancel, Methods: POST\n(APIServer pid=19685) INFO 08-12 10:31:27 [launcher.py:47] Route: /v1/completions, Methods: POST\n(APIServer pid=19685) INFO 08-12 10:31:27 [launcher.py:47] Route: /v1/completions/render, Methods: POST\n(APIServer pid=19685) INFO 08-12 10:31:27 [launcher.py:47] Route: /v1/messages, Methods: POST\n(APIServer pid=19685) INFO 08-12 10:31:27 [launcher.py:47] Route: /v1/messages/count_tokens, Methods: POST\n(APIServer pid=19685) INFO 08-12 10:31:27 [launcher.py:47] Route: /inference/v1/generate, Methods: POST\n(APIServer pid=19685) INFO 08-12 10:31:27 [launcher.py:47] Route: /scale_elastic_ep, Methods: POST\n(APIServer pid=19685) INFO 08-12 10:31:27 [launcher.py:47] Route: /is_scaling_elastic_ep, Methods: POST\n(APIServer pid=19685) INFO:     Started server process [19685]\n(APIServer pid=19685) INFO:     Waiting for application startup.\n(APIServer pid=19685) INFO:     Application startup complete.\n(APIServer pid=19685) INFO:     127.0.0.1:48276 - \"GET /v1/models HTTP/1.1\" 200 OK\n(APIServer pid=19685) INFO:     127.0.0.1:48282 - \"POST /v1/chat/completions HTTP/1.1\" 200 OK\n(APIServer pid=19685) INFO 08-12 10:31:29 [launcher.py:122] Shutting down FastAPI HTTP server.\n[rank0]:[W812 10:31:29.308915979 ProcessGroupNCCL.cpp:1544] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())\n(APIServer pid=19685) INFO:     Shutting down\n(APIServer pid=19685) INFO:     Waiting for application shutdown.\n(APIServer pid=19685) INFO:     Application shutdown complete.\n",
+    "events": {
+      "resolved_architecture": [
+        "Lfm2ForCausalLM"
+      ],
+      "casting_dtype": [
+        "torch.bfloat16 to torch.float16"
+      ],
+      "max_model_len": [
+        "2048"
+      ],
+      "chunked_prefill": [
+        "2048"
+      ],
+      "attention_backend": [
+        "FLASH_ATTN"
+      ],
+      "maca_flash_attention": [
+        {}
+      ],
+      "weight_load_s": [
+        "22.90"
+      ],
+      "model_memory": [
+        {
+          "memory": "2.2 GiB",
+          "seconds": "23.134834"
+        }
+      ],
+      "kv_available_memory": [
+        "7.48 GiB"
+      ],
+      "kv_cache_tokens": [
+        "217,952"
+      ],
+      "max_concurrency": [
+        "314.35"
+      ],
+      "engine_init_s": [
+        "22.02"
+      ],
+      "mamba_page_alignment": [
+        "(APIServer pid=19685) INFO 08-12 10:30:22 [config.py:544] Setting attention block size to 16 tokens to ensure that attention page size is >= mamba page size.",
+        "(APIServer pid=19685) INFO 08-12 10:30:22 [config.py:575] Padding mamba page size by 300.00% to ensure that mamba page size and attention page size are exactly equal."
+      ],
+      "kv_padding": [
+        "Add 2 padding layers, may waste at most 20.00% KV cache memory"
+      ],
+      "api_routes": [
+        "/v1/models",
+        "/v1/chat/completions",
+        "/v1/chat/completions/render",
+        "/v1/responses",
+        "/v1/responses/{response_id}",
+        "/v1/responses/{response_id}/cancel",
+        "/v1/completions",
+        "/v1/completions/render",
+        "/v1/messages",
+        "/v1/messages/count_tokens"
+      ]
+    },
+    "finished_at": "2026-08-12T10:31:42+0800"
+  }
+]
