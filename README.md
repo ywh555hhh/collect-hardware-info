@@ -138,7 +138,7 @@ scripts/
 - Paddle 包为 `paddlepaddle-gpu 2.6.0+maca3.0.0.5`。
 - C500 通过 Paddle 的 CUDA-compatible `gpu:0` 路径暴露，不是 `maca:0` custom-device 路径。
 - Paddle device string 实测：`gpu` / `gpu:0` 可用，`cuda` / `cuda:0` 不可用；官方 GraphNet Paddle benchmark 的 `--device cuda` 需要兼容层或小补丁。
-- 官方 GraphNet `ernie-3.0-nano-zh` Paddle sample 的 direct dygraph forward 已在 C500 上跑通，输出 `[1, 312]`；官方 benchmark 的 eager/compiled static 路径仍失败；临时补丁将 generated `_C_ops.full/equal/cast/scale` 替换为高层 API 后，错误推进到 `_C_ops.unsqueeze`，说明这是 generated `_C_ops` 与 Paddle 2.6/MACA dy2static 的系统性兼容问题。
+- 官方 GraphNet `ernie-3.0-nano-zh` Paddle sample 的 direct dygraph forward 已在 C500 上跑通，输出 `[1, 312]`；官方 benchmark 的 eager/compiled static 路径仍失败；全量临时 rewrite 将 159 个 generated `_C_ops` 调用替换为高层 Paddle API 后，官方 `compiler=nope` benchmark 跑通，状态为 `eager:success compiled:success`；e2e median 分别为 eager `4.415 ms`、compiled `4.409 ms`。GPU event timing 为 `0.0 ms`，说明该镜像下 Paddle Event 计时不可直接用于 GPU-only timing。
 - `is_compiled_with_cuda=True`，`is_compiled_with_cinn=False`。
 - Paddle Inference API 可用，`paddle.utils.run_check()` 通过。
 - matmul / conv2d / softmax / layernorm / gather / scatter 都能在 `Place(gpu:0)` 上跑通。

@@ -170,4 +170,16 @@ The value is still substantial: it shows framework internals judgment, benchmark
 
 ## Official Static Patch Follow-Up
 
-A temporary generated-code patch experiment is recorded in `raw/metax-c500-paddle/official_graphnet_static_patch/official_graphnet_static_patch_probe.json` and implemented by `scripts/official_graphnet_static_patch_probe.py`. Rewriting generated `_C_ops.full`, `_C_ops.equal`, `_C_ops.cast`, and `_C_ops.scale` calls to higher-level Paddle APIs moved the official `ernie-3.0-nano-zh` static benchmark failure from `full` to `unsqueeze`, while direct dygraph forward remains successful. This suggests the remaining blocker is a systematic generated `_C_ops` plus Paddle 2.6/MACA `dy2static` compatibility issue, not a single missing C500 kernel.
+A temporary generated-code patch experiment is recorded in `raw/metax-c500-paddle/official_graphnet_static_patch/official_graphnet_static_patch_probe.json` and implemented by `scripts/official_graphnet_static_patch_probe.py`. Rewriting all 159 generated `_C_ops` calls in the official `ernie-3.0-nano-zh` sample to higher-level Paddle APIs allowed the official `compiler=nope` benchmark to complete with `eager:success compiled:success`. The measured e2e median was 4.415 ms for eager and 4.409 ms for compiled; GPU event timing reported 0.0 ms, so GPU-only timing is not reliable in this Paddle/MACA image.
+
+
+## Official Benchmark Timing After Rewrite
+
+The final static patch experiment rewrites all 159 generated `_C_ops` calls in `ernie-3.0-nano-zh/model.py` to higher-level Paddle APIs inside a temporary workdir. With the backend import compatibility patch, the official `graph_net_bench.paddle.test_compiler --compiler nope` path completes successfully on C500.
+
+| Mode | Status | e2e median ms | e2e mean ms | GPU event median ms |
+| --- | --- | ---: | ---: | ---: |
+| eager | success | 4.415 | 4.450 | 0.000 |
+| compiled/nope | success | 4.409 | 4.411 | 0.000 |
+
+Interpretation: this proves the official Paddle sample can be made to run through GraphNet benchmark infrastructure on C500. The near-identical eager and compiled/nope timings are expected because `nope` is not an optimizing compiler. GPU event timing is unusable in this image because it reports 0.0 ms, so e2e timing should be used until a reliable vendor/Paddle event timing path is found.

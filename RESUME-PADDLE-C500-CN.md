@@ -21,7 +21,7 @@
 - 实现 mini GraphNet-style 计算图 workload，覆盖 dense block、sparse gather/scatter block、mixed graph block 与 graph readout，比较 Paddle 动态图与 `paddle.jit.save/load` 静态图执行路径。
 - 在 C500 上验证 dense/mixed graph block 的 `paddle.jit.save/load` 静态图执行，dense block 从 `0.333 ms` 动态图降低到 `0.255 ms` JIT 路径，mixed block 从 `1.268 ms` 降到 `1.122 ms`。
 - 将固定形状 dense/mixed graph block 导出到 Paddle Inference，验证 `PaddleInferPredictor` 在 C500 上可执行，测得端到端 predictor latency 分别为 `1.515 ms` 与 `2.670 ms`。
-- Bring up 官方 PaddlePaddle/GraphNet `ernie-3.0-nano-zh` Paddle sample：direct dygraph forward 在 `Place(gpu:0)` 上成功，输出 shape `[1, 312]`；进一步定位官方 benchmark static path 失败于 `paddle.jit.to_static` / generated `_C_ops` 兼容问题；将 `full/equal/cast/scale` 降级为高层 API 后，错误推进到 `unsqueeze`，证明问题是系统性的 static conversion 适配 gap。
+- Bring up 官方 PaddlePaddle/GraphNet `ernie-3.0-nano-zh` Paddle sample：direct dygraph forward 在 `Place(gpu:0)` 上成功，输出 shape `[1, 312]`；进一步定位官方 benchmark static path 失败于 `paddle.jit.to_static` / generated `_C_ops` 兼容问题；将全部 159 个 generated `_C_ops` 降级为高层 Paddle API 后，official `compiler=nope` benchmark 跑通，eager/compiled e2e median 分别为 `4.415 ms` / `4.409 ms`。
 - 识别官方 GraphNet 在 C500 Paddle 镜像上的适配 gap：上游 Paddle benchmark 存在 backend import path mismatch，且默认 `--device cuda` 与当前镜像要求的 `gpu/gpu:0` device string 不完全一致，需要 thin wrapper 或小补丁。
 - 明确当前镜像能力边界：`is_compiled_with_cuda=True` 但 `is_compiled_with_cinn=False`，因此适合 runtime/operator/static graph/Paddle Inference 路径研究，不应声称完成 CINN speedup benchmark。
 

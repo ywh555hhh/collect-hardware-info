@@ -288,4 +288,16 @@ Not completed yet:
 
 ## Official Static Patch Follow-Up
 
-A temporary generated-code patch experiment is recorded in `raw/metax-c500-paddle/official_graphnet_static_patch/official_graphnet_static_patch_probe.json` and implemented by `scripts/official_graphnet_static_patch_probe.py`. Rewriting generated `_C_ops.full`, `_C_ops.equal`, `_C_ops.cast`, and `_C_ops.scale` calls to higher-level Paddle APIs moved the official `ernie-3.0-nano-zh` static benchmark failure from `full` to `unsqueeze`, while direct dygraph forward remains successful. This suggests the remaining blocker is a systematic generated `_C_ops` plus Paddle 2.6/MACA `dy2static` compatibility issue, not a single missing C500 kernel.
+A temporary generated-code patch experiment is recorded in `raw/metax-c500-paddle/official_graphnet_static_patch/official_graphnet_static_patch_probe.json` and implemented by `scripts/official_graphnet_static_patch_probe.py`. Rewriting all 159 generated `_C_ops` calls in the official `ernie-3.0-nano-zh` sample to higher-level Paddle APIs allowed the official `compiler=nope` benchmark to complete with `eager:success compiled:success`. The measured e2e median was 4.415 ms for eager and 4.409 ms for compiled; GPU event timing reported 0.0 ms, so GPU-only timing is not reliable in this Paddle/MACA image.
+
+
+## Official GraphNet Timing After Generated-Code Rewrite
+
+`scripts/official_graphnet_static_patch_probe.py` now rewrites all 159 generated `_C_ops` calls in the official `ernie-3.0-nano-zh` sample to high-level Paddle APIs in a temporary workdir. The official `compiler=nope` benchmark then succeeds on C500 with `eager:success compiled:success`.
+
+| Mode | e2e median ms | e2e mean ms | Status |
+| --- | ---: | ---: | --- |
+| eager | 4.415 | 4.450 | success |
+| compiled/nope | 4.409 | 4.411 | success |
+
+The GPU-only event timing reports 0.0 ms, so it is treated as unsupported/unreliable for this image.

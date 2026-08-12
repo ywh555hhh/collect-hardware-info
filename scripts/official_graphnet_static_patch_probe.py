@@ -183,7 +183,105 @@ def patch_cops_full(model_path: Path) -> dict[str, Any]:
             return f"({x} * {scale})"
         return f"paddle.scale({x}, scale={scale}, bias={bias}, bias_after_scale={bias_after_scale})"
 
-    for op_name, converter in [("full", full_converter), ("equal", equal_converter), ("cast", cast_converter), ("scale", scale_converter)]:
+    def unsqueeze_converter(args: list[str]) -> str | None:
+        if len(args) != 2:
+            return None
+        return f"paddle.unsqueeze({args[0]}, axis={args[1]})"
+
+    def embedding_converter(args: list[str]) -> str | None:
+        if len(args) != 4:
+            return None
+        return f"paddle.nn.functional.embedding({args[0]}, {args[1]}, padding_idx={args[2]}, sparse={args[3]})"
+
+    def cumsum_converter(args: list[str]) -> str | None:
+        if len(args) != 5:
+            return None
+        # The target sample passes an axis tensor equal to [1]. High-level Paddle
+        # cumsum expects an int axis, so this converter is intentionally sample-scoped.
+        return f"paddle.cumsum({args[0]}, axis=1)"
+
+    def subtract_converter(args: list[str]) -> str | None:
+        if len(args) != 2:
+            return None
+        return f"paddle.subtract({args[0]}, {args[1]})"
+
+    def add_converter(args: list[str]) -> str | None:
+        if len(args) != 2:
+            return None
+        return f"paddle.add({args[0]}, {args[1]})"
+
+    def layer_norm_converter(args: list[str]) -> str | None:
+        if len(args) != 5:
+            return None
+        x, weight, bias, eps, _begin_axis = args
+        return f"paddle.nn.functional.layer_norm({x}, normalized_shape=list({weight}.shape), weight={weight}, bias={bias}, epsilon={eps})"
+
+    def dropout_converter(args: list[str]) -> str | None:
+        if len(args) < 1:
+            return None
+        # All target-sample modules are eval-mode benchmark paths; dropout is identity.
+        return args[0]
+
+    def matmul_converter(args: list[str]) -> str | None:
+        if len(args) != 4:
+            return None
+        return f"paddle.matmul({args[0]}, {args[1]}, transpose_x={args[2]}, transpose_y={args[3]})"
+
+    def reshape_converter(args: list[str]) -> str | None:
+        if len(args) != 2:
+            return None
+        return f"paddle.reshape({args[0]}, {args[1]})"
+
+    def transpose_converter(args: list[str]) -> str | None:
+        if len(args) != 2:
+            return None
+        return f"paddle.transpose({args[0]}, perm={args[1]})"
+
+    def softmax_converter(args: list[str]) -> str | None:
+        if len(args) != 2:
+            return None
+        return f"paddle.nn.functional.softmax({args[0]}, axis={args[1]})"
+
+    def gelu_converter(args: list[str]) -> str | None:
+        if len(args) != 2:
+            return None
+        return f"paddle.nn.functional.gelu({args[0]}, approximate={args[1]})"
+
+    def tanh_converter(args: list[str]) -> str | None:
+        if len(args) != 1:
+            return None
+        return f"paddle.tanh({args[0]})"
+
+    def slice_converter(args: list[str]) -> str | None:
+        if len(args) != 6:
+            return None
+        sliced = f"paddle.slice({args[0]}, axes={args[1]}, starts={args[2]}, ends={args[3]})"
+        decrease_axis = args[5].strip()
+        if decrease_axis not in {"[]", "None"}:
+            return f"paddle.squeeze({sliced}, axis={decrease_axis})"
+        return sliced
+
+    converters = [
+        ("full", full_converter),
+        ("equal", equal_converter),
+        ("cast", cast_converter),
+        ("scale", scale_converter),
+        ("unsqueeze", unsqueeze_converter),
+        ("embedding", embedding_converter),
+        ("cumsum", cumsum_converter),
+        ("subtract", subtract_converter),
+        ("add", add_converter),
+        ("layer_norm", layer_norm_converter),
+        ("dropout", dropout_converter),
+        ("matmul", matmul_converter),
+        ("reshape", reshape_converter),
+        ("transpose", transpose_converter),
+        ("softmax", softmax_converter),
+        ("gelu", gelu_converter),
+        ("tanh", tanh_converter),
+        ("slice", slice_converter),
+    ]
+    for op_name, converter in converters:
         text, replacements = rewrite_cops_call(text, op_name, converter)
         all_replacements.extend({"op": op_name, **item} for item in replacements)
 
