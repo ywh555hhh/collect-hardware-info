@@ -68,6 +68,7 @@ raw/
                                   # LFM2.5 torch.compile / CUDAGraph warm API benchmark
     api_bench_lfm25_stream/       # LFM2.5 streaming TTFT / TPOT benchmark
     api_bench_qwen3_stream/       # Qwen3-0.6B streaming TTFT / TPOT baseline
+    prefix_cache_qwen3/           # Qwen3-0.6B prefix cache / mixed prompt workload
     non_eager_probe/            # LFM2.5 torch.compile / CUDAGraph probe
 
 probes/
@@ -79,6 +80,7 @@ scripts/
   vllm_lifecycle_probe.py       # 采集 vLLM 模型生命周期
   vllm_kv_sweep.py              # 扫 max_model_len / gpu_memory_utilization
   vllm_api_bench.py             # OpenAI-compatible API server 并发 smoke
+  vllm_prefix_cache_probe.py    # Prefix cache / mixed prompt workload 探针
 ```
 
 ## vLLM 推理实验
@@ -89,6 +91,7 @@ scripts/
 - KV/cache sweep：扫 `max_model_len` 和 `gpu_memory_utilization`，观察 cache tokens 和 max concurrency。
 - API steady-state：常驻 OpenAI-compatible server，比较 eager 和 non-eager，并扫 prompt length。
 - Streaming TTFT/TPOT：拆 first token 和 per-output-token latency，对比 LFM2.5 / Qwen3。
+- Prefix cache：对比 shared-prefix 和 unique-prefix mixed workload，观察 TTFT 和吞吐变化。
 
 入口文档：
 
@@ -97,6 +100,7 @@ scripts/
 - `notes/metax-c500-vllm-deeper-exploration.md`
 - `notes/metax-c500-vllm-api-steady-state.md`
 - `notes/metax-c500-vllm-streaming-ttft-tpot.md`
+- `notes/metax-c500-vllm-prefix-cache-mixed-workload.md`
 
 ## 复现方式
 
