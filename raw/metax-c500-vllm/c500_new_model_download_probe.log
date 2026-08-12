@@ -1,0 +1,26 @@
+# New small model download probe 2026-08-12T09:05:43+08:00
+
+## LiquidAI/LFM2.5-1.2B-Instruct -> /data/models/LFM2.5-1.2B-Instruct
+Fetching 11 files:   0%|          | 0/11 [00:00<?, ?it/s]Still waiting to acquire lock on /data/models/LFM2.5-1.2B-Instruct/.cache/huggingface/.gitignore.lock (elapsed: 0.1 seconds)
+Downloading 'model.safetensors' to '/data/models/LFM2.5-1.2B-Instruct/.cache/huggingface/download/xGOKKLRSlIhH692hSVvI1-gpoa8=.1ba63d9adb03ae43581db0e136e4416febe0441aff7296397bd455fb6017f73a.incomplete'
+Downloading '.eval_results/gpqa.yaml' to '/data/models/LFM2.5-1.2B-Instruct/.cache/huggingface/download/.eval_results/_QSwG2sEazCCvpslLcz_ZduNTO8=.16d6be533aab86b4afe115c2686ae96cccd05dc2.incomplete'
+Downloading 'LICENSE' to '/data/models/LFM2.5-1.2B-Instruct/.cache/huggingface/download/DhCjcNQuMpl4FL346qr3tvNUCgY=.7fb1127cc01c34199fa391322ea59a1d5c8c692e.incomplete'
+Download complete. Moving file to /data/models/LFM2.5-1.2B-Instruct/.eval_results/gpqa.yaml
+Fetching 11 files:   9%|▉         | 1/11 [00:00<00:08,  1.19it/s]Downloading 'config.json' to '/data/models/LFM2.5-1.2B-Instruct/.cache/huggingface/download/8_PA_wEVGiVa2goH2H4KQOQpvVY=.42d7131e339aa00fecec1da8541151f9d0962835.incomplete'
+Downloading 'README.md' to '/data/models/LFM2.5-1.2B-Instruct/.cache/huggingface/download/Xn7B-BWUGOee2Y6hCZtEhtFu4BE=.c962730c53623845e60ccf9b25981ea3ba9da073.incomplete'
+Download complete. Moving file to /data/models/LFM2.5-1.2B-Instruct/LICENSE
+Download complete. Moving file to /data/models/LFM2.5-1.2B-Instruct/config.json
+Downloading '.gitattributes' to '/data/models/LFM2.5-1.2B-Instruct/.cache/huggingface/download/wPaCkH-WbT7GsmxMKKrNZTV4nSM=.a6344aac8c09253b3b630fb776ae94478aa0275b.incomplete'
+Downloading 'special_tokens_map.json' to '/data/models/LFM2.5-1.2B-Instruct/.cache/huggingface/download/ahkChHUJFxEmOdq5GDFEmerRzCY=.b28c8a1e9ecfa97dfc04bf0a5951183155ccc6d7.incomplete'
+Download complete. Moving file to /data/models/LFM2.5-1.2B-Instruct/.gitattributes
+Fetching 11 files:  18%|█▊        | 2/11 [00:01<00:05,  1.66it/s]Downloading 'generation_config.json' to '/data/models/LFM2.5-1.2B-Instruct/.cache/huggingface/download/3EVKVggOldJcKSsGjSdoUCN1AyQ=.0ec736a123e9569cb6aef0c86f7ee22523b2640f.incomplete'
+Download complete. Moving file to /data/models/LFM2.5-1.2B-Instruct/generation_config.json
+Downloading 'tokenizer.json' to '/data/models/LFM2.5-1.2B-Instruct/.cache/huggingface/download/HgM_lKo9sdSCfRtVg7MMFS7EKqo=.2e27bba0b0505b2b2124fa9225c9b5dda7531474.incomplete'
+Download complete. Moving file to /data/models/LFM2.5-1.2B-Instruct/special_tokens_map.json
+Downloading 'tokenizer_config.json' to '/data/models/LFM2.5-1.2B-Instruct/.cache/huggingface/download/vzaExXFZNBay89bvlQv-ZcI6BTg=.5b071cd2a330a6e5b33ba575fd1e2f6f57f09927.incomplete'
+Download complete. Moving file to /data/models/LFM2.5-1.2B-Instruct/README.md
+Fetching 11 files:  36%|███▋      | 4/11 [00:01<00:02,  3.48it/s]Download complete. Moving file to /data/models/LFM2.5-1.2B-Instruct/tokenizer_config.json
+Download complete. Moving file to /data/models/LFM2.5-1.2B-Instruct/tokenizer.json
+Downloading 'chat_template.jinja' to '/data/models/LFM2.5-1.2B-Instruct/.cache/huggingface/download/yIUQ6Jg7XpBWXEkozaEkS2ih05g=.4bba41b1eea86b9f3725ca30a89bb4656e17e25a.incomplete'
+Download complete. Moving file to /data/models/LFM2.5-1.2B-Instruct/chat_template.jinja
+Fetching 11 files:  45%|████▌     | 5/11 [00:02<00:03,  1.78it/s]
