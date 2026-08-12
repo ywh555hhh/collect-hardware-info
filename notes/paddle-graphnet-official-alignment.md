@@ -166,3 +166,8 @@ Do not claim yet:
 - kernel-level profiling with vendor tools
 
 The value is still substantial: it shows framework internals judgment, benchmark bring-up discipline, and inference/static-graph deployment awareness.
+
+
+## Official Static Patch Follow-Up
+
+A temporary generated-code patch experiment is recorded in `raw/metax-c500-paddle/official_graphnet_static_patch/official_graphnet_static_patch_probe.json` and implemented by `scripts/official_graphnet_static_patch_probe.py`. Rewriting generated `_C_ops.full`, `_C_ops.equal`, `_C_ops.cast`, and `_C_ops.scale` calls to higher-level Paddle APIs moved the official `ernie-3.0-nano-zh` static benchmark failure from `full` to `unsqueeze`, while direct dygraph forward remains successful. This suggests the remaining blocker is a systematic generated `_C_ops` plus Paddle 2.6/MACA `dy2static` compatibility issue, not a single missing C500 kernel.
