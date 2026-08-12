@@ -80,6 +80,10 @@ raw/
     paddle_op_probe.json        # Paddle core op compatibility/perf smoke
     device_alias/
       paddle_device_alias_probe.json # Paddle device-string compatibility probe
+    cops_signature/
+      paddle_cops_signature_probe.json # Low-level Paddle _C_ops signature probe
+    official_graphnet/
+      official_graphnet_c500_bringup_probe.json # Official GraphNet sample bring-up
     mini_graphnet/
       mini_graphnet_probe.json  # Paddle mini GraphNet-style dynamic/JIT workload
     paddle_inference_graphnet/
@@ -97,6 +101,8 @@ scripts/
   vllm_prefix_cache_probe.py    # Prefix cache / mixed prompt workload 探针
   paddle_backend_probe.py       # Paddle backend/device capability 探针
   paddle_device_alias_probe.py  # Paddle device-string compatibility 探针
+  paddle_cops_signature_probe.py # Paddle _C_ops signature compatibility 探针
+  official_graphnet_c500_bringup_probe.py # Official GraphNet bring-up 探针
   paddle_op_probe.py            # Paddle op coverage / latency smoke 探针
   paddle_mini_graphnet_probe.py # GraphNet-style dense/sparse/mixed graph workload
   paddle_inference_graphnet_probe.py # Paddle Inference predictor probe
@@ -128,6 +134,7 @@ scripts/
 - Paddle 包为 `paddlepaddle-gpu 2.6.0+maca3.0.0.5`。
 - C500 通过 Paddle 的 CUDA-compatible `gpu:0` 路径暴露，不是 `maca:0` custom-device 路径。
 - Paddle device string 实测：`gpu` / `gpu:0` 可用，`cuda` / `cuda:0` 不可用；官方 GraphNet Paddle benchmark 的 `--device cuda` 需要兼容层或小补丁。
+- 官方 GraphNet `ernie-3.0-nano-zh` Paddle sample 的 direct dygraph forward 已在 C500 上跑通，输出 `[1, 312]`；官方 benchmark 的 eager/compiled static 路径仍失败，卡在 `paddle.jit.to_static` 转换后的 `_C_ops.full` 参数类型兼容问题。
 - `is_compiled_with_cuda=True`，`is_compiled_with_cinn=False`。
 - Paddle Inference API 可用，`paddle.utils.run_check()` 通过。
 - matmul / conv2d / softmax / layernorm / gather / scatter 都能在 `Place(gpu:0)` 上跑通。

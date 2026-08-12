@@ -1,0 +1,127 @@
+{
+  "started_at": "2026-08-12T17:43:38+0800",
+  "python": "3.10.10 | packaged by conda-forge | (main, Mar 24 2023, 20:08:06) [GCC 11.3.0]",
+  "executable": "/opt/conda/bin/python3",
+  "params": {
+    "archive": "/data/PaddlePaddle-GraphNet-c500-probe.tgz",
+    "output_json": "/data/reports/official_graphnet_c500_v2/official_graphnet_c500_bringup_probe.json",
+    "work_dir": "/data/reports/official_graphnet_c500_v2/work_probe",
+    "sample": "paddle_samples/PaddleNLP/ernie-3.0-nano-zh",
+    "warmup": 2,
+    "trials": 3,
+    "timeout": 300
+  },
+  "env": {
+    "LD_LIBRARY_PATH": "/opt/maca/lib:/opt/maca/ompi/lib:/opt/maca/ucx/lib:/opt/mxdriver/lib:/opt/maca/lib:/opt/maca/ompi/lib:/opt/maca/ucx/lib:/opt/mxdriver/lib:/opt/maca/lib:/opt/maca/ompi/lib:/opt/maca/ucx/lib:/opt/mxdriver/lib:",
+    "MACA_CLANG_PATH": "/opt/maca/mxgpu_llvm/bin",
+    "MACA_PATH": "/opt/maca"
+  },
+  "graphnet_root": "/data/reports/official_graphnet_c500_v2/work_probe/PaddlePaddle-GraphNet.5ce69o",
+  "sample_path": "/data/reports/official_graphnet_c500_v2/work_probe/PaddlePaddle-GraphNet.5ce69o/paddle_samples/PaddleNLP/ernie-3.0-nano-zh",
+  "sample_exists": true,
+  "sample_files": [
+    "._graph_hash.txt",
+    "._graph_net.json",
+    "._input_meta.py",
+    "._model.py",
+    "._weight_meta.py",
+    "graph_hash.txt",
+    "graph_net.json",
+    "input_meta.py",
+    "model.py",
+    "weight_meta.py"
+  ],
+  "raw_import": {
+    "cmd": [
+      "/opt/conda/bin/python3",
+      "-c",
+      "import graph_net_bench.paddle.test_compiler as tc; print(tc.__file__)"
+    ],
+    "cwd": "/data/reports/official_graphnet_c500_v2/work_probe/PaddlePaddle-GraphNet.5ce69o",
+    "returncode": 1,
+    "elapsed_s": 2.359,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File \"/data/reports/official_graphnet_c500_v2/work_probe/PaddlePaddle-GraphNet.5ce69o/graph_net_bench/paddle/test_compiler.py\", line 19, in <module>\n    from graph_net.paddle.backend.graph_compiler_backend import GraphCompilerBackend\nModuleNotFoundError: No module named 'graph_net.paddle.backend'\n"
+  },
+  "compat_patch": {
+    "src": "/data/reports/official_graphnet_c500_v2/work_probe/PaddlePaddle-GraphNet.5ce69o/graph_net_bench/paddle/backend",
+    "dst": "/data/reports/official_graphnet_c500_v2/work_probe/PaddlePaddle-GraphNet.5ce69o/graph_net/paddle/backend",
+    "ok": true,
+    "copied": [
+      "._cinn_backend.py",
+      "._graph_compiler_backend.py",
+      "._nope_backend.py",
+      "cinn_backend.py",
+      "graph_compiler_backend.py",
+      "nope_backend.py"
+    ]
+  },
+  "patched_import": {
+    "cmd": [
+      "/opt/conda/bin/python3",
+      "-c",
+      "import graph_net_bench.paddle.test_compiler as tc; print(tc.__file__)"
+    ],
+    "cwd": "/data/reports/official_graphnet_c500_v2/work_probe/PaddlePaddle-GraphNet.5ce69o",
+    "returncode": 0,
+    "elapsed_s": 2.294,
+    "stdout": "/data/reports/official_graphnet_c500_v2/work_probe/PaddlePaddle-GraphNet.5ce69o/graph_net_bench/paddle/test_compiler.py\n",
+    "stderr": ""
+  },
+  "direct_dygraph_run": {
+    "cmd": [
+      "/opt/conda/bin/python3",
+      "-c",
+      "\nimport json\nimport paddle\nfrom graph_net_bench.paddle import test_compiler\nsample = '/data/reports/official_graphnet_c500_v2/work_probe/PaddlePaddle-GraphNet.5ce69o/paddle_samples/PaddleNLP/ernie-3.0-nano-zh'\npaddle.device.set_device(\"gpu:0\")\ninput_dict = test_compiler.get_input_dict(sample)\nmodel = test_compiler.get_model(sample)\nmodel.eval()\nout = model(**input_dict)\nif isinstance(out, paddle.Tensor):\n    outs = [out]\nelif isinstance(out, (tuple, list)):\n    outs = list(out)\nelse:\n    outs = [out]\nsummary = []\nfor x in outs:\n    if isinstance(x, paddle.Tensor):\n        summary.append({\"shape\": list(x.shape), \"dtype\": str(x.dtype), \"place\": str(x.place), \"sum\": float(x.astype(\"float32\").sum().numpy())})\n    else:\n        summary.append({\"type\": type(x).__name__, \"repr\": repr(x)[:200]})\nprint(json.dumps({\"ok\": True, \"num_outputs\": len(outs), \"outputs\": summary}, ensure_ascii=False))\n"
+    ],
+    "cwd": "/data/reports/official_graphnet_c500_v2/work_probe/PaddlePaddle-GraphNet.5ce69o",
+    "returncode": 0,
+    "elapsed_s": 27.213,
+    "stdout": "{\"ok\": true, \"num_outputs\": 1, \"outputs\": [{\"shape\": [1, 312], \"dtype\": \"paddle.float32\", \"place\": \"Place(gpu:0)\", \"sum\": 219.1051025390625}]}\n",
+    "stderr": "W0812 17:43:57.273669  5071 gpu_resources.cc:120] Please NOTE: device: 0, GPU Compute Capability: 8.0, Driver API Version: 11.6, Runtime API Version: 11.6\nW0812 17:43:58.113757  5071 gpu_resources.cc:165] device: 0, cuDNN Version: 1.1.\n"
+  },
+  "benchmark": {
+    "cmd": [
+      "/opt/conda/bin/python3",
+      "-m",
+      "graph_net_bench.paddle.test_compiler",
+      "--model-path",
+      "/data/reports/official_graphnet_c500_v2/work_probe/PaddlePaddle-GraphNet.5ce69o/paddle_samples/PaddleNLP/ernie-3.0-nano-zh",
+      "--compiler",
+      "nope",
+      "--device",
+      "cuda",
+      "--warmup",
+      "2",
+      "--trials",
+      "3",
+      "--log-prompt",
+      "c500-official-graphnet-log"
+    ],
+    "cwd": "/data/reports/official_graphnet_c500_v2/work_probe/PaddlePaddle-GraphNet.5ce69o",
+    "returncode": 0,
+    "elapsed_s": 5.161,
+    "stdout": "",
+    "stderr": "c500-official-graphnet-log [Processing] /data/reports/official_graphnet_c500_v2/work_probe/PaddlePaddle-GraphNet.5ce69o/paddle_samples/PaddleNLP/ernie-3.0-nano-zh\nW0812 17:44:24.488423  5439 gpu_resources.cc:120] Please NOTE: device: 0, GPU Compute Capability: 8.0, Driver API Version: 11.6, Runtime API Version: 11.6\nW0812 17:44:25.341279  5439 gpu_resources.cc:165] device: 0, cuDNN Version: 1.1.\nc500-official-graphnet-log [Config] model: ernie-3.0-nano-zh\nc500-official-graphnet-log [Config] device: cuda\nc500-official-graphnet-log [Config] hardware: MetaX C500\nc500-official-graphnet-log [Config] compiler: nope\nc500-official-graphnet-log [Config] warmup: 2\nc500-official-graphnet-log [Config] trials: 3\nc500-official-graphnet-log [Config] compile_framework_version: 2.6.0\nRun model in eager mode.\nRun model in eager mode failed: In transformed code:\n\n    File \"/data/reports/official_graphnet_c500_v2/work_probe/PaddlePaddle-GraphNet.5ce69o/paddle_samples/PaddleNLP/ernie-3.0-nano-zh/model.py\", line 86, in forward\n        ):\n            # pd_op.full: (xi64) <- ()\n            full_0 = paddle._C_ops.full(\n            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ <--- HERE\n                [], float(\"0\"), paddle.int64, paddle.framework._current_expected_place()\n            )\n\n\n    ValueError: (InvalidArgument) full: argument (position 3) must be one of paddle::DataType, but got paddle.base.libpaddle.VarType (at /workspace/paddle/paddle/fluid/pybind/eager_utils.cc:854)\n\n\nTraceback (most recent call last):\n  File \"/data/reports/official_graphnet_c500_v2/work_probe/PaddlePaddle-GraphNet.5ce69o/graph_net_bench/paddle/test_compiler.py\", line 338, in test_single_model\n    static_model = get_static_model(args, model)\n  File \"/data/reports/official_graphnet_c500_v2/work_probe/PaddlePaddle-GraphNet.5ce69o/graph_net_bench/paddle/test_compiler.py\", line 128, in get_static_model\n    program = static_model.forward.concrete_program.main_program  # noqa\n  File \"/opt/conda/lib/python3.10/site-packages/paddle/jit/dy2static/program_translator.py\", line 941, in concrete_program\n    return self.concrete_program_specify_input_spec(input_spec=None)\n  File \"/opt/conda/lib/python3.10/site-packages/paddle/jit/dy2static/program_translator.py\", line 986, in concrete_program_specify_input_spec\n    concrete_program, _ = self.get_concrete_program(\n  File \"/opt/conda/lib/python3.10/site-packages/paddle/jit/dy2static/program_translator.py\", line 875, in get_concrete_program\n    concrete_program, partial_program_layer = self._program_cache[\n  File \"/opt/conda/lib/python3.10/site-packages/paddle/jit/dy2static/program_translator.py\", line 1648, in __getitem__\n    self._caches[item_id] = self._build_once(item)\n  File \"/opt/conda/lib/python3.10/site-packages/paddle/jit/dy2static/program_translator.py\", line 1575, in _build_once\n    concrete_program = ConcreteProgram.from_func_spec(\n  File \"/opt/conda/lib/python3.10/site-packages/decorator.py\", line 235, in fun\n    return caller(func, *(extras + args), **kw)\n  File \"/opt/conda/lib/python3.10/site-packages/paddle/base/wrapped_decorator.py\", line 26, in __impl__\n    return wrapped_func(*args, **kwargs)\n  File \"/opt/conda/lib/python3.10/site-packages/paddle/base/dygraph/base.py\", line 68, in __impl__\n    return func(*args, **kwargs)\n  File \"/opt/conda/lib/python3.10/site-packages/paddle/jit/dy2static/program_translator.py\", line 1346, in from_func_spec\n    error_data.raise_new_exception()\n  File \"/opt/conda/lib/python3.10/site-packages/paddle/jit/dy2static/error.py\", line 452, in raise_new_exception\n    raise new_exception from None\nValueError: In transformed code:\n\n    File \"/data/reports/official_graphnet_c500_v2/work_probe/PaddlePaddle-GraphNet.5ce69o/paddle_samples/PaddleNLP/ernie-3.0-nano-zh/model.py\", line 86, in forward\n        ):\n            # pd_op.full: (xi64) <- ()\n            full_0 = paddle._C_ops.full(\n            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ <--- HERE\n                [], float(\"0\"), paddle.int64, paddle.framework._current_expected_place()\n            )\n\n\n    ValueError: (InvalidArgument) full: argument (position 3) must be one of paddle::DataType, but got paddle.base.libpaddle.VarType (at /workspace/paddle/paddle/fluid/pybind/eager_utils.cc:854)\n\n\n\nRun model in compiled mode.\nRun model in compiled mode failed: In transformed code:\n\n    File \"/data/reports/official_graphnet_c500_v2/work_probe/PaddlePaddle-GraphNet.5ce69o/paddle_samples/PaddleNLP/ernie-3.0-nano-zh/model.py\", line 86, in forward\n        ):\n            # pd_op.full: (xi64) <- ()\n            full_0 = paddle._C_ops.full(\n            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ <--- HERE\n                [], float(\"0\"), paddle.int64, paddle.framework._current_expected_place()\n            )\n\n\n    ValueError: (InvalidArgument) full: argument (position 3) must be one of paddle::DataType, but got paddle.base.libpaddle.VarType (at /workspace/paddle/paddle/fluid/pybind/eager_utils.cc:854)\n\n\nTraceback (most recent call last):\n  File \"/data/reports/official_graphnet_c500_v2/work_probe/PaddlePaddle-GraphNet.5ce69o/graph_net_bench/paddle/test_compiler.py\", line 357, in test_single_model\n    compiled_out, compiled_time_stats = measure_performance(\n  File \"/data/reports/official_graphnet_c500_v2/work_probe/PaddlePaddle-GraphNet.5ce69o/graph_net_bench/paddle/test_compiler.py\", line 137, in measure_performance\n    outs = model_call()\n  File \"/data/reports/official_graphnet_c500_v2/work_probe/PaddlePaddle-GraphNet.5ce69o/graph_net_bench/paddle/test_compiler.py\", line 358, in <lambda>\n    lambda: compiled_model(**input_dict), args, compiler, profile=False\n  File \"/opt/conda/lib/python3.10/site-packages/paddle/nn/layer/layers.py\", line 1429, in __call__\n    return self.forward(*inputs, **kwargs)\n  File \"/opt/conda/lib/python3.10/site-packages/paddle/jit/dy2static/program_translator.py\", line 503, in __call__\n    return self._perform_call(*args, **kwargs)\n  File \"/opt/conda/lib/python3.10/site-packages/paddle/jit/dy2static/program_translator.py\", line 818, in _perform_call\n    error_data.raise_new_exception()\n  File \"/opt/conda/lib/python3.10/site-packages/paddle/jit/dy2static/error.py\", line 452, in raise_new_exception\n    raise new_exception from None\nValueError: In transformed code:\n\n    File \"/data/reports/official_graphnet_c500_v2/work_probe/PaddlePaddle-GraphNet.5ce69o/paddle_samples/PaddleNLP/ernie-3.0-nano-zh/model.py\", line 86, in forward\n        ):\n            # pd_op.full: (xi64) <- ()\n            full_0 = paddle._C_ops.full(\n            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ <--- HERE\n                [], float(\"0\"), paddle.int64, paddle.framework._current_expected_place()\n            )\n\n\n    ValueError: (InvalidArgument) full: argument (position 3) must be one of paddle::DataType, but got paddle.base.libpaddle.VarType (at /workspace/paddle/paddle/fluid/pybind/eager_utils.cc:854)\n\n\n\nc500-official-graphnet-log [Result][status] eager:failed compiled:failed\n"
+  },
+  "benchmark_stdout_log": "/data/reports/official_graphnet_c500_v2/official_graphnet_ernie_nano_nope.stdout.log",
+  "benchmark_stderr_log": "/data/reports/official_graphnet_c500_v2/official_graphnet_ernie_nano_nope.stderr.log",
+  "benchmark_parsed": {
+    "status_lines": [
+      "c500-official-graphnet-log [Result][status] eager:failed compiled:failed"
+    ],
+    "performance_lines": [],
+    "config_lines": [
+      "c500-official-graphnet-log [Processing] /data/reports/official_graphnet_c500_v2/work_probe/PaddlePaddle-GraphNet.5ce69o/paddle_samples/PaddleNLP/ernie-3.0-nano-zh",
+      "c500-official-graphnet-log [Config] model: ernie-3.0-nano-zh",
+      "c500-official-graphnet-log [Config] device: cuda",
+      "c500-official-graphnet-log [Config] hardware: MetaX C500",
+      "c500-official-graphnet-log [Config] compiler: nope",
+      "c500-official-graphnet-log [Config] warmup: 2",
+      "c500-official-graphnet-log [Config] trials: 3",
+      "c500-official-graphnet-log [Config] compile_framework_version: 2.6.0"
+    ]
+  },
+  "ok": true,
+  "finished_at": "2026-08-12T17:44:27+0800"
+}

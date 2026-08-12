@@ -75,6 +75,9 @@ Already completed in this repo:
 - `paddle.jit.save/load` static graph workload
 - Paddle Inference `PaddleInferPredictor` workload
 - device alias compatibility probe
+- official GraphNet `ernie-3.0-nano-zh` direct dygraph forward on C500
+- official GraphNet benchmark static-path failure diagnosis
+- low-level `_C_ops.full` / `_C_ops.cast` signature probe
 
 Current limitation:
 
@@ -86,16 +89,62 @@ Current usable project framing:
 
 This is a runtime/backend readiness project, not a full official GraphNet/CINN benchmark yet.
 
+
+## Official Sample Bring-Up Result
+
+Raw data:
+
+- `raw/metax-c500-paddle/official_graphnet/official_graphnet_c500_bringup_probe.json`
+- `raw/metax-c500-paddle/official_graphnet/official_graphnet_ernie_nano_nope.stderr.log`
+- `raw/metax-c500-paddle/cops_signature/paddle_cops_signature_probe.json`
+
+Script:
+
+- `scripts/official_graphnet_c500_bringup_probe.py`
+- `scripts/paddle_cops_signature_probe.py`
+
+Tested official sample:
+
+- `paddle_samples/PaddleNLP/ernie-3.0-nano-zh`
+
+Results:
+
+| Stage | Result | Evidence |
+| --- | --- | --- |
+| Raw official import | failed | `ModuleNotFoundError: No module named 'graph_net.paddle.backend'` |
+| Minimal backend path patch | passed | copied `graph_net_bench/paddle/backend/*.py` to `graph_net/paddle/backend/` in temporary workdir |
+| Direct dygraph forward | passed | output shape `[1, 312]`, dtype `paddle.float32`, place `Place(gpu:0)` |
+| Official `compiler=nope` benchmark | process completed, benchmark status failed | `eager:failed compiled:failed` |
+| Hardware detection | passed | benchmark reports hardware `MetaX C500` |
+
+The official benchmark failure is specific:
+
+```text
+ValueError: full: argument (position 3) must be one of paddle::DataType, but got paddle.base.libpaddle.VarType
+```
+
+It occurs inside the benchmark's static conversion path around generated sample code:
+
+```python
+full_0 = paddle._C_ops.full(
+    [], float("0"), paddle.int64, paddle.framework._current_expected_place()
+)
+```
+
+A separate low-level signature probe shows `_C_ops.full([], 0.0, paddle.int64, gpu_place)` succeeds directly on this image. Therefore the current evidence suggests the failure is tied to GraphNet generated code under `paddle.jit.to_static` / dy2static transformation on Paddle 2.6.0+MACA, not a simple missing C500 kernel.
+
+This is exactly the next serious engineering problem: make official GraphNet static benchmark replay compatible with the vendor Paddle image, then compare static/nope/CINN if a CINN-enabled image becomes available.
+
 ## Recommended Next Implementation
 
 The highest-return next step is a thin compatibility harness rather than a broad rewrite:
 
 1. Clone official GraphNet on the C500 machine.
 2. Install only the minimum dependencies needed to import and run a small sample.
-3. Patch or wrap the Paddle benchmark so logical GraphNet `cuda` maps to Paddle `gpu:0`.
-4. Try `compiler=nope` first to validate eager/static replay without CINN.
-5. Use C500 as target device against a tiny reference run, then record failure/success by sample.
-6. Only after that, explore whether a CINN-enabled Paddle image exists.
+3. Keep the backend import compatibility patch minimal and upstreamable.
+4. Patch or wrap the Paddle benchmark so logical GraphNet `cuda` maps to Paddle `gpu:0`.
+5. Fix or bypass the `paddle.jit.to_static` / `_C_ops.full` compatibility issue for generated GraphNet Paddle samples.
+6. Re-run `compiler=nope` static benchmark, then compare against CINN only if a CINN-enabled Paddle image becomes available.
 
 Expected deliverables:
 

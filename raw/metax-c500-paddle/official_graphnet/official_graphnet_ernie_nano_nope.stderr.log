@@ -1,0 +1,111 @@
+c500-official-graphnet-log [Processing] /data/reports/official_graphnet_c500_v2/work_probe/PaddlePaddle-GraphNet.5ce69o/paddle_samples/PaddleNLP/ernie-3.0-nano-zh
+W0812 17:44:24.488423  5439 gpu_resources.cc:120] Please NOTE: device: 0, GPU Compute Capability: 8.0, Driver API Version: 11.6, Runtime API Version: 11.6
+W0812 17:44:25.341279  5439 gpu_resources.cc:165] device: 0, cuDNN Version: 1.1.
+c500-official-graphnet-log [Config] model: ernie-3.0-nano-zh
+c500-official-graphnet-log [Config] device: cuda
+c500-official-graphnet-log [Config] hardware: MetaX C500
+c500-official-graphnet-log [Config] compiler: nope
+c500-official-graphnet-log [Config] warmup: 2
+c500-official-graphnet-log [Config] trials: 3
+c500-official-graphnet-log [Config] compile_framework_version: 2.6.0
+Run model in eager mode.
+Run model in eager mode failed: In transformed code:
+
+    File "/data/reports/official_graphnet_c500_v2/work_probe/PaddlePaddle-GraphNet.5ce69o/paddle_samples/PaddleNLP/ernie-3.0-nano-zh/model.py", line 86, in forward
+        ):
+            # pd_op.full: (xi64) <- ()
+            full_0 = paddle._C_ops.full(
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ <--- HERE
+                [], float("0"), paddle.int64, paddle.framework._current_expected_place()
+            )
+
+
+    ValueError: (InvalidArgument) full: argument (position 3) must be one of paddle::DataType, but got paddle.base.libpaddle.VarType (at /workspace/paddle/paddle/fluid/pybind/eager_utils.cc:854)
+
+
+Traceback (most recent call last):
+  File "/data/reports/official_graphnet_c500_v2/work_probe/PaddlePaddle-GraphNet.5ce69o/graph_net_bench/paddle/test_compiler.py", line 338, in test_single_model
+    static_model = get_static_model(args, model)
+  File "/data/reports/official_graphnet_c500_v2/work_probe/PaddlePaddle-GraphNet.5ce69o/graph_net_bench/paddle/test_compiler.py", line 128, in get_static_model
+    program = static_model.forward.concrete_program.main_program  # noqa
+  File "/opt/conda/lib/python3.10/site-packages/paddle/jit/dy2static/program_translator.py", line 941, in concrete_program
+    return self.concrete_program_specify_input_spec(input_spec=None)
+  File "/opt/conda/lib/python3.10/site-packages/paddle/jit/dy2static/program_translator.py", line 986, in concrete_program_specify_input_spec
+    concrete_program, _ = self.get_concrete_program(
+  File "/opt/conda/lib/python3.10/site-packages/paddle/jit/dy2static/program_translator.py", line 875, in get_concrete_program
+    concrete_program, partial_program_layer = self._program_cache[
+  File "/opt/conda/lib/python3.10/site-packages/paddle/jit/dy2static/program_translator.py", line 1648, in __getitem__
+    self._caches[item_id] = self._build_once(item)
+  File "/opt/conda/lib/python3.10/site-packages/paddle/jit/dy2static/program_translator.py", line 1575, in _build_once
+    concrete_program = ConcreteProgram.from_func_spec(
+  File "/opt/conda/lib/python3.10/site-packages/decorator.py", line 235, in fun
+    return caller(func, *(extras + args), **kw)
+  File "/opt/conda/lib/python3.10/site-packages/paddle/base/wrapped_decorator.py", line 26, in __impl__
+    return wrapped_func(*args, **kwargs)
+  File "/opt/conda/lib/python3.10/site-packages/paddle/base/dygraph/base.py", line 68, in __impl__
+    return func(*args, **kwargs)
+  File "/opt/conda/lib/python3.10/site-packages/paddle/jit/dy2static/program_translator.py", line 1346, in from_func_spec
+    error_data.raise_new_exception()
+  File "/opt/conda/lib/python3.10/site-packages/paddle/jit/dy2static/error.py", line 452, in raise_new_exception
+    raise new_exception from None
+ValueError: In transformed code:
+
+    File "/data/reports/official_graphnet_c500_v2/work_probe/PaddlePaddle-GraphNet.5ce69o/paddle_samples/PaddleNLP/ernie-3.0-nano-zh/model.py", line 86, in forward
+        ):
+            # pd_op.full: (xi64) <- ()
+            full_0 = paddle._C_ops.full(
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ <--- HERE
+                [], float("0"), paddle.int64, paddle.framework._current_expected_place()
+            )
+
+
+    ValueError: (InvalidArgument) full: argument (position 3) must be one of paddle::DataType, but got paddle.base.libpaddle.VarType (at /workspace/paddle/paddle/fluid/pybind/eager_utils.cc:854)
+
+
+
+Run model in compiled mode.
+Run model in compiled mode failed: In transformed code:
+
+    File "/data/reports/official_graphnet_c500_v2/work_probe/PaddlePaddle-GraphNet.5ce69o/paddle_samples/PaddleNLP/ernie-3.0-nano-zh/model.py", line 86, in forward
+        ):
+            # pd_op.full: (xi64) <- ()
+            full_0 = paddle._C_ops.full(
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ <--- HERE
+                [], float("0"), paddle.int64, paddle.framework._current_expected_place()
+            )
+
+
+    ValueError: (InvalidArgument) full: argument (position 3) must be one of paddle::DataType, but got paddle.base.libpaddle.VarType (at /workspace/paddle/paddle/fluid/pybind/eager_utils.cc:854)
+
+
+Traceback (most recent call last):
+  File "/data/reports/official_graphnet_c500_v2/work_probe/PaddlePaddle-GraphNet.5ce69o/graph_net_bench/paddle/test_compiler.py", line 357, in test_single_model
+    compiled_out, compiled_time_stats = measure_performance(
+  File "/data/reports/official_graphnet_c500_v2/work_probe/PaddlePaddle-GraphNet.5ce69o/graph_net_bench/paddle/test_compiler.py", line 137, in measure_performance
+    outs = model_call()
+  File "/data/reports/official_graphnet_c500_v2/work_probe/PaddlePaddle-GraphNet.5ce69o/graph_net_bench/paddle/test_compiler.py", line 358, in <lambda>
+    lambda: compiled_model(**input_dict), args, compiler, profile=False
+  File "/opt/conda/lib/python3.10/site-packages/paddle/nn/layer/layers.py", line 1429, in __call__
+    return self.forward(*inputs, **kwargs)
+  File "/opt/conda/lib/python3.10/site-packages/paddle/jit/dy2static/program_translator.py", line 503, in __call__
+    return self._perform_call(*args, **kwargs)
+  File "/opt/conda/lib/python3.10/site-packages/paddle/jit/dy2static/program_translator.py", line 818, in _perform_call
+    error_data.raise_new_exception()
+  File "/opt/conda/lib/python3.10/site-packages/paddle/jit/dy2static/error.py", line 452, in raise_new_exception
+    raise new_exception from None
+ValueError: In transformed code:
+
+    File "/data/reports/official_graphnet_c500_v2/work_probe/PaddlePaddle-GraphNet.5ce69o/paddle_samples/PaddleNLP/ernie-3.0-nano-zh/model.py", line 86, in forward
+        ):
+            # pd_op.full: (xi64) <- ()
+            full_0 = paddle._C_ops.full(
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ <--- HERE
+                [], float("0"), paddle.int64, paddle.framework._current_expected_place()
+            )
+
+
+    ValueError: (InvalidArgument) full: argument (position 3) must be one of paddle::DataType, but got paddle.base.libpaddle.VarType (at /workspace/paddle/paddle/fluid/pybind/eager_utils.cc:854)
+
+
+
+c500-official-graphnet-log [Result][status] eager:failed compiled:failed

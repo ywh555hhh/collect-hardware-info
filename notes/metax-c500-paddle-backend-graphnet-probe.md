@@ -31,6 +31,8 @@ Raw data:
 - `raw/metax-c500-paddle/device_alias/paddle_device_alias_probe.json`
 - `raw/metax-c500-paddle/mini_graphnet/mini_graphnet_probe.json`
 - `raw/metax-c500-paddle/paddle_inference_graphnet/paddle_inference_graphnet_probe.json`
+- `raw/metax-c500-paddle/official_graphnet/official_graphnet_c500_bringup_probe.json`
+- `raw/metax-c500-paddle/cops_signature/paddle_cops_signature_probe.json`
 
 Scripts:
 
@@ -39,6 +41,8 @@ Scripts:
 - `scripts/paddle_op_probe.py`
 - `scripts/paddle_mini_graphnet_probe.py`
 - `scripts/paddle_inference_graphnet_probe.py`
+- `scripts/official_graphnet_c500_bringup_probe.py`
+- `scripts/paddle_cops_signature_probe.py`
 
 Environment observed:
 
@@ -141,6 +145,8 @@ The next probe exports fixed-shape dense and mixed graph blocks to `.pdmodel/.pd
 Raw data:
 
 - `raw/metax-c500-paddle/paddle_inference_graphnet/paddle_inference_graphnet_probe.json`
+- `raw/metax-c500-paddle/official_graphnet/official_graphnet_c500_bringup_probe.json`
+- `raw/metax-c500-paddle/cops_signature/paddle_cops_signature_probe.json`
 
 Parameters match the mini GraphNet-style workload: 8192 nodes, 65536 edges, hidden size 256, 10 warmup iterations, and 50 measured iterations.
 
@@ -156,6 +162,25 @@ Important interpretation:
 - The dense predictor graph reports roughly 0.5MB persistable params, while the mixed graph reports roughly 8.8MB persistable params and larger temporary buffers for gather/scatter intermediates.
 - This makes the image useful for studying Paddle Inference graph optimization and deployment-path overhead on a non-NVIDIA backend, even without CINN.
 
+## Official GraphNet Sample Bring-Up
+
+A real official PaddlePaddle/GraphNet sample was tested on C500:
+
+- sample: `paddle_samples/PaddleNLP/ernie-3.0-nano-zh`
+- raw data: `raw/metax-c500-paddle/official_graphnet/official_graphnet_c500_bringup_probe.json`
+
+Results:
+
+| Stage | Result |
+| --- | --- |
+| Raw official import | failed due to missing `graph_net.paddle.backend` path |
+| Minimal backend path compatibility patch | import passed |
+| Direct dygraph forward | passed on `Place(gpu:0)`, output `[1, 312]` |
+| Official `compiler=nope` benchmark | process completed but benchmark status `eager:failed compiled:failed` |
+| Failure locus | `paddle.jit.to_static` / dy2static path around generated `_C_ops.full` call |
+
+A separate `_C_ops` signature probe shows `_C_ops.full(..., paddle.int64, gpu_place)` succeeds directly, so the failure is more likely a generated-code + dy2static compatibility issue than a simple missing backend kernel.
+
 ## Resume-Grade Project Direction
 
 Recommended project framing:
@@ -170,6 +195,7 @@ Suggested resume bullets after deeper completion:
 - Validated Paddle Inference availability and core operator coverage on C500, including fp32/fp16 matmul, conv2d, layernorm, softmax, gather, and scatter.
 - Connected PaddlePaddle GraphNet-style computation graph workloads to backend/kernel coverage by profiling dense, sparse-ish, mixed, and readout graph blocks relevant to tensor compiler benchmarks.
 - Verified `paddle.jit.save/load` static graph execution for dense and mixed GraphNet-style blocks on C500.
+- Brought up a real official GraphNet Paddle sample in direct dygraph mode and isolated the official static benchmark failure to a dy2static compatibility issue.
 - Exported fixed-shape graph blocks to Paddle Inference and validated `PaddleInferPredictor` execution on C500.
 - Identified a key compiler limitation in the current image: CINN is not compiled in, so this image is suitable for runtime/operator/inference analysis but not direct CINN-vs-baseline compiler benchmarking.
 
@@ -254,7 +280,7 @@ Completed:
 
 Not completed yet:
 
-- full GraphNet workload replay
+- full official GraphNet static benchmark replay
 - CINN benchmark comparison
 - full deployment benchmark with repeated request patterns
 - repeated runs across multiple graph sizes

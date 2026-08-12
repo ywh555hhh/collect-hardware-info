@@ -1,0 +1,80 @@
+{
+  "started_at": "2026-08-12T17:41:57+0800",
+  "python": "3.10.10 | packaged by conda-forge | (main, Mar 24 2023, 20:08:06) [GCC 11.3.0]",
+  "executable": "/opt/conda/bin/python3",
+  "paddle_version": "2.6.0",
+  "device_arg": "gpu:0",
+  "results": [
+    {
+      "label": "_C_ops.full dtype=paddle.int64",
+      "ok": true,
+      "dtype": "paddle.int64",
+      "place": "Place(gpu:0)",
+      "shape": [],
+      "value": 0
+    },
+    {
+      "label": "_C_ops.full dtype='int64'",
+      "ok": false,
+      "error": "ValueError('(InvalidArgument) argument (position 3) must be one of core.VarDesc.VarType, but got str (at /workspace/paddle/paddle/fluid/pybind/eager_utils.cc:833)\\n')",
+      "traceback": "Traceback (most recent call last):\n  File \"/data/paddle_cops_signature_probe.py\", line 20, in try_call\n    out = fn()\n  File \"/data/paddle_cops_signature_probe.py\", line 62, in <lambda>\n    (\"_C_ops.full dtype='int64'\", lambda: paddle._C_ops.full([], float(\"0\"), \"int64\", place)),\nValueError: (InvalidArgument) argument (position 3) must be one of core.VarDesc.VarType, but got str (at /workspace/paddle/paddle/fluid/pybind/eager_utils.cc:833)\n\n"
+    },
+    {
+      "label": "_C_ops.full dtype=VarType.INT64",
+      "ok": true,
+      "dtype": "paddle.int64",
+      "place": "Place(gpu:0)",
+      "shape": [],
+      "value": 0
+    },
+    {
+      "label": "paddle.full dtype='int64'",
+      "ok": true,
+      "dtype": "paddle.int64",
+      "place": "Place(gpu:0)",
+      "shape": [],
+      "value": 0
+    },
+    {
+      "label": "paddle.to_tensor dtype='int64'",
+      "ok": true,
+      "dtype": "paddle.int64",
+      "place": "Place(gpu:0)",
+      "shape": [],
+      "value": 0
+    },
+    {
+      "label": "_C_ops.cast dtype=paddle.float32",
+      "ok": true,
+      "dtype": "paddle.float32",
+      "place": "Place(gpu:0)",
+      "shape": [
+        1
+      ],
+      "value": [
+        1.0
+      ]
+    },
+    {
+      "label": "_C_ops.cast dtype='float32'",
+      "ok": false,
+      "error": "ValueError('(InvalidArgument) argument (position 2) must be one of core.VarDesc.VarType, but got str (at /workspace/paddle/paddle/fluid/pybind/eager_utils.cc:833)\\n')",
+      "traceback": "Traceback (most recent call last):\n  File \"/data/paddle_cops_signature_probe.py\", line 20, in try_call\n    out = fn()\n  File \"/data/paddle_cops_signature_probe.py\", line 70, in <lambda>\n    (\"_C_ops.cast dtype='float32'\", lambda: paddle._C_ops.cast(paddle.to_tensor([True]), \"float32\")),\nValueError: (InvalidArgument) argument (position 2) must be one of core.VarDesc.VarType, but got str (at /workspace/paddle/paddle/fluid/pybind/eager_utils.cc:833)\n\n"
+    },
+    {
+      "label": "_C_ops.cast dtype=VarType.FP32",
+      "ok": true,
+      "dtype": "paddle.float32",
+      "place": "Place(gpu:0)",
+      "shape": [
+        1
+      ],
+      "value": [
+        1.0
+      ]
+    }
+  ],
+  "current_device": "gpu:0",
+  "current_expected_place": "Place(gpu:0)",
+  "finished_at": "2026-08-12T17:41:58+0800"
+}
