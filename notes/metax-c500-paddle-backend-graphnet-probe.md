@@ -28,12 +28,14 @@ Raw data:
 
 - `raw/metax-c500-paddle/paddle_backend_probe.json`
 - `raw/metax-c500-paddle/paddle_op_probe.json`
+- `raw/metax-c500-paddle/device_alias/paddle_device_alias_probe.json`
 - `raw/metax-c500-paddle/mini_graphnet/mini_graphnet_probe.json`
 - `raw/metax-c500-paddle/paddle_inference_graphnet/paddle_inference_graphnet_probe.json`
 
 Scripts:
 
 - `scripts/paddle_backend_probe.py`
+- `scripts/paddle_device_alias_probe.py`
 - `scripts/paddle_op_probe.py`
 - `scripts/paddle_mini_graphnet_probe.py`
 - `scripts/paddle_inference_graphnet_probe.py`
@@ -61,12 +63,15 @@ The important finding: this Paddle image uses Paddle's `gpu:0` route, not a Padd
 | `paddle.is_compiled_with_cinn()` | `False` |
 | custom device types | `[]` |
 | `maca:0` device string | unsupported |
+| `cuda` / `cuda:0` device string | unsupported by Paddle Python API in this image |
+| `gpu` / `gpu:0` device string | supported |
 | Paddle Inference API | available |
 | `paddle.utils.run_check()` | pass |
 
 Interpretation:
 
 - C500 is exposed to Paddle as a CUDA/GPU-compatible backend.
+- Official GraphNet Paddle scripts use `--device cuda`, but this image requires Paddle device strings `gpu` or `gpu:0`; official bring-up likely needs a small wrapper or patch.
 - The image is not suitable for directly testing Paddle CINN acceleration because CINN is not compiled in.
 - The image is suitable for backend/operator coverage, Paddle Inference path checks, dynamic/static graph smoke, and GraphNet-style op mix probing.
 

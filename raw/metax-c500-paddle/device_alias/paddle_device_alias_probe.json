@@ -1,0 +1,54 @@
+{
+  "started_at": "2026-08-12T17:31:25+0800",
+  "python": "3.10.10 | packaged by conda-forge | (main, Mar 24 2023, 20:08:06) [GCC 11.3.0]",
+  "executable": "/opt/conda/bin/python3",
+  "paddle_version": "2.6.0",
+  "results": [
+    {
+      "device": "cuda",
+      "ok": false,
+      "error": "ValueError(\"The device must be a string which is like 'cpu', 'gpu', 'gpu:x', 'xpu', 'xpu:x', 'npu', 'npu:x'\")",
+      "traceback": "Traceback (most recent call last):\n  File \"/data/paddle_device_alias_probe.py\", line 40, in main\n    paddle.device.set_device(device)\n  File \"/opt/conda/lib/python3.10/site-packages/paddle/device/__init__.py\", line 292, in set_device\n    place = _convert_to_place(device)\n  File \"/opt/conda/lib/python3.10/site-packages/paddle/device/__init__.py\", line 253, in _convert_to_place\n    raise ValueError(\nValueError: The device must be a string which is like 'cpu', 'gpu', 'gpu:x', 'xpu', 'xpu:x', 'npu', 'npu:x'\n"
+    },
+    {
+      "device": "cuda:0",
+      "ok": false,
+      "error": "ValueError(\"The device must be a string which is like 'cpu', 'gpu', 'gpu:x', 'xpu', 'xpu:x', 'npu', 'npu:x'\")",
+      "traceback": "Traceback (most recent call last):\n  File \"/data/paddle_device_alias_probe.py\", line 40, in main\n    paddle.device.set_device(device)\n  File \"/opt/conda/lib/python3.10/site-packages/paddle/device/__init__.py\", line 292, in set_device\n    place = _convert_to_place(device)\n  File \"/opt/conda/lib/python3.10/site-packages/paddle/device/__init__.py\", line 253, in _convert_to_place\n    raise ValueError(\nValueError: The device must be a string which is like 'cpu', 'gpu', 'gpu:x', 'xpu', 'xpu:x', 'npu', 'npu:x'\n"
+    },
+    {
+      "device": "gpu",
+      "ok": true,
+      "current_device": "gpu:0",
+      "place": "Place(gpu:0)",
+      "sum": 20.646652221679688
+    },
+    {
+      "device": "gpu:0",
+      "ok": true,
+      "current_device": "gpu:0",
+      "place": "Place(gpu:0)",
+      "sum": -59.05004119873047
+    },
+    {
+      "device": "maca",
+      "ok": false,
+      "error": "ValueError(\"The device must be a string which is like 'cpu', 'gpu', 'gpu:x', 'xpu', 'xpu:x', 'npu', 'npu:x'\")",
+      "traceback": "Traceback (most recent call last):\n  File \"/data/paddle_device_alias_probe.py\", line 40, in main\n    paddle.device.set_device(device)\n  File \"/opt/conda/lib/python3.10/site-packages/paddle/device/__init__.py\", line 292, in set_device\n    place = _convert_to_place(device)\n  File \"/opt/conda/lib/python3.10/site-packages/paddle/device/__init__.py\", line 253, in _convert_to_place\n    raise ValueError(\nValueError: The device must be a string which is like 'cpu', 'gpu', 'gpu:x', 'xpu', 'xpu:x', 'npu', 'npu:x'\n"
+    },
+    {
+      "device": "maca:0",
+      "ok": false,
+      "error": "ValueError(\"The device must be a string which is like 'cpu', 'gpu', 'gpu:x', 'xpu', 'xpu:x', 'npu', 'npu:x'\")",
+      "traceback": "Traceback (most recent call last):\n  File \"/data/paddle_device_alias_probe.py\", line 40, in main\n    paddle.device.set_device(device)\n  File \"/opt/conda/lib/python3.10/site-packages/paddle/device/__init__.py\", line 292, in set_device\n    place = _convert_to_place(device)\n  File \"/opt/conda/lib/python3.10/site-packages/paddle/device/__init__.py\", line 253, in _convert_to_place\n    raise ValueError(\nValueError: The device must be a string which is like 'cpu', 'gpu', 'gpu:x', 'xpu', 'xpu:x', 'npu', 'npu:x'\n"
+    },
+    {
+      "device": "cpu",
+      "ok": true,
+      "current_device": "cpu",
+      "place": "Place(cpu)",
+      "sum": -44.835365295410156
+    }
+  ],
+  "finished_at": "2026-08-12T17:31:26+0800"
+}

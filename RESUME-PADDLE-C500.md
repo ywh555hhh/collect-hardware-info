@@ -27,6 +27,7 @@ These are safe to use now, based on current repository evidence:
 - Profiled dense and sparse-ish graph blocks across matmul, gelu, layernorm, gather, scatter, projection, and reduction; observed dynamic avg latency of 0.333 ms for dense block, 0.878 ms for gather/scatter block, and 1.268 ms for mixed graph block on `Place(gpu:0)`.
 - Verified JIT export/load for dense and mixed graph blocks, with dense block improving from 0.333 ms dynamic to 0.255 ms JIT path, and mixed block from 1.268 ms dynamic to 1.122 ms JIT path.
 - Exported fixed-shape dense and mixed graph blocks to Paddle Inference and validated `PaddleInferPredictor` execution on C500, observing 1.515 ms and 2.670 ms average end-to-end predictor latency for the two blocks.
+- Identified official GraphNet bring-up compatibility gaps on C500: Paddle accepts `gpu` / `gpu:0` but rejects GraphNet's expected `cuda` / `cuda:0` device strings, requiring a thin benchmark wrapper or patch.
 - Evaluated the current C500 Paddle image's suitability for compiler benchmarking, finding that it supports runtime/operator/static-graph analysis but cannot directly run CINN acceleration because CINN is not compiled in.
 
 ## Stronger Bullets After Next Phase
@@ -55,6 +56,9 @@ A good 60-second version:
 | Mini GraphNet-style raw output | `raw/metax-c500-paddle/mini_graphnet/mini_graphnet_probe.json` |
 | Paddle Inference predictor script | `scripts/paddle_inference_graphnet_probe.py` |
 | Paddle Inference predictor raw output | `raw/metax-c500-paddle/paddle_inference_graphnet/paddle_inference_graphnet_probe.json` |
+| Paddle device alias probe script | `scripts/paddle_device_alias_probe.py` |
+| Paddle device alias raw output | `raw/metax-c500-paddle/device_alias/paddle_device_alias_probe.json` |
+| Official GraphNet alignment note | `notes/paddle-graphnet-official-alignment.md` |
 | Technical note | `notes/metax-c500-paddle-backend-graphnet-probe.md` |
 
 ## What Not To Overclaim Yet
@@ -71,6 +75,7 @@ Current true claim:
 - completed backend capability and op coverage probe
 - completed mini GraphNet-style dynamic/static graph workload probe
 - completed Paddle Inference predictor probe for dense/mixed graph blocks
+- completed device-string compatibility probe for official GraphNet bring-up
 - identified image-level compiler limitation (`CINN=False`)
 - established a concrete path toward real GraphNet and vendor-profiler follow-up
 
@@ -79,7 +84,7 @@ Current true claim:
 The highest-return next tasks:
 
 1. Read GraphNet data format and benchmark driver.
-2. Run one real GraphNet sample in Paddle if dependencies fit the image.
-3. Add repeated-run statistics across several graph sizes.
+2. Patch or wrap official GraphNet Paddle benchmark so `cuda` maps to Paddle `gpu:0` on C500.
+3. Run one real GraphNet sample in Paddle if dependencies fit the image.
 4. Add vendor-profiler or `mx-smi` time-series sampling around each graph block.
 5. Compare predictor latency under larger graph sizes and batched/repeated request patterns.
