@@ -1,0 +1,31 @@
+Generating SQLite file /data/results/tileops-4090/profiling_20260811/nsys/bt_k8_threads512/report.sqlite from /data/results/tileops-4090/profiling_20260811/nsys/bt_k8_threads512/report.nsys-rep
+Processing [/data/results/tileops-4090/profiling_20260811/nsys/bt_k8_threads512/report.sqlite] with [/usr/local/cuda-12.8/NsightSystems-cli-2024.6.2/target-linux-x64/reports/cuda_gpu_kern_sum.py]... 
+
+ ** CUDA GPU Kernel Summary (cuda_gpu_kern_sum):
+
+ Time (%)  Total Time (ns)  Instances  Avg (ns)   Med (ns)   Min (ns)  Max (ns)  StdDev (ns)               Name              
+ --------  ---------------  ---------  ---------  ---------  --------  --------  -----------  -------------------------------
+    100.0          8055580          1  8055580.0  8055580.0   8055580   8055580          0.0  batched_transpose_kernel_kernel
+
+Processing [/data/results/tileops-4090/profiling_20260811/nsys/bt_k8_threads512/report.sqlite] with [/usr/local/cuda-12.8/NsightSystems-cli-2024.6.2/target-linux-x64/reports/cuda_api_sum.py]... 
+
+ ** CUDA API Summary (cuda_api_sum):
+
+ Time (%)  Total Time (ns)  Num Calls  Avg (ns)   Med (ns)   Min (ns)  Max (ns)  StdDev (ns)          Name         
+ --------  ---------------  ---------  ---------  ---------  --------  --------  -----------  ---------------------
+     99.4          7989191          1  7989191.0  7989191.0   7989191   7989191          0.0  cudaDeviceSynchronize
+      0.6            45951          1    45951.0    45951.0     45951     45951          0.0  cuLaunchKernel       
+      0.0             3389          1     3389.0     3389.0      3389      3389          0.0  cuProfilerStart      
+
+Processing [/data/results/tileops-4090/profiling_20260811/nsys/bt_k8_threads512/report.sqlite] with [/usr/local/cuda-12.8/NsightSystems-cli-2024.6.2/target-linux-x64/reports/osrt_sum.py]... 
+
+ ** OS Runtime Summary (osrt_sum):
+
+ Time (%)  Total Time (ns)  Num Calls  Avg (ns)  Med (ns)  Min (ns)  Max (ns)  StdDev (ns)   Name  
+ --------  ---------------  ---------  --------  --------  --------  --------  -----------  -------
+     67.4           636403         19   33494.9   12117.0      1564    282132      64680.4  read   
+     20.6           194550         67    2903.7    2230.0      1110      7507       1860.4  stat64 
+      9.4            89098         19    4689.4    5009.0      3087      5834        798.3  open64 
+      1.6            15137         13    1164.4    1128.0      1021      1506        120.3  fstat64
+      0.9             8415          2    4207.5    4207.5      3459      4956       1058.5  mmap64 
+

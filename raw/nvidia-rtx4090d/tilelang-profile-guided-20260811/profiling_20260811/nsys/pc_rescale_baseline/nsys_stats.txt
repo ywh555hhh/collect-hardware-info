@@ -1,0 +1,19 @@
+Generating SQLite file /data/results/tileops-4090/profiling_20260811/nsys/pc_rescale_baseline/report.sqlite from /data/results/tileops-4090/profiling_20260811/nsys/pc_rescale_baseline/report.nsys-rep
+Processing [/data/results/tileops-4090/profiling_20260811/nsys/pc_rescale_baseline/report.sqlite] with [/usr/local/cuda-12.8/NsightSystems-cli-2024.6.2/target-linux-x64/reports/cuda_gpu_kern_sum.py]... 
+
+ ** CUDA GPU Kernel Summary (cuda_gpu_kern_sum):
+
+ Time (%)  Total Time (ns)  Instances  Avg (ns)  Med (ns)  Min (ns)  Max (ns)  StdDev (ns)                  Name                
+ --------  ---------------  ---------  --------  --------  --------  --------  -----------  ------------------------------------
+    100.0            22144          1   22144.0   22144.0     22144     22144          0.0  per_channel_cast_fused_kernel_kernel
+
+Processing [/data/results/tileops-4090/profiling_20260811/nsys/pc_rescale_baseline/report.sqlite] with [/usr/local/cuda-12.8/NsightSystems-cli-2024.6.2/target-linux-x64/reports/cuda_api_sum.py]... 
+
+ ** CUDA API Summary (cuda_api_sum):
+
+ Time (%)  Total Time (ns)  Num Calls  Avg (ns)  Med (ns)  Min (ns)  Max (ns)  StdDev (ns)          Name         
+ --------  ---------------  ---------  --------  --------  --------  --------  -----------  ---------------------
+     76.5            76744          1   76744.0   76744.0     76744     76744          0.0  cuLaunchKernel       
+     16.7            16767          1   16767.0   16767.0     16767     16767          0.0  cudaDeviceSynchronize
+      6.7             6759          1    6759.0    6759.0      6759      6759          0.0  cuProfilerStart      
+

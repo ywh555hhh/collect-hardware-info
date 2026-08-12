@@ -1,0 +1,238 @@
+Running 224 items in this shard
+........................................................................ [ 32%]
+........................................................................ [ 64%]
+........................................................................ [ 96%]
+........                                                                 [100%]
+========================= Benchmark Regression Report ==========================
+No baseline file found — skipping regression comparison.
+  (looked at: /data/src/TileKernels-Metax/tests/benchmark_baselines.jsonl)
+
+Kernel                                                                                                                                                              Current    Bandwidth
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden= 576,num_per_tokens=32,num_tokens= 4096,round=1,without_transpose=True]                                19.0 us   635.5 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden= 576,num_per_tokens=32,num_tokens= 4096,round=1,swiglu_clamp_value=0.5,without_transpose=True]         19.1 us   633.4 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden= 576,num_per_tokens=32,num_tokens= 4096,round=0,without_transpose=True]                                19.1 us   632.2 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden= 576,num_per_tokens=32,num_tokens= 4096,round=0,swiglu_clamp_value=0.5,without_transpose=True]         19.1 us   633.2 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden= 576,num_per_tokens=32,num_tokens= 4096,round=1,without_transpose=False]                               19.1 us   634.4 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden= 576,num_per_tokens=32,num_tokens= 4096,round=1,swiglu_clamp_value=0.5,without_transpose=False]        19.0 us   637.4 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden= 576,num_per_tokens=32,num_tokens= 4096,round=0,without_transpose=False]                               19.1 us   634.3 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden= 576,num_per_tokens=32,num_tokens= 4096,round=0,swiglu_clamp_value=0.5,without_transpose=False]        19.1 us   632.5 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden= 576,num_per_tokens=128,num_tokens= 4096,round=1,without_transpose=True]                               19.1 us   621.3 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden= 576,num_per_tokens=128,num_tokens= 4096,round=1,swiglu_clamp_value=0.5,without_transpose=True]        19.1 us   621.6 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden= 576,num_per_tokens=128,num_tokens= 4096,round=0,without_transpose=True]                               19.1 us   621.6 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden= 576,num_per_tokens=128,num_tokens= 4096,round=0,swiglu_clamp_value=0.5,without_transpose=True]        19.1 us   622.6 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden= 576,num_per_tokens=128,num_tokens= 4096,round=1,without_transpose=False]                              19.1 us   622.8 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden= 576,num_per_tokens=128,num_tokens= 4096,round=1,swiglu_clamp_value=0.5,without_transpose=False]       19.0 us   624.6 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden= 576,num_per_tokens=128,num_tokens= 4096,round=0,without_transpose=False]                              19.1 us   620.1 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden= 576,num_per_tokens=128,num_tokens= 4096,round=0,swiglu_clamp_value=0.5,without_transpose=False]       19.2 us   618.0 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2048,num_per_tokens=32,num_tokens= 4096,round=1,without_transpose=True]                                56.9 us   755.7 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2048,num_per_tokens=32,num_tokens= 4096,round=1,swiglu_clamp_value=0.5,without_transpose=True]         56.9 us   755.1 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2048,num_per_tokens=32,num_tokens= 4096,round=0,without_transpose=True]                                56.9 us   755.6 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2048,num_per_tokens=32,num_tokens= 4096,round=0,swiglu_clamp_value=0.5,without_transpose=True]         57.1 us   753.5 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2048,num_per_tokens=32,num_tokens= 4096,round=1,without_transpose=False]                               58.5 us   735.0 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2048,num_per_tokens=32,num_tokens= 4096,round=1,swiglu_clamp_value=0.5,without_transpose=False]        58.5 us   735.3 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2048,num_per_tokens=32,num_tokens= 4096,round=0,without_transpose=False]                               58.5 us   734.8 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2048,num_per_tokens=32,num_tokens= 4096,round=0,swiglu_clamp_value=0.5,without_transpose=False]        58.5 us   735.1 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2048,num_per_tokens=128,num_tokens= 4096,round=1,without_transpose=True]                               57.3 us   736.4 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2048,num_per_tokens=128,num_tokens= 4096,round=1,swiglu_clamp_value=0.5,without_transpose=True]        57.3 us   736.0 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2048,num_per_tokens=128,num_tokens= 4096,round=0,without_transpose=True]                               57.4 us   735.0 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2048,num_per_tokens=128,num_tokens= 4096,round=0,swiglu_clamp_value=0.5,without_transpose=True]        57.4 us   735.1 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2048,num_per_tokens=128,num_tokens= 4096,round=1,without_transpose=False]                              58.5 us   721.7 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2048,num_per_tokens=128,num_tokens= 4096,round=1,swiglu_clamp_value=0.5,without_transpose=False]       58.6 us   720.0 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2048,num_per_tokens=128,num_tokens= 4096,round=0,without_transpose=False]                              58.7 us   719.0 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2048,num_per_tokens=128,num_tokens= 4096,round=0,swiglu_clamp_value=0.5,without_transpose=False]       58.6 us   720.1 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2560,num_per_tokens=32,num_tokens= 4096,round=1,without_transpose=True]                                70.3 us   764.6 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2560,num_per_tokens=32,num_tokens= 4096,round=1,swiglu_clamp_value=0.5,without_transpose=True]         70.4 us   762.9 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2560,num_per_tokens=32,num_tokens= 4096,round=0,without_transpose=True]                                70.4 us   763.7 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2560,num_per_tokens=32,num_tokens= 4096,round=0,swiglu_clamp_value=0.5,without_transpose=True]         70.4 us   763.2 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2560,num_per_tokens=32,num_tokens= 4096,round=1,without_transpose=False]                               73.9 us   727.4 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2560,num_per_tokens=32,num_tokens= 4096,round=1,swiglu_clamp_value=0.5,without_transpose=False]        73.8 us   728.3 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2560,num_per_tokens=32,num_tokens= 4096,round=0,without_transpose=False]                               74.0 us   725.7 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2560,num_per_tokens=32,num_tokens= 4096,round=0,swiglu_clamp_value=0.5,without_transpose=False]        74.0 us   726.2 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2560,num_per_tokens=128,num_tokens= 4096,round=1,without_transpose=True]                               69.9 us   754.3 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2560,num_per_tokens=128,num_tokens= 4096,round=1,swiglu_clamp_value=0.5,without_transpose=True]        69.8 us   756.0 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2560,num_per_tokens=128,num_tokens= 4096,round=0,without_transpose=True]                               69.9 us   755.1 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2560,num_per_tokens=128,num_tokens= 4096,round=0,swiglu_clamp_value=0.5,without_transpose=True]        69.9 us   755.0 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2560,num_per_tokens=128,num_tokens= 4096,round=1,without_transpose=False]                              73.3 us   720.0 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2560,num_per_tokens=128,num_tokens= 4096,round=1,swiglu_clamp_value=0.5,without_transpose=False]       73.3 us   719.8 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2560,num_per_tokens=128,num_tokens= 4096,round=0,without_transpose=False]                              73.3 us   719.3 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2560,num_per_tokens=128,num_tokens= 4096,round=0,swiglu_clamp_value=0.5,without_transpose=False]       73.3 us   720.2 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=3072,num_per_tokens=32,num_tokens= 4096,round=1,without_transpose=True]                                82.3 us   783.6 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=3072,num_per_tokens=32,num_tokens= 4096,round=1,swiglu_clamp_value=0.5,without_transpose=True]         82.3 us   783.9 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=3072,num_per_tokens=32,num_tokens= 4096,round=0,without_transpose=True]                                82.1 us   785.5 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=3072,num_per_tokens=32,num_tokens= 4096,round=0,swiglu_clamp_value=0.5,without_transpose=True]         82.2 us   784.1 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=3072,num_per_tokens=32,num_tokens= 4096,round=1,without_transpose=False]                               85.6 us   753.0 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=3072,num_per_tokens=32,num_tokens= 4096,round=1,swiglu_clamp_value=0.5,without_transpose=False]        85.7 us   752.3 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=3072,num_per_tokens=32,num_tokens= 4096,round=0,without_transpose=False]                               85.9 us   751.0 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=3072,num_per_tokens=32,num_tokens= 4096,round=0,swiglu_clamp_value=0.5,without_transpose=False]        85.7 us   752.1 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=3072,num_per_tokens=128,num_tokens= 4096,round=1,without_transpose=True]                               82.2 us   769.8 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=3072,num_per_tokens=128,num_tokens= 4096,round=1,swiglu_clamp_value=0.5,without_transpose=True]        82.2 us   769.7 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=3072,num_per_tokens=128,num_tokens= 4096,round=0,without_transpose=True]                               82.4 us   768.5 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=3072,num_per_tokens=128,num_tokens= 4096,round=0,swiglu_clamp_value=0.5,without_transpose=True]        82.2 us   769.9 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=3072,num_per_tokens=128,num_tokens= 4096,round=1,without_transpose=False]                              83.9 us   754.2 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=3072,num_per_tokens=128,num_tokens= 4096,round=1,swiglu_clamp_value=0.5,without_transpose=False]       83.9 us   754.9 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=3072,num_per_tokens=128,num_tokens= 4096,round=0,without_transpose=False]                              84.0 us   753.3 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=3072,num_per_tokens=128,num_tokens= 4096,round=0,swiglu_clamp_value=0.5,without_transpose=False]       84.1 us   753.1 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=4096,num_per_tokens=32,num_tokens= 4096,round=1,without_transpose=True]                               107.4 us   800.7 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=4096,num_per_tokens=32,num_tokens= 4096,round=1,swiglu_clamp_value=0.5,without_transpose=True]        107.4 us   800.5 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=4096,num_per_tokens=32,num_tokens= 4096,round=0,without_transpose=True]                               107.7 us   798.7 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=4096,num_per_tokens=32,num_tokens= 4096,round=0,swiglu_clamp_value=0.5,without_transpose=True]        107.6 us   798.9 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=4096,num_per_tokens=32,num_tokens= 4096,round=1,without_transpose=False]                              110.6 us   777.4 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=4096,num_per_tokens=32,num_tokens= 4096,round=1,swiglu_clamp_value=0.5,without_transpose=False]       110.7 us   777.1 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=4096,num_per_tokens=32,num_tokens= 4096,round=0,without_transpose=False]                              110.5 us   777.9 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=4096,num_per_tokens=32,num_tokens= 4096,round=0,swiglu_clamp_value=0.5,without_transpose=False]       110.8 us   776.3 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=4096,num_per_tokens=128,num_tokens= 4096,round=1,without_transpose=True]                              108.1 us   781.1 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=4096,num_per_tokens=128,num_tokens= 4096,round=1,swiglu_clamp_value=0.5,without_transpose=True]       108.1 us   780.9 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=4096,num_per_tokens=128,num_tokens= 4096,round=0,without_transpose=True]                              108.2 us   780.5 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=4096,num_per_tokens=128,num_tokens= 4096,round=0,swiglu_clamp_value=0.5,without_transpose=True]       108.0 us   781.4 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=4096,num_per_tokens=128,num_tokens= 4096,round=1,without_transpose=False]                             109.2 us   772.6 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=4096,num_per_tokens=128,num_tokens= 4096,round=1,swiglu_clamp_value=0.5,without_transpose=False]      109.3 us   772.0 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=4096,num_per_tokens=128,num_tokens= 4096,round=0,without_transpose=False]                             109.5 us   770.9 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=4096,num_per_tokens=128,num_tokens= 4096,round=0,swiglu_clamp_value=0.5,without_transpose=False]      109.4 us   771.3 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=6144,num_per_tokens=32,num_tokens= 4096,round=1,without_transpose=True]                               155.0 us   832.2 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=6144,num_per_tokens=32,num_tokens= 4096,round=1,swiglu_clamp_value=0.5,without_transpose=True]        155.0 us   832.3 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=6144,num_per_tokens=32,num_tokens= 4096,round=0,without_transpose=True]                               154.9 us   832.7 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=6144,num_per_tokens=32,num_tokens= 4096,round=0,swiglu_clamp_value=0.5,without_transpose=True]        155.1 us   831.7 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=6144,num_per_tokens=32,num_tokens= 4096,round=1,without_transpose=False]                              161.0 us   801.3 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=6144,num_per_tokens=32,num_tokens= 4096,round=1,swiglu_clamp_value=0.5,without_transpose=False]       161.1 us   800.7 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=6144,num_per_tokens=32,num_tokens= 4096,round=0,without_transpose=False]                              161.2 us   800.1 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=6144,num_per_tokens=32,num_tokens= 4096,round=0,swiglu_clamp_value=0.5,without_transpose=False]       161.4 us   799.0 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=6144,num_per_tokens=128,num_tokens= 4096,round=1,without_transpose=True]                              158.7 us   798.0 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=6144,num_per_tokens=128,num_tokens= 4096,round=1,swiglu_clamp_value=0.5,without_transpose=True]       158.7 us   798.0 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=6144,num_per_tokens=128,num_tokens= 4096,round=0,without_transpose=True]                              158.7 us   798.1 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=6144,num_per_tokens=128,num_tokens= 4096,round=0,swiglu_clamp_value=0.5,without_transpose=True]       158.4 us   799.1 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=6144,num_per_tokens=128,num_tokens= 4096,round=1,without_transpose=False]                             159.2 us   795.4 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=6144,num_per_tokens=128,num_tokens= 4096,round=1,swiglu_clamp_value=0.5,without_transpose=False]      159.2 us   795.3 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=6144,num_per_tokens=128,num_tokens= 4096,round=0,without_transpose=False]                             159.3 us   794.6 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=6144,num_per_tokens=128,num_tokens= 4096,round=0,swiglu_clamp_value=0.5,without_transpose=False]      159.3 us   794.6 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=7168,num_per_tokens=32,num_tokens= 4096,round=1,without_transpose=True]                               178.5 us   843.0 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=7168,num_per_tokens=32,num_tokens= 4096,round=1,swiglu_clamp_value=0.5,without_transpose=True]        178.5 us   843.0 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=7168,num_per_tokens=32,num_tokens= 4096,round=0,without_transpose=True]                               178.6 us   842.5 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=7168,num_per_tokens=32,num_tokens= 4096,round=0,swiglu_clamp_value=0.5,without_transpose=True]        178.5 us   842.9 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=7168,num_per_tokens=32,num_tokens= 4096,round=1,without_transpose=False]                              185.4 us   811.6 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=7168,num_per_tokens=32,num_tokens= 4096,round=1,swiglu_clamp_value=0.5,without_transpose=False]       185.3 us   812.0 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=7168,num_per_tokens=32,num_tokens= 4096,round=0,without_transpose=False]                              185.5 us   811.0 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=7168,num_per_tokens=32,num_tokens= 4096,round=0,swiglu_clamp_value=0.5,without_transpose=False]       185.5 us   811.2 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=7168,num_per_tokens=128,num_tokens= 4096,round=1,without_transpose=True]                              180.8 us   817.0 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=7168,num_per_tokens=128,num_tokens= 4096,round=1,swiglu_clamp_value=0.5,without_transpose=True]       180.8 us   816.9 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=7168,num_per_tokens=128,num_tokens= 4096,round=0,without_transpose=True]                              180.9 us   816.5 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=7168,num_per_tokens=128,num_tokens= 4096,round=0,swiglu_clamp_value=0.5,without_transpose=True]       180.9 us   816.5 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=7168,num_per_tokens=128,num_tokens= 4096,round=1,without_transpose=False]                             183.2 us   806.4 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=7168,num_per_tokens=128,num_tokens= 4096,round=1,swiglu_clamp_value=0.5,without_transpose=False]      183.4 us   805.5 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=7168,num_per_tokens=128,num_tokens= 4096,round=0,without_transpose=False]                             183.3 us   805.9 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=7168,num_per_tokens=128,num_tokens= 4096,round=0,swiglu_clamp_value=0.5,without_transpose=False]      183.2 us   806.2 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden= 576,num_per_tokens=32,num_tokens= 8064,round=1,without_transpose=True]                                35.3 us   675.2 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden= 576,num_per_tokens=32,num_tokens= 8064,round=1,swiglu_clamp_value=0.5,without_transpose=True]         35.2 us   675.6 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden= 576,num_per_tokens=32,num_tokens= 8064,round=0,without_transpose=True]                                35.4 us   672.9 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden= 576,num_per_tokens=32,num_tokens= 8064,round=0,swiglu_clamp_value=0.5,without_transpose=True]         35.2 us   675.9 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden= 576,num_per_tokens=32,num_tokens= 8064,round=1,without_transpose=False]                               33.4 us   712.8 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden= 576,num_per_tokens=32,num_tokens= 8064,round=1,swiglu_clamp_value=0.5,without_transpose=False]        33.4 us   712.0 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden= 576,num_per_tokens=32,num_tokens= 8064,round=0,without_transpose=False]                               33.6 us   709.4 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden= 576,num_per_tokens=32,num_tokens= 8064,round=0,swiglu_clamp_value=0.5,without_transpose=False]        33.5 us   711.1 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden= 576,num_per_tokens=128,num_tokens= 8064,round=1,without_transpose=True]                               34.2 us   683.1 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden= 576,num_per_tokens=128,num_tokens= 8064,round=1,swiglu_clamp_value=0.5,without_transpose=True]        34.3 us   681.4 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden= 576,num_per_tokens=128,num_tokens= 8064,round=0,without_transpose=True]                               34.3 us   681.9 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden= 576,num_per_tokens=128,num_tokens= 8064,round=0,swiglu_clamp_value=0.5,without_transpose=True]        34.3 us   681.5 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden= 576,num_per_tokens=128,num_tokens= 8064,round=1,without_transpose=False]                              33.2 us   703.7 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden= 576,num_per_tokens=128,num_tokens= 8064,round=1,swiglu_clamp_value=0.5,without_transpose=False]       33.1 us   705.4 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden= 576,num_per_tokens=128,num_tokens= 8064,round=0,without_transpose=False]                              33.4 us   700.5 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden= 576,num_per_tokens=128,num_tokens= 8064,round=0,swiglu_clamp_value=0.5,without_transpose=False]       33.2 us   703.5 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2048,num_per_tokens=32,num_tokens= 8064,round=1,without_transpose=True]                               106.2 us   796.6 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2048,num_per_tokens=32,num_tokens= 8064,round=1,swiglu_clamp_value=0.5,without_transpose=True]        106.3 us   796.0 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2048,num_per_tokens=32,num_tokens= 8064,round=0,without_transpose=True]                               106.2 us   797.3 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2048,num_per_tokens=32,num_tokens= 8064,round=0,swiglu_clamp_value=0.5,without_transpose=True]        106.1 us   797.7 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2048,num_per_tokens=32,num_tokens= 8064,round=1,without_transpose=False]                              109.8 us   770.9 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2048,num_per_tokens=32,num_tokens= 8064,round=1,swiglu_clamp_value=0.5,without_transpose=False]       109.8 us   770.8 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2048,num_per_tokens=32,num_tokens= 8064,round=0,without_transpose=False]                              109.8 us   771.1 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2048,num_per_tokens=32,num_tokens= 8064,round=0,swiglu_clamp_value=0.5,without_transpose=False]       109.8 us   771.2 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2048,num_per_tokens=128,num_tokens= 8064,round=1,without_transpose=True]                              108.3 us   767.5 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2048,num_per_tokens=128,num_tokens= 8064,round=1,swiglu_clamp_value=0.5,without_transpose=True]       108.1 us   768.4 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2048,num_per_tokens=128,num_tokens= 8064,round=0,without_transpose=True]                              108.1 us   768.9 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2048,num_per_tokens=128,num_tokens= 8064,round=0,swiglu_clamp_value=0.5,without_transpose=True]       108.2 us   767.7 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2048,num_per_tokens=128,num_tokens= 8064,round=1,without_transpose=False]                             108.4 us   766.3 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2048,num_per_tokens=128,num_tokens= 8064,round=1,swiglu_clamp_value=0.5,without_transpose=False]      108.4 us   766.2 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2048,num_per_tokens=128,num_tokens= 8064,round=0,without_transpose=False]                             108.4 us   766.7 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2048,num_per_tokens=128,num_tokens= 8064,round=0,swiglu_clamp_value=0.5,without_transpose=False]      108.5 us   766.0 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2560,num_per_tokens=32,num_tokens= 8064,round=1,without_transpose=True]                               129.3 us   818.0 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2560,num_per_tokens=32,num_tokens= 8064,round=1,swiglu_clamp_value=0.5,without_transpose=True]        129.2 us   819.1 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2560,num_per_tokens=32,num_tokens= 8064,round=0,without_transpose=True]                               129.2 us   818.7 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2560,num_per_tokens=32,num_tokens= 8064,round=0,swiglu_clamp_value=0.5,without_transpose=True]        129.3 us   818.0 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2560,num_per_tokens=32,num_tokens= 8064,round=1,without_transpose=False]                              134.4 us   787.3 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2560,num_per_tokens=32,num_tokens= 8064,round=1,swiglu_clamp_value=0.5,without_transpose=False]       134.3 us   787.7 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2560,num_per_tokens=32,num_tokens= 8064,round=0,without_transpose=False]                              134.3 us   787.7 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2560,num_per_tokens=32,num_tokens= 8064,round=0,swiglu_clamp_value=0.5,without_transpose=False]       134.3 us   787.6 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2560,num_per_tokens=128,num_tokens= 8064,round=1,without_transpose=True]                              130.7 us   794.9 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2560,num_per_tokens=128,num_tokens= 8064,round=1,swiglu_clamp_value=0.5,without_transpose=True]       130.4 us   796.6 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2560,num_per_tokens=128,num_tokens= 8064,round=0,without_transpose=True]                              130.5 us   795.9 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2560,num_per_tokens=128,num_tokens= 8064,round=0,swiglu_clamp_value=0.5,without_transpose=True]       130.6 us   795.4 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2560,num_per_tokens=128,num_tokens= 8064,round=1,without_transpose=False]                             132.2 us   785.6 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2560,num_per_tokens=128,num_tokens= 8064,round=1,swiglu_clamp_value=0.5,without_transpose=False]      132.3 us   785.0 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2560,num_per_tokens=128,num_tokens= 8064,round=0,without_transpose=False]                             132.2 us   785.5 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=2560,num_per_tokens=128,num_tokens= 8064,round=0,swiglu_clamp_value=0.5,without_transpose=False]      132.4 us   784.6 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=3072,num_per_tokens=32,num_tokens= 8064,round=1,without_transpose=True]                               154.3 us   822.9 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=3072,num_per_tokens=32,num_tokens= 8064,round=1,swiglu_clamp_value=0.5,without_transpose=True]        154.3 us   822.9 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=3072,num_per_tokens=32,num_tokens= 8064,round=0,without_transpose=True]                               154.3 us   822.8 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=3072,num_per_tokens=32,num_tokens= 8064,round=0,swiglu_clamp_value=0.5,without_transpose=True]        154.3 us   822.7 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=3072,num_per_tokens=32,num_tokens= 8064,round=1,without_transpose=False]                              158.8 us   799.6 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=3072,num_per_tokens=32,num_tokens= 8064,round=1,swiglu_clamp_value=0.5,without_transpose=False]       158.7 us   799.9 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=3072,num_per_tokens=32,num_tokens= 8064,round=0,without_transpose=False]                              158.9 us   799.1 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=3072,num_per_tokens=32,num_tokens= 8064,round=0,swiglu_clamp_value=0.5,without_transpose=False]       159.0 us   798.4 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=3072,num_per_tokens=128,num_tokens= 8064,round=1,without_transpose=True]                              156.0 us   799.1 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=3072,num_per_tokens=128,num_tokens= 8064,round=1,swiglu_clamp_value=0.5,without_transpose=True]       156.0 us   799.1 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=3072,num_per_tokens=128,num_tokens= 8064,round=0,without_transpose=True]                              155.9 us   799.4 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=3072,num_per_tokens=128,num_tokens= 8064,round=0,swiglu_clamp_value=0.5,without_transpose=True]       156.0 us   799.0 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=3072,num_per_tokens=128,num_tokens= 8064,round=1,without_transpose=False]                             157.1 us   793.3 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=3072,num_per_tokens=128,num_tokens= 8064,round=1,swiglu_clamp_value=0.5,without_transpose=False]      157.0 us   793.7 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=3072,num_per_tokens=128,num_tokens= 8064,round=0,without_transpose=False]                             157.1 us   793.3 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=3072,num_per_tokens=128,num_tokens= 8064,round=0,swiglu_clamp_value=0.5,without_transpose=False]      157.2 us   793.0 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=4096,num_per_tokens=32,num_tokens= 8064,round=1,without_transpose=True]                               200.8 us   843.2 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=4096,num_per_tokens=32,num_tokens= 8064,round=1,swiglu_clamp_value=0.5,without_transpose=True]        200.9 us   842.8 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=4096,num_per_tokens=32,num_tokens= 8064,round=0,without_transpose=True]                               200.8 us   842.9 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=4096,num_per_tokens=32,num_tokens= 8064,round=0,swiglu_clamp_value=0.5,without_transpose=True]        200.8 us   842.9 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=4096,num_per_tokens=32,num_tokens= 8064,round=1,without_transpose=False]                              207.4 us   816.3 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=4096,num_per_tokens=32,num_tokens= 8064,round=1,swiglu_clamp_value=0.5,without_transpose=False]       207.5 us   815.9 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=4096,num_per_tokens=32,num_tokens= 8064,round=0,without_transpose=False]                              207.4 us   816.3 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=4096,num_per_tokens=32,num_tokens= 8064,round=0,swiglu_clamp_value=0.5,without_transpose=False]       207.6 us   815.4 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=4096,num_per_tokens=128,num_tokens= 8064,round=1,without_transpose=True]                              203.2 us   817.8 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=4096,num_per_tokens=128,num_tokens= 8064,round=1,swiglu_clamp_value=0.5,without_transpose=True]       203.3 us   817.5 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=4096,num_per_tokens=128,num_tokens= 8064,round=0,without_transpose=True]                              203.3 us   817.5 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=4096,num_per_tokens=128,num_tokens= 8064,round=0,swiglu_clamp_value=0.5,without_transpose=True]       203.2 us   817.9 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=4096,num_per_tokens=128,num_tokens= 8064,round=1,without_transpose=False]                             205.0 us   810.5 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=4096,num_per_tokens=128,num_tokens= 8064,round=1,swiglu_clamp_value=0.5,without_transpose=False]      205.2 us   810.1 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=4096,num_per_tokens=128,num_tokens= 8064,round=0,without_transpose=False]                             205.0 us   810.6 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=4096,num_per_tokens=128,num_tokens= 8064,round=0,swiglu_clamp_value=0.5,without_transpose=False]      205.2 us   810.0 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=6144,num_per_tokens=32,num_tokens= 8064,round=1,without_transpose=True]                               294.2 us   863.2 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=6144,num_per_tokens=32,num_tokens= 8064,round=1,swiglu_clamp_value=0.5,without_transpose=True]        293.4 us   865.3 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=6144,num_per_tokens=32,num_tokens= 8064,round=0,without_transpose=True]                               293.9 us   864.0 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=6144,num_per_tokens=32,num_tokens= 8064,round=0,swiglu_clamp_value=0.5,without_transpose=True]        293.6 us   864.9 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=6144,num_per_tokens=32,num_tokens= 8064,round=1,without_transpose=False]                              304.4 us   834.3 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=6144,num_per_tokens=32,num_tokens= 8064,round=1,swiglu_clamp_value=0.5,without_transpose=False]       304.1 us   834.9 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=6144,num_per_tokens=32,num_tokens= 8064,round=0,without_transpose=False]                              304.4 us   834.2 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=6144,num_per_tokens=32,num_tokens= 8064,round=0,swiglu_clamp_value=0.5,without_transpose=False]       304.3 us   834.5 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=6144,num_per_tokens=128,num_tokens= 8064,round=1,without_transpose=True]                              299.5 us   832.4 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=6144,num_per_tokens=128,num_tokens= 8064,round=1,swiglu_clamp_value=0.5,without_transpose=True]       299.4 us   832.5 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=6144,num_per_tokens=128,num_tokens= 8064,round=0,without_transpose=True]                              299.4 us   832.7 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=6144,num_per_tokens=128,num_tokens= 8064,round=0,swiglu_clamp_value=0.5,without_transpose=True]       299.4 us   832.5 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=6144,num_per_tokens=128,num_tokens= 8064,round=1,without_transpose=False]                             300.9 us   828.3 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=6144,num_per_tokens=128,num_tokens= 8064,round=1,swiglu_clamp_value=0.5,without_transpose=False]      300.8 us   828.6 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=6144,num_per_tokens=128,num_tokens= 8064,round=0,without_transpose=False]                             300.8 us   828.8 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=6144,num_per_tokens=128,num_tokens= 8064,round=0,swiglu_clamp_value=0.5,without_transpose=False]      301.0 us   828.1 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=7168,num_per_tokens=32,num_tokens= 8064,round=1,without_transpose=True]                               341.1 us   868.4 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=7168,num_per_tokens=32,num_tokens= 8064,round=1,swiglu_clamp_value=0.5,without_transpose=True]        340.5 us   870.0 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=7168,num_per_tokens=32,num_tokens= 8064,round=0,without_transpose=True]                               340.5 us   869.9 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=7168,num_per_tokens=32,num_tokens= 8064,round=0,swiglu_clamp_value=0.5,without_transpose=True]        340.5 us   870.1 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=7168,num_per_tokens=32,num_tokens= 8064,round=1,without_transpose=False]                              349.3 us   848.0 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=7168,num_per_tokens=32,num_tokens= 8064,round=1,swiglu_clamp_value=0.5,without_transpose=False]       349.2 us   848.4 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=7168,num_per_tokens=32,num_tokens= 8064,round=0,without_transpose=False]                              349.2 us   848.2 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=7168,num_per_tokens=32,num_tokens= 8064,round=0,swiglu_clamp_value=0.5,without_transpose=False]       349.3 us   848.2 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=7168,num_per_tokens=128,num_tokens= 8064,round=1,without_transpose=True]                              343.5 us   846.7 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=7168,num_per_tokens=128,num_tokens= 8064,round=1,swiglu_clamp_value=0.5,without_transpose=True]       343.5 us   846.7 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=7168,num_per_tokens=128,num_tokens= 8064,round=0,without_transpose=True]                              343.5 us   846.7 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=7168,num_per_tokens=128,num_tokens= 8064,round=0,swiglu_clamp_value=0.5,without_transpose=True]       343.4 us   846.9 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=7168,num_per_tokens=128,num_tokens= 8064,round=1,without_transpose=False]                             345.6 us   841.5 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=7168,num_per_tokens=128,num_tokens= 8064,round=1,swiglu_clamp_value=0.5,without_transpose=False]      345.6 us   841.6 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=7168,num_per_tokens=128,num_tokens= 8064,round=0,without_transpose=False]                             345.6 us   841.6 GB/s
+swiglu_forward_and_per_channel_cast_and_transpose/fwd[hidden=7168,num_per_tokens=128,num_tokens= 8064,round=0,swiglu_clamp_value=0.5,without_transpose=False]      345.5 us   841.6 GB/s
+
+Total: 224 benchmarks, 0 with baselines, 224 missing, 0 regressions, 0 improvements (threshold: 15%)
+224 passed, 224 warnings in 34.36s

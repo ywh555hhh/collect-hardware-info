@@ -8,6 +8,64 @@
 
 ## 当前数据
 
+### NVIDIA RTX 4090 D
+
+采集时间：2026-08-11 / 2026-08-12
+
+这批数据记录 TileLang / TileKernels-Metax 三个 FP8/MoE 相关算子在 RTX 4090 D 上的 profile-guided 优化尝试。重点不是硬件属性枚举，而是沉淀一组真实 kernel 优化闭环：C500 迁移思路、4090 上的 NSYS profiling、correctness-gated benchmark、最终 adaptive 默认策略和代码快照。
+
+环境摘要：
+
+| 项目 | 值 |
+| --- | --- |
+| GPU | NVIDIA GeForce RTX 4090 D |
+| CUDA | 12.8 |
+| Driver | 570.124.06 |
+| NSYS | 2024.6.2 |
+| NCU | 2025.1.0 |
+| NCU counter 状态 | 被 `RmProfilingAdminOnly=1` 阻塞 |
+| Repository | TileKernels-Metax |
+
+最终三算子结果：
+
+| 算子 | 通过 rows | Gmean BW | Peak BW | Gmean speedup |
+| --- | ---: | ---: | ---: | ---: |
+| `per_channel_cast_fused` | 96/96 | 1044.7 GB/s | 1474.8 GB/s | 1.0604x |
+| `batched_transpose` | 84/84 | 904.7 GB/s | 932.7 GB/s | 1.0054x |
+| `swiglu_forward_and_per_channel_cast_and_transpose` | 224/224 | 773.3 GB/s | 870.1 GB/s | 1.0051x |
+
+关键观察：
+
+- DeepSeek/TileKernels 原实现已经很强，单 kernel 局部调参空间有限。
+- 最大可写结果来自 `per_channel_cast_fused` 的 MoE/topk expand 路径：profile-guided adaptive 默认策略达到 `~6.0%` gmean speedup 和 `~1.475 TB/s` peak bandwidth。
+- `batched_transpose` 的 `block_k=8 + threads=512` 是 correctness 修复后的真实小收益，不应包装成大 SOTA。
+- SwiGLU 的 `128x64` tile 只适合 transpose path + `num_per_tokens=32`，全局启用会伤害 no-transpose path。
+- NCU counter 当前不可用，因此本轮可信证据是 NSYS kernel summary + benchmark JSONL + correctness/pass rows。
+
+相关目录：
+
+```text
+notes/
+  nvidia-rtx4090d-tilelang-profile-guided.md
+  nvidia-rtx4090d-tilelang-per-channel-sweep.md
+  nvidia-rtx4090d-tilelang-three-operator-push.md
+  nvidia-rtx4090d-tilelang-sota-push.md
+
+kernels/nvidia-rtx4090d/tilelang-profile-guided/
+  *_4090_profile_guided_kernel.py
+
+probes/nvidia-rtx4090d/tilelang-profile-guided/
+  run_*.sh
+  profile_*.py
+
+raw/nvidia-rtx4090d/tilelang-profile-guided-20260811/
+  profile_guided_adaptive_20260811/
+  profiling_20260811/
+  opt_sweep/
+  three_ops_push_20260811/
+  sota_push_20260811/
+```
+
 ### MetaX C500
 
 采集时间：2026-08-12
@@ -55,14 +113,22 @@
 
 ```text
 raw/
+  nvidia-rtx4090d/
+    tilelang-profile-guided-20260811/ # benchmark JSONL + NSYS stats + pytest logs
   metax-c500/
     c500_hardware_exposure.txt  # mx-smi help/plain/query + PyTorch props + MACA runtime props
     c500_mxsmi_detail.txt       # mx-smi 各 show 子命令详细输出
 
 probes/
+  nvidia-rtx4090d/
+    tilelang-profile-guided/     # TileLang benchmark/profile reproduction scripts
   metax-c500/
     add1.cpp                    # 最小 MACA 自定义 kernel 编译/运行探针
     device_props.cpp            # mcGetDeviceProperties 属性采集探针
+
+kernels/
+  nvidia-rtx4090d/
+    tilelang-profile-guided/     # final profile-guided TileLang kernel snapshots
 ```
 
 ## 复现方式

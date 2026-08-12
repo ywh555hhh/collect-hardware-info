@@ -1,0 +1,19 @@
+Generating SQLite file /data/results/tileops-4090/profiling_20260811/nsys_adaptive_focus/swiglu_t32_adaptive/report.sqlite from /data/results/tileops-4090/profiling_20260811/nsys_adaptive_focus/swiglu_t32_adaptive/report.nsys-rep
+Processing [/data/results/tileops-4090/profiling_20260811/nsys_adaptive_focus/swiglu_t32_adaptive/report.sqlite] with [/usr/local/cuda-12.8/NsightSystems-cli-2024.6.2/target-linux-x64/reports/cuda_gpu_kern_sum.py]... 
+
+ ** CUDA GPU Kernel Summary (cuda_gpu_kern_sum):
+
+ Time (%)  Total Time (ns)  Instances  Avg (ns)  Med (ns)  Min (ns)  Max (ns)  StdDev (ns)                               Name                              
+ --------  ---------------  ---------  --------  --------  --------  --------  -----------  ---------------------------------------------------------------
+    100.0            14400          1   14400.0   14400.0     14400     14400          0.0  swiglu_forward_and_per_channel_cast_and_transpose_kernel_kernel
+
+Processing [/data/results/tileops-4090/profiling_20260811/nsys_adaptive_focus/swiglu_t32_adaptive/report.sqlite] with [/usr/local/cuda-12.8/NsightSystems-cli-2024.6.2/target-linux-x64/reports/cuda_api_sum.py]... 
+
+ ** CUDA API Summary (cuda_api_sum):
+
+ Time (%)  Total Time (ns)  Num Calls  Avg (ns)  Med (ns)  Min (ns)  Max (ns)  StdDev (ns)          Name         
+ --------  ---------------  ---------  --------  --------  --------  --------  -----------  ---------------------
+     77.4            56119          1   56119.0   56119.0     56119     56119          0.0  cuLaunchKernel       
+     15.1            10983          1   10983.0   10983.0     10983     10983          0.0  cudaDeviceSynchronize
+      7.5             5429          1    5429.0    5429.0      5429      5429          0.0  cuProfilerStart      
+

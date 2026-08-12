@@ -1,0 +1,108 @@
+Running 96 items in this shard
+........................................................................ [ 75%]
+........................                                                 [100%]
+========================= Benchmark Regression Report ==========================
+No baseline file found — skipping regression comparison.
+  (looked at: /data/src/TileKernels-Metax/tests/benchmark_baselines.jsonl)
+
+Kernel                                                                                                                                                                Current    Bandwidth
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+per_channel_cast_fused/fwd[hidden=2048,is_fused_cast_back=False,ep= 0,experts=  0,num_per_channels= 128,num_per_tokens=128,num_tokens= 4096,num_topk=0,round=0]       38.1 us   667.6 GB/s
+per_channel_cast_fused/fwd[hidden=2048,is_fused_cast_back=False,ep= 0,experts=  0,num_per_channels= 128,num_per_tokens=128,num_tokens= 4096,num_topk=0,round=1]       38.3 us   663.4 GB/s
+per_channel_cast_fused/fwd[hidden=2048,is_fused_cast_back=True,ep= 0,experts=  0,num_per_channels= 128,num_per_tokens=128,num_tokens= 4096,num_topk=0,round=0]        26.9 us   642.4 GB/s
+per_channel_cast_fused/fwd[hidden=2048,is_fused_cast_back=True,ep= 0,experts=  0,num_per_channels= 128,num_per_tokens=128,num_tokens= 4096,num_topk=0,round=1]        26.8 us   645.7 GB/s
+per_channel_cast_fused/fwd[hidden=2560,is_fused_cast_back=False,ep= 0,experts=  0,num_per_channels= 128,num_per_tokens=128,num_tokens= 4096,num_topk=0,round=0]       45.8 us   694.3 GB/s
+per_channel_cast_fused/fwd[hidden=2560,is_fused_cast_back=False,ep= 0,experts=  0,num_per_channels= 128,num_per_tokens=128,num_tokens= 4096,num_topk=0,round=1]       46.2 us   688.6 GB/s
+per_channel_cast_fused/fwd[hidden=2560,is_fused_cast_back=True,ep= 0,experts=  0,num_per_channels= 128,num_per_tokens=128,num_tokens= 4096,num_topk=0,round=0]        32.8 us   659.7 GB/s
+per_channel_cast_fused/fwd[hidden=2560,is_fused_cast_back=True,ep= 0,experts=  0,num_per_channels= 128,num_per_tokens=128,num_tokens= 4096,num_topk=0,round=1]        32.8 us   660.2 GB/s
+per_channel_cast_fused/fwd[hidden=3072,is_fused_cast_back=False,ep= 0,experts=  0,num_per_channels= 128,num_per_tokens=128,num_tokens= 4096,num_topk=0,round=0]       53.2 us   717.2 GB/s
+per_channel_cast_fused/fwd[hidden=3072,is_fused_cast_back=False,ep= 0,experts=  0,num_per_channels= 128,num_per_tokens=128,num_tokens= 4096,num_topk=0,round=1]       53.1 us   717.7 GB/s
+per_channel_cast_fused/fwd[hidden=3072,is_fused_cast_back=True,ep= 0,experts=  0,num_per_channels= 128,num_per_tokens=128,num_tokens= 4096,num_topk=0,round=0]        37.8 us   686.0 GB/s
+per_channel_cast_fused/fwd[hidden=3072,is_fused_cast_back=True,ep= 0,experts=  0,num_per_channels= 128,num_per_tokens=128,num_tokens= 4096,num_topk=0,round=1]        37.9 us   684.4 GB/s
+per_channel_cast_fused/fwd[hidden=4096,is_fused_cast_back=False,ep= 0,experts=  0,num_per_channels= 128,num_per_tokens=128,num_tokens= 4096,num_topk=0,round=0]       68.3 us   744.0 GB/s
+per_channel_cast_fused/fwd[hidden=4096,is_fused_cast_back=False,ep= 0,experts=  0,num_per_channels= 128,num_per_tokens=128,num_tokens= 4096,num_topk=0,round=1]       68.3 us   745.0 GB/s
+per_channel_cast_fused/fwd[hidden=4096,is_fused_cast_back=True,ep= 0,experts=  0,num_per_channels= 128,num_per_tokens=128,num_tokens= 4096,num_topk=0,round=0]        50.0 us   691.7 GB/s
+per_channel_cast_fused/fwd[hidden=4096,is_fused_cast_back=True,ep= 0,experts=  0,num_per_channels= 128,num_per_tokens=128,num_tokens= 4096,num_topk=0,round=1]        49.9 us   693.0 GB/s
+per_channel_cast_fused/fwd[hidden=6144,is_fused_cast_back=False,ep= 0,experts=  0,num_per_channels= 128,num_per_tokens=128,num_tokens= 4096,num_topk=0,round=0]       98.7 us   772.9 GB/s
+per_channel_cast_fused/fwd[hidden=6144,is_fused_cast_back=False,ep= 0,experts=  0,num_per_channels= 128,num_per_tokens=128,num_tokens= 4096,num_topk=0,round=1]       98.7 us   773.1 GB/s
+per_channel_cast_fused/fwd[hidden=6144,is_fused_cast_back=True,ep= 0,experts=  0,num_per_channels= 128,num_per_tokens=128,num_tokens= 4096,num_topk=0,round=0]        70.3 us   738.5 GB/s
+per_channel_cast_fused/fwd[hidden=6144,is_fused_cast_back=True,ep= 0,experts=  0,num_per_channels= 128,num_per_tokens=128,num_tokens= 4096,num_topk=0,round=1]        70.5 us   736.0 GB/s
+per_channel_cast_fused/fwd[hidden=7168,is_fused_cast_back=False,ep= 0,experts=  0,num_per_channels= 128,num_per_tokens=128,num_tokens= 4096,num_topk=0,round=0]      113.2 us   786.3 GB/s
+per_channel_cast_fused/fwd[hidden=7168,is_fused_cast_back=False,ep= 0,experts=  0,num_per_channels= 128,num_per_tokens=128,num_tokens= 4096,num_topk=0,round=1]      113.3 us   785.6 GB/s
+per_channel_cast_fused/fwd[hidden=7168,is_fused_cast_back=True,ep= 0,experts=  0,num_per_channels= 128,num_per_tokens=128,num_tokens= 4096,num_topk=0,round=0]        81.4 us   744.1 GB/s
+per_channel_cast_fused/fwd[hidden=7168,is_fused_cast_back=True,ep= 0,experts=  0,num_per_channels= 128,num_per_tokens=128,num_tokens= 4096,num_topk=0,round=1]        81.5 us   742.7 GB/s
+per_channel_cast_fused/fwd[hidden=2048,is_fused_cast_back=False,ep= 8,experts=  9,num_per_channels= 128,num_per_tokens=128,num_tokens=18365,num_topk=6,round=0]      119.3 us  1313.0 GB/s
+per_channel_cast_fused/fwd[hidden=2048,is_fused_cast_back=False,ep= 8,experts=  9,num_per_channels= 128,num_per_tokens=128,num_tokens=18375,num_topk=6,round=1]      119.3 us  1312.9 GB/s
+per_channel_cast_fused/fwd[hidden=2048,is_fused_cast_back=True,ep= 8,experts=  9,num_per_channels= 128,num_per_tokens=128,num_tokens=18289,num_topk=6,round=0]       108.7 us   975.5 GB/s
+per_channel_cast_fused/fwd[hidden=2048,is_fused_cast_back=True,ep= 8,experts=  9,num_per_channels= 128,num_per_tokens=128,num_tokens=18187,num_topk=6,round=1]       107.4 us   972.2 GB/s
+per_channel_cast_fused/fwd[hidden=2560,is_fused_cast_back=False,ep= 8,experts=  9,num_per_channels= 128,num_per_tokens=128,num_tokens=18405,num_topk=6,round=0]      144.1 us  1351.5 GB/s
+per_channel_cast_fused/fwd[hidden=2560,is_fused_cast_back=False,ep= 8,experts=  9,num_per_channels= 128,num_per_tokens=128,num_tokens=18490,num_topk=6,round=1]      144.9 us  1351.0 GB/s
+per_channel_cast_fused/fwd[hidden=2560,is_fused_cast_back=True,ep= 8,experts=  9,num_per_channels= 128,num_per_tokens=128,num_tokens=18410,num_topk=6,round=0]       133.1 us   996.0 GB/s
+per_channel_cast_fused/fwd[hidden=2560,is_fused_cast_back=True,ep= 8,experts=  9,num_per_channels= 128,num_per_tokens=128,num_tokens=18336,num_topk=6,round=1]       133.2 us   995.0 GB/s
+per_channel_cast_fused/fwd[hidden=3072,is_fused_cast_back=False,ep= 8,experts=  9,num_per_channels= 128,num_per_tokens=128,num_tokens=18339,num_topk=6,round=0]      168.3 us  1381.7 GB/s
+per_channel_cast_fused/fwd[hidden=3072,is_fused_cast_back=False,ep= 8,experts=  9,num_per_channels= 128,num_per_tokens=128,num_tokens=18290,num_topk=6,round=1]      169.0 us  1382.9 GB/s
+per_channel_cast_fused/fwd[hidden=3072,is_fused_cast_back=True,ep= 8,experts=  9,num_per_channels= 128,num_per_tokens=128,num_tokens=18341,num_topk=6,round=0]       155.9 us  1025.4 GB/s
+per_channel_cast_fused/fwd[hidden=3072,is_fused_cast_back=True,ep= 8,experts=  9,num_per_channels= 128,num_per_tokens=128,num_tokens=18437,num_topk=6,round=1]       157.1 us  1027.9 GB/s
+per_channel_cast_fused/fwd[hidden=4096,is_fused_cast_back=False,ep= 8,experts=  9,num_per_channels= 128,num_per_tokens=128,num_tokens=18353,num_topk=6,round=0]      218.3 us  1419.9 GB/s
+per_channel_cast_fused/fwd[hidden=4096,is_fused_cast_back=False,ep= 8,experts=  9,num_per_channels= 128,num_per_tokens=128,num_tokens=18269,num_topk=6,round=1]      216.7 us  1416.2 GB/s
+per_channel_cast_fused/fwd[hidden=4096,is_fused_cast_back=True,ep= 8,experts=  9,num_per_channels= 128,num_per_tokens=128,num_tokens=18345,num_topk=6,round=0]       203.4 us  1037.0 GB/s
+per_channel_cast_fused/fwd[hidden=4096,is_fused_cast_back=True,ep= 8,experts=  9,num_per_channels= 128,num_per_tokens=128,num_tokens=18268,num_topk=6,round=1]       202.3 us  1037.5 GB/s
+per_channel_cast_fused/fwd[hidden=6144,is_fused_cast_back=False,ep= 8,experts=  9,num_per_channels= 128,num_per_tokens=128,num_tokens=18346,num_topk=6,round=0]      321.9 us  1459.5 GB/s
+per_channel_cast_fused/fwd[hidden=6144,is_fused_cast_back=False,ep= 8,experts=  9,num_per_channels= 128,num_per_tokens=128,num_tokens=18419,num_topk=6,round=1]      321.0 us  1456.0 GB/s
+per_channel_cast_fused/fwd[hidden=6144,is_fused_cast_back=True,ep= 8,experts=  9,num_per_channels= 128,num_per_tokens=128,num_tokens=18501,num_topk=6,round=0]       309.7 us  1037.5 GB/s
+per_channel_cast_fused/fwd[hidden=6144,is_fused_cast_back=True,ep= 8,experts=  9,num_per_channels= 128,num_per_tokens=128,num_tokens=18393,num_topk=6,round=1]       306.5 us  1037.7 GB/s
+per_channel_cast_fused/fwd[hidden=7168,is_fused_cast_back=False,ep= 8,experts=  9,num_per_channels= 128,num_per_tokens=128,num_tokens=18225,num_topk=6,round=0]      364.8 us  1464.0 GB/s
+per_channel_cast_fused/fwd[hidden=7168,is_fused_cast_back=False,ep= 8,experts=  9,num_per_channels= 128,num_per_tokens=128,num_tokens=18287,num_topk=6,round=1]      369.7 us  1474.8 GB/s
+per_channel_cast_fused/fwd[hidden=7168,is_fused_cast_back=True,ep= 8,experts=  9,num_per_channels= 128,num_per_tokens=128,num_tokens=18448,num_topk=6,round=0]       360.2 us  1035.3 GB/s
+per_channel_cast_fused/fwd[hidden=7168,is_fused_cast_back=True,ep= 8,experts=  9,num_per_channels= 128,num_per_tokens=128,num_tokens=18434,num_topk=6,round=1]       360.2 us  1040.5 GB/s
+per_channel_cast_fused/fwd[hidden=2048,is_fused_cast_back=False,ep= 8,experts= 32,num_per_channels= 128,num_per_tokens=128,num_tokens=18686,num_topk=6,round=0]      132.4 us  1327.2 GB/s
+per_channel_cast_fused/fwd[hidden=2048,is_fused_cast_back=False,ep= 8,experts= 32,num_per_channels= 128,num_per_tokens=128,num_tokens=18546,num_topk=6,round=1]      132.2 us  1329.2 GB/s
+per_channel_cast_fused/fwd[hidden=2048,is_fused_cast_back=True,ep= 8,experts= 32,num_per_channels= 128,num_per_tokens=128,num_tokens=18547,num_topk=6,round=0]       120.5 us   992.5 GB/s
+per_channel_cast_fused/fwd[hidden=2048,is_fused_cast_back=True,ep= 8,experts= 32,num_per_channels= 128,num_per_tokens=128,num_tokens=18768,num_topk=6,round=1]       122.1 us   992.7 GB/s
+per_channel_cast_fused/fwd[hidden=2560,is_fused_cast_back=False,ep= 8,experts= 32,num_per_channels= 128,num_per_tokens=128,num_tokens=18639,num_topk=6,round=0]      163.3 us  1332.6 GB/s
+per_channel_cast_fused/fwd[hidden=2560,is_fused_cast_back=False,ep= 8,experts= 32,num_per_channels= 128,num_per_tokens=128,num_tokens=18663,num_topk=6,round=1]      164.8 us  1344.9 GB/s
+per_channel_cast_fused/fwd[hidden=2560,is_fused_cast_back=True,ep= 8,experts= 32,num_per_channels= 128,num_per_tokens=128,num_tokens=18620,num_topk=6,round=0]       149.9 us   997.4 GB/s
+per_channel_cast_fused/fwd[hidden=2560,is_fused_cast_back=True,ep= 8,experts= 32,num_per_channels= 128,num_per_tokens=128,num_tokens=18435,num_topk=6,round=1]       148.6 us  1001.3 GB/s
+per_channel_cast_fused/fwd[hidden=3072,is_fused_cast_back=False,ep= 8,experts= 32,num_per_channels= 128,num_per_tokens=128,num_tokens=18700,num_topk=6,round=0]      190.2 us  1397.8 GB/s
+per_channel_cast_fused/fwd[hidden=3072,is_fused_cast_back=False,ep= 8,experts= 32,num_per_channels= 128,num_per_tokens=128,num_tokens=18613,num_topk=6,round=1]      190.6 us  1395.1 GB/s
+per_channel_cast_fused/fwd[hidden=3072,is_fused_cast_back=True,ep= 8,experts= 32,num_per_channels= 128,num_per_tokens=128,num_tokens=18722,num_topk=6,round=0]       176.3 us  1022.0 GB/s
+per_channel_cast_fused/fwd[hidden=3072,is_fused_cast_back=True,ep= 8,experts= 32,num_per_channels= 128,num_per_tokens=128,num_tokens=18715,num_topk=6,round=1]       175.4 us  1018.1 GB/s
+per_channel_cast_fused/fwd[hidden=4096,is_fused_cast_back=False,ep= 8,experts= 32,num_per_channels= 128,num_per_tokens=128,num_tokens=18801,num_topk=6,round=0]      246.3 us  1413.7 GB/s
+per_channel_cast_fused/fwd[hidden=4096,is_fused_cast_back=False,ep= 8,experts= 32,num_per_channels= 128,num_per_tokens=128,num_tokens=18634,num_topk=6,round=1]      247.6 us  1425.3 GB/s
+per_channel_cast_fused/fwd[hidden=4096,is_fused_cast_back=True,ep= 8,experts= 32,num_per_channels= 128,num_per_tokens=128,num_tokens=18602,num_topk=6,round=0]       229.7 us  1031.7 GB/s
+per_channel_cast_fused/fwd[hidden=4096,is_fused_cast_back=True,ep= 8,experts= 32,num_per_channels= 128,num_per_tokens=128,num_tokens=18642,num_topk=6,round=1]       231.7 us  1031.9 GB/s
+per_channel_cast_fused/fwd[hidden=6144,is_fused_cast_back=False,ep= 8,experts= 32,num_per_channels= 128,num_per_tokens=128,num_tokens=18670,num_topk=6,round=0]      362.8 us  1452.4 GB/s
+per_channel_cast_fused/fwd[hidden=6144,is_fused_cast_back=False,ep= 8,experts= 32,num_per_channels= 128,num_per_tokens=128,num_tokens=18567,num_topk=6,round=1]      362.8 us  1452.3 GB/s
+per_channel_cast_fused/fwd[hidden=6144,is_fused_cast_back=True,ep= 8,experts= 32,num_per_channels= 128,num_per_tokens=128,num_tokens=18607,num_topk=6,round=0]       351.0 us  1021.5 GB/s
+per_channel_cast_fused/fwd[hidden=6144,is_fused_cast_back=True,ep= 8,experts= 32,num_per_channels= 128,num_per_tokens=128,num_tokens=18413,num_topk=6,round=1]       348.9 us  1027.6 GB/s
+per_channel_cast_fused/fwd[hidden=7168,is_fused_cast_back=False,ep= 8,experts= 32,num_per_channels= 128,num_per_tokens=128,num_tokens=18562,num_topk=6,round=0]      416.3 us  1456.7 GB/s
+per_channel_cast_fused/fwd[hidden=7168,is_fused_cast_back=False,ep= 8,experts= 32,num_per_channels= 128,num_per_tokens=128,num_tokens=18754,num_topk=6,round=1]      422.7 us  1467.4 GB/s
+per_channel_cast_fused/fwd[hidden=7168,is_fused_cast_back=True,ep= 8,experts= 32,num_per_channels= 128,num_per_tokens=128,num_tokens=18551,num_topk=6,round=0]       410.6 us  1018.7 GB/s
+per_channel_cast_fused/fwd[hidden=7168,is_fused_cast_back=True,ep= 8,experts= 32,num_per_channels= 128,num_per_tokens=128,num_tokens=18748,num_topk=6,round=1]       416.0 us  1014.7 GB/s
+per_channel_cast_fused/fwd[hidden=2048,is_fused_cast_back=False,ep=64,experts=  4,num_per_channels= 128,num_per_tokens=128,num_tokens=25175,num_topk=6,round=0]      123.4 us  1320.5 GB/s
+per_channel_cast_fused/fwd[hidden=2048,is_fused_cast_back=False,ep=64,experts=  4,num_per_channels= 128,num_per_tokens=128,num_tokens=25561,num_topk=6,round=1]      126.2 us  1310.6 GB/s
+per_channel_cast_fused/fwd[hidden=2048,is_fused_cast_back=True,ep=64,experts=  4,num_per_channels= 128,num_per_tokens=128,num_tokens=24985,num_topk=6,round=0]       113.5 us   963.3 GB/s
+per_channel_cast_fused/fwd[hidden=2048,is_fused_cast_back=True,ep=64,experts=  4,num_per_channels= 128,num_per_tokens=128,num_tokens=25114,num_topk=6,round=1]       113.7 us   970.9 GB/s
+per_channel_cast_fused/fwd[hidden=2560,is_fused_cast_back=False,ep=64,experts=  4,num_per_channels= 128,num_per_tokens=128,num_tokens=25003,num_topk=6,round=0]      150.4 us  1348.1 GB/s
+per_channel_cast_fused/fwd[hidden=2560,is_fused_cast_back=False,ep=64,experts=  4,num_per_channels= 128,num_per_tokens=128,num_tokens=24862,num_topk=6,round=1]      149.1 us  1346.3 GB/s
+per_channel_cast_fused/fwd[hidden=2560,is_fused_cast_back=True,ep=64,experts=  4,num_per_channels= 128,num_per_tokens=128,num_tokens=25055,num_topk=6,round=0]       143.0 us   969.6 GB/s
+per_channel_cast_fused/fwd[hidden=2560,is_fused_cast_back=True,ep=64,experts=  4,num_per_channels= 128,num_per_tokens=128,num_tokens=25067,num_topk=6,round=1]       140.6 us   986.2 GB/s
+per_channel_cast_fused/fwd[hidden=3072,is_fused_cast_back=False,ep=64,experts=  4,num_per_channels= 128,num_per_tokens=128,num_tokens=25057,num_topk=6,round=0]      176.7 us  1376.7 GB/s
+per_channel_cast_fused/fwd[hidden=3072,is_fused_cast_back=False,ep=64,experts=  4,num_per_channels= 128,num_per_tokens=128,num_tokens=25017,num_topk=6,round=1]      176.6 us  1377.3 GB/s
+per_channel_cast_fused/fwd[hidden=3072,is_fused_cast_back=True,ep=64,experts=  4,num_per_channels= 128,num_per_tokens=128,num_tokens=25224,num_topk=6,round=0]       164.8 us  1009.4 GB/s
+per_channel_cast_fused/fwd[hidden=3072,is_fused_cast_back=True,ep=64,experts=  4,num_per_channels= 128,num_per_tokens=128,num_tokens=24893,num_topk=6,round=1]       164.5 us  1001.5 GB/s
+per_channel_cast_fused/fwd[hidden=4096,is_fused_cast_back=False,ep=64,experts=  4,num_per_channels= 128,num_per_tokens=128,num_tokens=25034,num_topk=6,round=0]      228.0 us  1422.5 GB/s
+per_channel_cast_fused/fwd[hidden=4096,is_fused_cast_back=False,ep=64,experts=  4,num_per_channels= 128,num_per_tokens=128,num_tokens=25263,num_topk=6,round=1]      231.3 us  1415.7 GB/s
+per_channel_cast_fused/fwd[hidden=4096,is_fused_cast_back=True,ep=64,experts=  4,num_per_channels= 128,num_per_tokens=128,num_tokens=25161,num_topk=6,round=0]       215.8 us  1022.6 GB/s
+per_channel_cast_fused/fwd[hidden=4096,is_fused_cast_back=True,ep=64,experts=  4,num_per_channels= 128,num_per_tokens=128,num_tokens=24875,num_topk=6,round=1]       213.3 us  1024.4 GB/s
+per_channel_cast_fused/fwd[hidden=6144,is_fused_cast_back=False,ep=64,experts=  4,num_per_channels= 128,num_per_tokens=128,num_tokens=24816,num_topk=6,round=0]      328.8 us  1465.0 GB/s
+per_channel_cast_fused/fwd[hidden=6144,is_fused_cast_back=False,ep=64,experts=  4,num_per_channels= 128,num_per_tokens=128,num_tokens=24706,num_topk=6,round=1]      332.2 us  1442.5 GB/s
+per_channel_cast_fused/fwd[hidden=6144,is_fused_cast_back=True,ep=64,experts=  4,num_per_channels= 128,num_per_tokens=128,num_tokens=25077,num_topk=6,round=0]       326.2 us  1014.6 GB/s
+per_channel_cast_fused/fwd[hidden=6144,is_fused_cast_back=True,ep=64,experts=  4,num_per_channels= 128,num_per_tokens=128,num_tokens=25335,num_topk=6,round=1]       332.0 us  1006.7 GB/s
+per_channel_cast_fused/fwd[hidden=7168,is_fused_cast_back=False,ep=64,experts=  4,num_per_channels= 128,num_per_tokens=128,num_tokens=25432,num_topk=6,round=0]      391.3 us  1464.5 GB/s
+per_channel_cast_fused/fwd[hidden=7168,is_fused_cast_back=False,ep=64,experts=  4,num_per_channels= 128,num_per_tokens=128,num_tokens=24999,num_topk=6,round=1]      385.9 us  1463.4 GB/s
+per_channel_cast_fused/fwd[hidden=7168,is_fused_cast_back=True,ep=64,experts=  4,num_per_channels= 128,num_per_tokens=128,num_tokens=24907,num_topk=6,round=0]       376.6 us  1020.3 GB/s
+per_channel_cast_fused/fwd[hidden=7168,is_fused_cast_back=True,ep=64,experts=  4,num_per_channels= 128,num_per_tokens=128,num_tokens=25153,num_topk=6,round=1]       385.1 us  1007.7 GB/s
+
+Total: 96 benchmarks, 0 with baselines, 96 missing, 0 regressions, 0 improvements (threshold: 15%)
+96 passed, 96 warnings in 14.58s
