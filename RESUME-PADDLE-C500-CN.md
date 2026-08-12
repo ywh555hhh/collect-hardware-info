@@ -81,7 +81,7 @@
 - 完成 C500 Paddle 后端能力图谱
 - 完成 mini GraphNet-style dynamic/static/Paddle Inference 路径验证
 - 跑通 official GraphNet Paddle sample 的 direct dygraph forward
-- 精确定位 official static benchmark 的下一步兼容性问题
+- 通过 generated `_C_ops` rewrite 跑通一个 official GraphNet `compiler=nope` benchmark timing
 
 ## 下一步最值钱
 

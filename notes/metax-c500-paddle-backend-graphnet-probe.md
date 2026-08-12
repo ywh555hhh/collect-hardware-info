@@ -280,7 +280,7 @@ Completed:
 
 Not completed yet:
 
-- full official GraphNet static benchmark replay
+- broader official GraphNet static benchmark replay across multiple samples
 - CINN benchmark comparison
 - full deployment benchmark with repeated request patterns
 - repeated runs across multiple graph sizes
