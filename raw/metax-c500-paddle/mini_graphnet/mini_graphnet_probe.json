@@ -1,0 +1,203 @@
+{
+  "started_at": "2026-08-12T17:20:24+0800",
+  "params": {
+    "output": "/data/reports/paddle_mini_graphnet/mini_graphnet_probe.json",
+    "device": "gpu:0",
+    "nodes": 8192,
+    "edges": 65536,
+    "hidden": 256,
+    "warmup": 10,
+    "iters": 50,
+    "sample_mxsmi": true
+  },
+  "python": "3.10.10 | packaged by conda-forge | (main, Mar 24 2023, 20:08:06) [GCC 11.3.0]",
+  "paddle_version": "2.6.0",
+  "env": {
+    "LD_LIBRARY_PATH": "/opt/conda/lib/python3.10/site-packages/cv2/../../lib64:/opt/maca/lib:/opt/maca/ompi/lib:/opt/maca/ucx/lib:/opt/mxdriver/lib:/opt/maca/lib:/opt/maca/ompi/lib:/opt/maca/ucx/lib:/opt/mxdriver/lib:/opt/maca/lib:/opt/maca/ompi/lib:/opt/maca/ucx/lib:/opt/mxdriver/lib:",
+    "MACA_CLANG_PATH": "/opt/maca/mxgpu_llvm/bin",
+    "MACA_PATH": "/opt/maca"
+  },
+  "device": "gpu:0",
+  "mxsmi_before": {
+    "label": "before",
+    "mx_smi": {
+      "cmd": [
+        "mx-smi"
+      ],
+      "returncode": 0,
+      "stdout": "mx-smi  version: 2.2.6\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 17:20:24 2026\n\nAttached GPUs                                     : 1\n+---------------------------------------------------------------------------------+\n| MX-SMI 2.2.6                        Kernel Mode Driver Version: 3.8.30          |\n| MACA Version: 3.0.0.8               BIOS Version: 1.33.5.0                      |\n|------------------------------------+---------------------+----------------------+\n| GPU     NAME         Persistence-M | Bus-id              | GPU-Util      sGPU-M |\n| Temp    Pwr:Usage/Cap         Perf | Memory-Usage        | GPU-State            |\n|====================================+=====================+======================|\n| 0       MetaX C500             Off | 0000:37:00.0        | 0%             *sGPU |\n| 36C     57W / 350W              P0 | 826/65536 MiB       | Available            |\n+------------------------------------+---------------------+----------------------+\n\n+---------------------------------------------------------------------------------+\n| Sliced GPU                                                                      |\n|------------------------------------+---------------------+----------------------+\n| Minor    GPU    sGPU-Id    Compute | Vram Quota          | sGPU-Util            |\n|====================================+=====================+======================|\n| 022      0      3          25%     | 0/16000 MiB         | 0%                   |\n+------------------------------------+---------------------+----------------------+\n\n+---------------------------------------------------------------------------------+\n| Process:                                                                        |\n|  GPU                    PID         Process Name                 GPU Memory     |\n|                                                                  Usage(MiB)     |\n|=================================================================================|\n|  no process found                                                               |\n+---------------------------------------------------------------------------------+\n\nEnd of Log\n",
+      "stderr": ""
+    },
+    "usage": {
+      "cmd": [
+        "mx-smi",
+        "--show-usage"
+      ],
+      "returncode": 0,
+      "stdout": "mx-smi  version: 2.2.6\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 17:20:24 2026\n\nAttached GPUs                                     : 1\nGPU#0  MXC500  0000:37:00.0\n    Utilization\n        GPU                                       : 0 %\n        VPUE                                      : 0 %\n        VPUD                                      : 0 %\n\nEnd of Log\n",
+      "stderr": ""
+    },
+    "hbm_bandwidth": {
+      "cmd": [
+        "mx-smi",
+        "--show-hbm-bandwidth"
+      ],
+      "returncode": 0,
+      "stdout": "mx-smi  version: 2.2.6\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 17:20:24 2026\n\nAttached GPUs                                     : 1\nGPU#0  MXC500  0000:37:00.0\n    Hbm Bandwidth\n        throughput                                : 1 MBytes/s\n\nEnd of Log\n",
+      "stderr": ""
+    }
+  },
+  "dynamic_results": [
+    {
+      "name": "dense_block",
+      "warmup": 10,
+      "iters": 50,
+      "ok": true,
+      "avg_ms": 0.3331,
+      "min_ms": 0.3301,
+      "p50_ms": 0.3324,
+      "p90_ms": 0.3355,
+      "max_ms": 0.3435,
+      "place": "Place(gpu:0)",
+      "shape": [
+        8192,
+        256
+      ],
+      "dtype": "paddle.float32",
+      "sum": -0.0001678466796875
+    },
+    {
+      "name": "sparse_gather_scatter_block",
+      "warmup": 10,
+      "iters": 50,
+      "ok": true,
+      "avg_ms": 0.8784,
+      "min_ms": 0.8461,
+      "p50_ms": 0.8777,
+      "p90_ms": 0.8844,
+      "max_ms": 0.9332,
+      "place": "Place(gpu:0)",
+      "shape": [
+        8192,
+        256
+      ],
+      "dtype": "paddle.float32",
+      "sum": 1002.4945068359375
+    },
+    {
+      "name": "mixed_graph_block",
+      "warmup": 10,
+      "iters": 50,
+      "ok": true,
+      "avg_ms": 1.2682,
+      "min_ms": 1.2288,
+      "p50_ms": 1.2697,
+      "p90_ms": 1.2767,
+      "max_ms": 1.2853,
+      "place": "Place(gpu:0)",
+      "shape": [
+        8192,
+        256
+      ],
+      "dtype": "paddle.float32",
+      "sum": -71691.7890625
+    },
+    {
+      "name": "graph_readout_reduce",
+      "warmup": 10,
+      "iters": 50,
+      "ok": true,
+      "avg_ms": 1.3406,
+      "min_ms": 1.2443,
+      "p50_ms": 1.2853,
+      "p90_ms": 1.4346,
+      "max_ms": 2.0536,
+      "place": "Place(gpu:0)",
+      "shape": [
+        256
+      ],
+      "dtype": "paddle.float32",
+      "sum": -8.751435279846191
+    }
+  ],
+  "jit_export": {
+    "dense_block": {
+      "attempted": true,
+      "save_ok": true,
+      "files": [
+        "model.pdiparams",
+        "model.pdiparams.info",
+        "model.pdmodel"
+      ],
+      "load_and_run_ok": true,
+      "avg_ms": 0.2554,
+      "place": "Place(gpu:0)",
+      "shape": [
+        8192,
+        256
+      ],
+      "sum": -0.0001678466796875
+    },
+    "mixed_graph_block": {
+      "attempted": true,
+      "save_ok": true,
+      "files": [
+        "model.pdiparams",
+        "model.pdiparams.info",
+        "model.pdmodel"
+      ],
+      "load_and_run_ok": true,
+      "avg_ms": 1.1215,
+      "place": "Place(gpu:0)",
+      "shape": [
+        8192,
+        256
+      ],
+      "sum": -71691.7890625
+    }
+  },
+  "paddle_inference_api": {
+    "available": true,
+    "gpu_methods": [
+      "disable_gpu",
+      "enable_use_gpu",
+      "fraction_of_gpu_memory_for_pool",
+      "gpu_device_id",
+      "mark_trt_engine_outputs",
+      "set_trt_dynamic_shape_info",
+      "trt_allow_build_at_runtime",
+      "use_gpu"
+    ]
+  },
+  "mxsmi_after": {
+    "label": "after",
+    "mx_smi": {
+      "cmd": [
+        "mx-smi"
+      ],
+      "returncode": 0,
+      "stdout": "mx-smi  version: 2.2.6\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 17:20:26 2026\n\nAttached GPUs                                     : 1\n+---------------------------------------------------------------------------------+\n| MX-SMI 2.2.6                        Kernel Mode Driver Version: 3.8.30          |\n| MACA Version: 3.0.0.8               BIOS Version: 1.33.5.0                      |\n|------------------------------------+---------------------+----------------------+\n| GPU     NAME         Persistence-M | Bus-id              | GPU-Util      sGPU-M |\n| Temp    Pwr:Usage/Cap         Perf | Memory-Usage        | GPU-State            |\n|====================================+=====================+======================|\n| 0       MetaX C500             Off | 0000:37:00.0        | 21%            *sGPU |\n| 37C     100W / 350W             P9 | 1385/65536 MiB      | Available            |\n+------------------------------------+---------------------+----------------------+\n\n+---------------------------------------------------------------------------------+\n| Sliced GPU                                                                      |\n|------------------------------------+---------------------+----------------------+\n| Minor    GPU    sGPU-Id    Compute | Vram Quota          | sGPU-Util            |\n|====================================+=====================+======================|\n| 022      0      3          25%     | 558/16000 MiB       | 21%                  |\n+------------------------------------+---------------------+----------------------+\n\n+---------------------------------------------------------------------------------+\n| Process:                                                                        |\n|  GPU                    PID         Process Name                 GPU Memory     |\n|                                                                  Usage(MiB)     |\n|=================================================================================|\n|  0-s3                  2735         python3                      558            |\n+---------------------------------------------------------------------------------+\n\nEnd of Log\n",
+      "stderr": ""
+    },
+    "usage": {
+      "cmd": [
+        "mx-smi",
+        "--show-usage"
+      ],
+      "returncode": 0,
+      "stdout": "mx-smi  version: 2.2.6\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 17:20:26 2026\n\nAttached GPUs                                     : 1\nGPU#0  MXC500  0000:37:00.0\n    Utilization\n        GPU                                       : 21 %\n        VPUE                                      : 0 %\n        VPUD                                      : 0 %\n\nEnd of Log\n",
+      "stderr": ""
+    },
+    "hbm_bandwidth": {
+      "cmd": [
+        "mx-smi",
+        "--show-hbm-bandwidth"
+      ],
+      "returncode": 0,
+      "stdout": "mx-smi  version: 2.2.6\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 17:20:26 2026\n\nAttached GPUs                                     : 1\nGPU#0  MXC500  0000:37:00.0\n    Hbm Bandwidth\n        throughput                                : 1 MBytes/s\n\nEnd of Log\n",
+      "stderr": ""
+    }
+  },
+  "ok": true,
+  "finished_at": "2026-08-12T17:20:26+0800"
+}

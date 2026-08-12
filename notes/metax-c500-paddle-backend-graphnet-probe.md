@@ -28,11 +28,13 @@ Raw data:
 
 - `raw/metax-c500-paddle/paddle_backend_probe.json`
 - `raw/metax-c500-paddle/paddle_op_probe.json`
+- `raw/metax-c500-paddle/mini_graphnet/mini_graphnet_probe.json`
 
 Scripts:
 
 - `scripts/paddle_backend_probe.py`
 - `scripts/paddle_op_probe.py`
+- `scripts/paddle_mini_graphnet_probe.py`
 
 Environment observed:
 
@@ -82,6 +84,49 @@ All of these ran on `Place(gpu:0)`:
 
 The gather/scatter pair is the most relevant for GraphNet-style work because it probes sparse-ish indexing and memory movement. Scatter is noticeably slower than gather, which is consistent with irregular writes and potential write conflicts being harder than reads.
 
+## Mini GraphNet-Style Workload
+
+This is not the official PaddlePaddle/GraphNet benchmark. It is a controlled mini workload that mirrors GraphNet-relevant operator families:
+
+- dense graph block: `matmul -> gelu -> matmul -> layernorm residual`
+- sparse-ish block: `gather -> elementwise scale -> scatter`
+- mixed block: dense block + sparse block + projection
+- graph readout: mixed block + reduction
+
+Parameters:
+
+| Parameter | Value |
+| --- | --- |
+| nodes | 8192 |
+| edges | 65536 |
+| hidden | 256 |
+| warmup | 10 |
+| iterations | 50 |
+| device | `gpu:0` |
+
+Dynamic graph results:
+
+| Workload | avg ms | p50 ms | p90 ms | Place |
+| --- | ---: | ---: | ---: | --- |
+| dense block | 0.333 | 0.332 | 0.336 | `Place(gpu:0)` |
+| sparse gather/scatter block | 0.878 | 0.878 | 0.884 | `Place(gpu:0)` |
+| mixed graph block | 1.268 | 1.270 | 1.277 | `Place(gpu:0)` |
+| graph readout reduce | 1.341 | 1.285 | 1.435 | `Place(gpu:0)` |
+
+`paddle.jit.save/load` results:
+
+| Workload | save/load | avg ms | Place | Observation |
+| --- | --- | ---: | --- | --- |
+| dense block | pass | 0.255 | `Place(gpu:0)` | faster than dynamic path in this smoke run |
+| mixed graph block | pass | 1.122 | `Place(gpu:0)` | faster than dynamic path in this smoke run |
+
+Interpretation:
+
+- The image supports Paddle dynamic graph execution on C500 for dense, sparse-ish, mixed, and reduction graph blocks.
+- The image can export and reload these Paddle layers through `paddle.jit.save/load`, so it is useful for static graph/runtime readiness exploration.
+- The sparse-ish gather/scatter block is slower than the dense block despite less arithmetic density, which makes it a good follow-up target for memory traffic and irregular-write analysis.
+- This still does not prove full official GraphNet benchmark support; it is a controlled approximation that de-risks the backend/operator/static graph path first.
+
 ## Resume-Grade Project Direction
 
 Recommended project framing:
@@ -94,7 +139,8 @@ Suggested resume bullets after deeper completion:
 
 - Built a reproducible PaddlePaddle backend probe on MetaX C500, identifying that the vendor image exposes the accelerator through Paddle's CUDA-compatible `gpu:0` path rather than custom device dispatch.
 - Validated Paddle Inference availability and core operator coverage on C500, including fp32/fp16 matmul, conv2d, layernorm, softmax, gather, and scatter.
-- Connected PaddlePaddle GraphNet-style computation graph workloads to backend/kernel coverage by profiling dense and sparse-ish operator primitives relevant to tensor compiler benchmarks.
+- Connected PaddlePaddle GraphNet-style computation graph workloads to backend/kernel coverage by profiling dense, sparse-ish, mixed, and readout graph blocks relevant to tensor compiler benchmarks.
+- Verified `paddle.jit.save/load` static graph execution for dense and mixed GraphNet-style blocks on C500.
 - Identified a key compiler limitation in the current image: CINN is not compiled in, so this image is suitable for runtime/operator/inference analysis but not direct CINN-vs-baseline compiler benchmarking.
 
 ## How This Relates to Inference
@@ -117,13 +163,8 @@ For interviews, the unifying story is:
 
 1. Clone/read PaddlePaddle/GraphNet and summarize its graph format and benchmark pipeline.
 2. Run one minimal GraphNet benchmark path if dependencies fit the C500 Paddle image.
-3. If GraphNet itself is too heavy, implement a mini GraphNet-style computation graph replay harness using Paddle ops:
-   - dense matmul blocks
-   - normalization/activation blocks
-   - gather/scatter indexing blocks
-   - dynamic vs static graph comparison
-   - Paddle Inference export/load if possible
-4. Add `mx-smi` sampling around Paddle op groups.
+3. Try Paddle Inference predictor execution from the saved `.pdmodel` artifacts.
+4. Add repeated graph-size sweeps and `mx-smi` sampling around Paddle op groups.
 5. Try to find or build a Paddle image with CINN enabled; current image reports `is_compiled_with_cinn() = False`.
 
 ## Concrete Project Plan
@@ -138,7 +179,7 @@ Phase 1: backend capability map, already started here.
 - Run core op compatibility smoke on C500 `gpu:0`.
 - Classify the image as runtime/operator/inference capable, but not CINN-enabled.
 
-Phase 2: mini GraphNet-style graph replay harness.
+Phase 2: mini GraphNet-style graph replay harness, completed as first pass.
 
 - Build several synthetic graph workloads using Paddle ops:
   - dense block: matmul -> bias -> activation -> layernorm
@@ -169,7 +210,7 @@ Phase 4: resume-ready summary.
 
 ## Evidence Quality
 
-Current evidence is enough for a first report and resume direction, but not yet enough to claim full GraphNet benchmark completion.
+Current evidence is enough for a first report and a resume-ready mini project, but not yet enough to claim full GraphNet benchmark completion.
 
 Completed:
 
@@ -177,10 +218,12 @@ Completed:
 - Paddle Inference API availability check
 - core op smoke on `gpu:0`
 - sparse-ish gather/scatter op smoke
+- mini GraphNet-style dynamic graph workload
+- `paddle.jit.save/load` static graph smoke for dense and mixed blocks
 
 Not completed yet:
 
 - full GraphNet workload replay
 - CINN benchmark comparison
-- Paddle static inference latency comparison
-- repeated runs with stable statistics
+- Paddle Inference predictor latency comparison
+- repeated runs across multiple graph sizes

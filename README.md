@@ -78,6 +78,8 @@ raw/
   metax-c500-paddle/
     paddle_backend_probe.json   # Paddle backend/device/Paddle Inference capability probe
     paddle_op_probe.json        # Paddle core op compatibility/perf smoke
+    mini_graphnet/
+      mini_graphnet_probe.json  # Paddle mini GraphNet-style dynamic/JIT workload
 
 probes/
   metax-c500/
@@ -91,6 +93,7 @@ scripts/
   vllm_prefix_cache_probe.py    # Prefix cache / mixed prompt workload 探针
   paddle_backend_probe.py       # Paddle backend/device capability 探针
   paddle_op_probe.py            # Paddle op coverage / latency smoke 探针
+  paddle_mini_graphnet_probe.py # GraphNet-style dense/sparse/mixed graph workload
 ```
 
 ## vLLM 推理实验
@@ -121,6 +124,16 @@ scripts/
 - `is_compiled_with_cuda=True`，`is_compiled_with_cinn=False`。
 - Paddle Inference API 可用，`paddle.utils.run_check()` 通过。
 - matmul / conv2d / softmax / layernorm / gather / scatter 都能在 `Place(gpu:0)` 上跑通。
+- mini GraphNet-style workload 已跑通动态图和 `paddle.jit.save/load` 静态图路径：
+
+| Workload | Dynamic avg ms | JIT save/load avg ms | 说明 |
+| --- | ---: | ---: | --- |
+| dense block | 0.333 | 0.255 | matmul -> gelu -> matmul -> layernorm residual |
+| sparse gather/scatter block | 0.878 | n/a | gather -> elementwise scale -> scatter |
+| mixed graph block | 1.268 | 1.122 | dense + sparse + projection |
+| graph readout reduce | 1.341 | n/a | mixed block -> mean reduction |
+
+这个结果说明：当前镜像不适合直接做 CINN compiler speedup，但适合做 Paddle runtime / operator coverage / static graph export / inference path 的后端研究。
 
 入口文档：
 
