@@ -11,6 +11,7 @@
 归档入口：
 
 - `ARCHIVE-2026-08-12.md`
+- `RESUME-PADDLE-C500.md`
 
 ### MetaX C500
 
@@ -74,6 +75,9 @@ raw/
     api_bench_qwen3_stream/       # Qwen3-0.6B streaming TTFT / TPOT baseline
     prefix_cache_qwen3/           # Qwen3-0.6B prefix cache / mixed prompt workload
     non_eager_probe/            # LFM2.5 torch.compile / CUDAGraph probe
+  metax-c500-paddle/
+    paddle_backend_probe.json   # Paddle backend/device/Paddle Inference capability probe
+    paddle_op_probe.json        # Paddle core op compatibility/perf smoke
 
 probes/
   metax-c500/
@@ -85,6 +89,8 @@ scripts/
   vllm_kv_sweep.py              # 扫 max_model_len / gpu_memory_utilization
   vllm_api_bench.py             # OpenAI-compatible API server 并发 smoke
   vllm_prefix_cache_probe.py    # Prefix cache / mixed prompt workload 探针
+  paddle_backend_probe.py       # Paddle backend/device capability 探针
+  paddle_op_probe.py            # Paddle op coverage / latency smoke 探针
 ```
 
 ## vLLM 推理实验
@@ -105,6 +111,20 @@ scripts/
 - `notes/metax-c500-vllm-api-steady-state.md`
 - `notes/metax-c500-vllm-streaming-ttft-tpot.md`
 - `notes/metax-c500-vllm-prefix-cache-mixed-workload.md`
+
+## Paddle / GraphNet 方向
+
+当前 Paddle 镜像初步盘点结论：
+
+- Paddle 包为 `paddlepaddle-gpu 2.6.0+maca3.0.0.5`。
+- C500 通过 Paddle 的 CUDA-compatible `gpu:0` 路径暴露，不是 `maca:0` custom-device 路径。
+- `is_compiled_with_cuda=True`，`is_compiled_with_cinn=False`。
+- Paddle Inference API 可用，`paddle.utils.run_check()` 通过。
+- matmul / conv2d / softmax / layernorm / gather / scatter 都能在 `Place(gpu:0)` 上跑通。
+
+入口文档：
+
+- `notes/metax-c500-paddle-backend-graphnet-probe.md`
 
 ## 复现方式
 

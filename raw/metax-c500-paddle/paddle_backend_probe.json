@@ -1,0 +1,107 @@
+{
+  "python": "3.10.10 | packaged by conda-forge | (main, Mar 24 2023, 20:08:06) [GCC 11.3.0]",
+  "executable": "/opt/conda/bin/python3",
+  "env": {
+    "LD_LIBRARY_PATH": "/opt/maca/lib:/opt/maca/ompi/lib:/opt/maca/ucx/lib:/opt/mxdriver/lib:/opt/maca/lib:/opt/maca/ompi/lib:/opt/maca/ucx/lib:/opt/mxdriver/lib:/opt/maca/lib:/opt/maca/ompi/lib:/opt/maca/ucx/lib:/opt/mxdriver/lib:",
+    "MACA_CLANG_PATH": "/opt/maca/mxgpu_llvm/bin",
+    "MACA_PATH": "/opt/maca"
+  },
+  "commands": {
+    "mx_smi": {
+      "cmd": [
+        "mx-smi"
+      ],
+      "returncode": 0,
+      "stdout": "mx-smi  version: 2.2.6\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 16:56:41 2026\n\nAttached GPUs                                     : 1\n+---------------------------------------------------------------------------------+\n| MX-SMI 2.2.6                        Kernel Mode Driver Version: 3.8.30          |\n| MACA Version: 3.0.0.8               BIOS Version: 1.33.5.0                      |\n|------------------------------------+---------------------+----------------------+\n| GPU     NAME         Persistence-M | Bus-id              | GPU-Util      sGPU-M |\n| Temp    Pwr:Usage/Cap         Perf | Memory-Usage        | GPU-State            |\n|====================================+=====================+======================|\n| 0       MetaX C500             Off | 0000:37:00.0        | 0%             *sGPU |\n| 37C     49W / 350W              P0 | 826/65536 MiB       | Available            |\n+------------------------------------+---------------------+----------------------+\n\n+---------------------------------------------------------------------------------+\n| Sliced GPU                                                                      |\n|------------------------------------+---------------------+----------------------+\n| Minor    GPU    sGPU-Id    Compute | Vram Quota          | sGPU-Util            |\n|====================================+=====================+======================|\n| 022      0      3          25%     | 0/16000 MiB         | 0%                   |\n+------------------------------------+---------------------+----------------------+\n\n+---------------------------------------------------------------------------------+\n| Process:                                                                        |\n|  GPU                    PID         Process Name                 GPU Memory     |\n|                                                                  Usage(MiB)     |\n|=================================================================================|\n|  no process found                                                               |\n+---------------------------------------------------------------------------------+\n\nEnd of Log\n",
+      "stderr": ""
+    },
+    "pip_paddle": {
+      "cmd": [
+        "/opt/conda/bin/python3",
+        "-m",
+        "pip",
+        "list"
+      ],
+      "returncode": 0,
+      "stdout": "Package                        Version\n------------------------------ -----------------\nanyio                          4.9.0\narchspec                       0.2.5\nargon2-cffi                    25.1.0\nargon2-cffi-bindings           25.1.0\narrow                          1.3.0\nastor                          0.8.1\nasttokens                      3.0.0\nasync-lru                      2.0.5\nattrs                          25.3.0\nbabel                          2.17.0\nbeautifulsoup4                 4.13.5\nbleach                         6.2.0\nboltons                        24.0.0\nBrotli                         1.1.0\ncertifi                        2025.8.3\ncffi                           1.17.1\ncharset-normalizer             3.4.1\ncolorama                       0.4.6\ncomm                           0.2.3\nconda                          25.7.0\nconda-libmamba-solver          25.4.0\nconda-package-handling         2.4.0\nconda_package_streaming        0.11.0\ndebugpy                        1.8.16\ndecorator                      5.2.1\ndefusedxml                     0.7.1\ndistro                         1.9.0\neinops                         0.8.1\nexceptiongroup                 1.3.0\nexecuting                      2.2.1\nfastjsonschema                 2.21.2\nfilelock                       3.18.0\nfqdn                           1.5.1\nfrozendict                     2.4.6\nfsspec                         2025.5.1\nh11                            0.16.0\nh2                             4.1.0\nhpack                          4.0.0\nhttpcore                       1.0.9\nhttpx                          0.28.1\nhyperframe                     6.0.1\nidna                           3.10\nimportlib_metadata             8.7.0\niniconfig                      2.1.0\nipykernel                      6.30.1\nipython                        8.37.0\nipywidgets                     8.1.7\nisoduration                    20.11.0\njedi                           0.19.2\nJinja2                         3.1.6\njson5                          0.12.1\njsonpatch                      1.33\njsonpointer                    3.0.0\njsonschema                     4.25.1\njsonschema-specifications      2025.4.1\njupyter                        1.1.1\njupyter_client                 8.6.3\njupyter-console                6.6.3\njupyter_core                   5.8.1\njupyter-events                 0.12.0\njupyter-lsp                    2.3.0\njupyter_server                 2.17.0\njupyter_server_terminals       0.5.3\njupyterlab                     4.4.7\njupyterlab-language-pack-zh-CN 4.4.post1\njupyterlab_pygments            0.3.0\njupyterlab_server              2.27.3\njupyterlab_widgets             3.0.15\nlark                           1.2.2\nlibmambapy                     2.3.0\nMarkupSafe                     3.0.2\nmatplotlib-inline              0.1.7\nmenuinst                       2.3.0\nmistune                        3.1.4\nmpmath                         1.3.0\nnbclient                       0.10.2\nnbconvert                      7.16.6\nnbformat                       5.10.4\nnest_asyncio                   1.6.0\nnetworkx                       3.4.2\nninja                          1.11.1.4\nnotebook                       7.4.5\nnotebook_shim                  0.2.4\nnumpy                          1.26.4\nopencv-python                  4.9.0.80\nopencv-python-headless         4.9.0.80\nopt-einsum                     3.3.0\noverrides                      7.7.0\npackaging                      24.2\npaddlepaddle-gpu               2.6.0+maca3.0.0.5\npandocfilters                  1.5.1\nparso                          0.8.5\npexpect                        4.9.0\npickleshare                    0.7.5\npillow                         11.2.1\npip                            24.3.1\nplatformdirs                   4.3.6\npluggy                         1.5.0\nprometheus_client              0.22.1\nprompt_toolkit                 3.0.52\nprotobuf                       6.31.1\npsutil                         7.0.0\nptyprocess                     0.7.0\npure_eval                      0.2.3\npycosat                        0.6.6\npycparser                      2.22\nPygments                       2.19.2\nPySocks                        1.7.1\npytest                         8.4.1\npython-dateutil                2.9.0.post0\npython-json-logger             3.3.0\nPyYAML                         6.0.2\npyzmq                          27.0.2\nreferencing                    0.36.2\nrequests                       2.32.3\nrfc3339-validator              0.1.4\nrfc3986-validator              0.1.1\nrfc3987-syntax                 1.1.0\nrpds-py                        0.27.1\nruamel.yaml                    0.18.14\nruamel.yaml.clib               0.2.8\nscipy                          1.15.3\nSend2Trash                     1.8.3\nsetuptools                     69.5.1\nsetuptools-scm                 8.3.1\nsix                            1.17.0\nsniffio                        1.3.1\nsoupsieve                      2.8\nstack_data                     0.6.3\nsympy                          1.14.0\nterminado                      0.18.1\ntinycss2                       1.4.0\ntomli                          2.2.1\ntornado                        6.5.2\ntqdm                           4.67.1\ntraitlets                      5.14.3\ntruststore                     0.10.0\ntypes-python-dateutil          2.9.0.20250822\ntyping_extensions              4.14.0\nuri-template                   1.3.0\nurllib3                        2.3.0\nwcwidth                        0.2.13\nwebcolors                      24.11.1\nwebencodings                   0.5.1\nwebsocket-client               1.8.0\nwheel                          0.45.1\nwidgetsnbextension             4.0.14\nzipp                           3.23.0\nzstandard                      0.23.0\n",
+      "stderr": ""
+    }
+  },
+  "paddle": {
+    "version": "2.6.0",
+    "file": "/opt/conda/lib/python3.10/site-packages/paddle/__init__.py",
+    "current_device": "gpu:0",
+    "available_device": [],
+    "all_custom_device_type": [],
+    "compiled": {
+      "is_compiled_with_cuda": true,
+      "is_compiled_with_xpu": false,
+      "is_compiled_with_rocm": false,
+      "is_compiled_with_custom_device": {
+        "error": "TypeError(\"is_compiled_with_custom_device() missing 1 required positional argument: 'device_type'\")"
+      },
+      "is_compiled_with_cinn": false
+    }
+  },
+  "paddle_core": {
+    "compiled_cuda": true,
+    "compiled_xpu": false,
+    "compiled_custom": {
+      "error": "TypeError('is_compiled_with_custom_device(): incompatible function arguments. The following argument types are supported:\\n    1. (arg0: str) -> bool\\n\\nInvoked with: ')"
+    },
+    "compiled_cinn": false,
+    "cuda_device_count": 1,
+    "all_custom_device_type": []
+  },
+  "smoke_tests": [
+    {
+      "device": "cpu",
+      "ok": true,
+      "place": "Place(cpu)",
+      "loss": 258.387451171875,
+      "wall_ms": 36.301
+    },
+    {
+      "device": "gpu",
+      "ok": true,
+      "place": "Place(gpu:0)",
+      "loss": 255.5786895751953,
+      "wall_ms": 471.954
+    },
+    {
+      "device": "gpu:0",
+      "ok": true,
+      "place": "Place(gpu:0)",
+      "loss": 258.3397216796875,
+      "wall_ms": 0.263
+    },
+    {
+      "device": "maca",
+      "ok": false,
+      "error": "ValueError(\"The device must be a string which is like 'cpu', 'gpu', 'gpu:x', 'xpu', 'xpu:x', 'npu', 'npu:x'\")"
+    },
+    {
+      "device": "maca:0",
+      "ok": false,
+      "error": "ValueError(\"The device must be a string which is like 'cpu', 'gpu', 'gpu:x', 'xpu', 'xpu:x', 'npu', 'npu:x'\")"
+    },
+    {
+      "device": "xpu",
+      "ok": false,
+      "error": "ValueError(\"The device should not be 'xpu', since PaddlePaddle is not compiled with XPU\")"
+    },
+    {
+      "device": "custom_cpu",
+      "ok": false,
+      "error": "ValueError(\"The device must be a string which is like 'cpu', 'gpu', 'gpu:x', 'xpu', 'xpu:x', 'npu', 'npu:x'\")"
+    }
+  ],
+  "static_graph": {
+    "enabled": true
+  },
+  "inference": {
+    "available": true,
+    "Config": "<class 'paddle.base.libpaddle.AnalysisConfig'>",
+    "Predictor": "<class 'paddle.base.libpaddle.PaddleInferPredictor'>"
+  }
+}

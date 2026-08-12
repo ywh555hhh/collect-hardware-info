@@ -1,0 +1,121 @@
+{
+  "paddle_version": "2.6.0",
+  "device": "gpu:0",
+  "results": [
+    {
+      "name": "matmul_1024_fp32",
+      "ok": true,
+      "iters": 20,
+      "avg_ms": 0.103,
+      "place": "Place(gpu:0)",
+      "shape": [
+        1024,
+        1024
+      ],
+      "dtype": "paddle.float32",
+      "sum": 25097.869140625
+    },
+    {
+      "name": "matmul_1024_fp16",
+      "ok": true,
+      "iters": 20,
+      "avg_ms": 0.03,
+      "place": "Place(gpu:0)",
+      "shape": [
+        1024,
+        1024
+      ],
+      "dtype": "paddle.float16",
+      "sum": 65288.7890625
+    },
+    {
+      "name": "softmax_4096x1024",
+      "ok": true,
+      "iters": 20,
+      "avg_ms": 0.054,
+      "place": "Place(gpu:0)",
+      "shape": [
+        4096,
+        1024
+      ],
+      "dtype": "paddle.float32",
+      "sum": 4096.0
+    },
+    {
+      "name": "layernorm_4096x1024",
+      "ok": true,
+      "iters": 20,
+      "avg_ms": 0.048,
+      "place": "Place(gpu:0)",
+      "shape": [
+        4096,
+        1024
+      ],
+      "dtype": "paddle.float32",
+      "sum": -0.00047218799591064453
+    },
+    {
+      "name": "conv2d_16x64x56x56",
+      "ok": true,
+      "iters": 10,
+      "avg_ms": 0.268,
+      "place": "Place(gpu:0)",
+      "shape": [
+        16,
+        128,
+        56,
+        56
+      ],
+      "dtype": "paddle.float32",
+      "sum": 883.5087890625
+    },
+    {
+      "name": "gather_65536x128",
+      "ok": true,
+      "iters": 20,
+      "avg_ms": 0.119,
+      "place": "Place(gpu:0)",
+      "shape": [
+        65536,
+        128
+      ],
+      "dtype": "paddle.float32",
+      "sum": -2786.989990234375
+    },
+    {
+      "name": "scatter_65536x128",
+      "ok": true,
+      "iters": 8,
+      "avg_ms": 0.393,
+      "place": "Place(gpu:0)",
+      "shape": [
+        200000,
+        128
+      ],
+      "dtype": "paddle.float32",
+      "sum": -306.394287109375
+    }
+  ],
+  "extra": {
+    "run_check": "ok",
+    "inference_config_gpu_related_methods": [
+      "disable_gpu",
+      "disable_mkldnn",
+      "disable_mkldnn_fc_passes",
+      "enable_mkldnn",
+      "enable_mkldnn_bfloat16",
+      "enable_mkldnn_int8",
+      "enable_use_gpu",
+      "fraction_of_gpu_memory_for_pool",
+      "gpu_device_id",
+      "mark_trt_engine_outputs",
+      "mkldnn_enabled",
+      "mkldnn_int8_enabled",
+      "set_mkldnn_cache_capacity",
+      "set_mkldnn_op",
+      "set_trt_dynamic_shape_info",
+      "trt_allow_build_at_runtime",
+      "use_gpu"
+    ]
+  }
+}
