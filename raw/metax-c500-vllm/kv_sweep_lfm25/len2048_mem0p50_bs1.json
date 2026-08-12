@@ -1,0 +1,93 @@
+[
+  {
+    "phase": "offline_llm",
+    "started_at": "2026-08-12T09:54:38+0800",
+    "model": "LFM2.5-1.2B-Instruct",
+    "model_path": "/data/models/LFM2.5-1.2B-Instruct",
+    "config": {
+      "model_type": "lfm2",
+      "architectures": [
+        "Lfm2ForCausalLM"
+      ],
+      "hidden_size": 2048,
+      "num_hidden_layers": 16,
+      "num_attention_heads": 32,
+      "num_key_value_heads": 8,
+      "intermediate_size": 12288,
+      "max_position_embeddings": 128000,
+      "rope_theta": 1000000.0
+    },
+    "generation_config": {
+      "bos_token_id": 1,
+      "eos_token_id": 7,
+      "pad_token_id": 0
+    },
+    "params": {
+      "dtype": "float16",
+      "max_model_len": 2048,
+      "gpu_memory_utilization": 0.5,
+      "max_tokens": 16,
+      "batch_size": 1,
+      "enforce_eager": true
+    },
+    "hardware_before": {
+      "mx_smi_rc": 0,
+      "mx_smi": "mx-smi  version: 2.2.12\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 09:54:38 2026\n\nAttached GPUs                                     : 1\n+---------------------------------------------------------------------------------+\n| MX-SMI 2.2.12                      Kernel Mode Driver Version: 3.8.30           |\n| MACA Version: 3.5.3.20             BIOS Version: 1.33.5.0                       |\n|------------------+-----------------+---------------------+----------------------|\n| Board       Name | GPU   Persist-M | Bus-id              | GPU-Util      sGPU-M |\n| Pwr:Usage/Cap    | Temp       Perf | Memory-Usage        | GPU-State            |\n|==================+=================+=====================+======================|\n| 0     MetaX C500 | 0           Off | 0000:37:00.0        | 0%           Enabled |\n| 61W / 350W       | 38C          P9 | 15155/65536 MiB     | Available            |\n+------------------+-----------------+---------------------+----------------------+\n\n+---------------------------------------------------------------------------------+\n| Sliced GPU                                                                      |\n|------------------------------------+---------------------+----------------------|\n| Minor    GPU    sGPU-Id    Compute | Vram Quota          | sGPU-Util            |\n|====================================+=====================+======================|\n| 022      0      3          25%     | 0/16000 MiB         | 0%                   |\n+------------------------------------+---------------------+----------------------+\n\n+---------------------------------------------------------------------------------+\n| Process:                                                                        |\n|  GPU                    PID         Process Name                 GPU Memory     |\n|                                                                  Usage(MiB)     |\n|=================================================================================|\n|  no process found                                                               |\n+---------------------------------------------------------------------------------+\n\nEnd of Log\n",
+      "torch": {
+        "version": "2.8.0+metax3.5.3.9",
+        "cuda_version": "11.6",
+        "cuda_available": true,
+        "device_count": 1,
+        "device_name": "MetaX C500",
+        "visible_memory_bytes": 16341008384,
+        "multi_processor_count": 104,
+        "warp_size": 64,
+        "l2_cache_size": 8388608
+      }
+    },
+    "load_wall_s": 47.942,
+    "generate_wall_s": 0.822,
+    "new_tokens": [
+      16
+    ],
+    "total_new_tokens": 16,
+    "aggregate_tok_s": 19.474,
+    "sample": "  KV 缓存扫描是一种通过定期检查缓存条",
+    "ok": true,
+    "logs": "INFO 08-12 09:54:48 [__init__.py:44] Available plugins for group vllm.platform_plugins:\nINFO 08-12 09:54:48 [__init__.py:46] - metax -> vllm_metax:register\nINFO 08-12 09:54:48 [__init__.py:49] All plugins in this group will be loaded. Set `VLLM_PLUGINS` to control which plugins to load.\nINFO 08-12 09:54:48 [__init__.py:212] Platform plugin metax is activated\nINFO 08-12 09:54:48 [envs.py:104] Plugin sets VLLM_USE_FLASHINFER_SAMPLER to False. Reason: flashinfer sampler are not supported on maca\nINFO 08-12 09:54:48 [envs.py:104] Plugin sets VLLM_ENGINE_READY_TIMEOUT_S to 3600. Reason: set timeout to 3600s for model loading\nINFO 08-12 09:54:48 [envs.py:104] Plugin sets VLLM_DISABLE_SHARED_EXPERTS_STREAM to True. Reason: no used on maca\nINFO Print the version information of mcoplib during compilation.\n\nVersion info:Mcoplib_Version = '0.4.2'\nBuild_Maca_Version = '3.5.3.20'\nGIT_BRANCH = 'HEAD'\nGIT_COMMIT = 'e482051'\nVllm Op Version = 0.17.0\nSGlang Op Version  = 0.5.8 && 0.5.9 \n\nINFO Staring Check the current MACA version of the operating environment.\n\nINFO: Release major.minor matching,  successful:3.5. \n\nWARNING 08-12 09:54:53 [__init__.py:80] The quantization method 'awq' already exists and will be overwritten by the quantization config <class 'vllm_metax.quant_config.awq.MacaAWQConfig'>.\nWARNING 08-12 09:54:53 [__init__.py:80] The quantization method 'awq_marlin' already exists and will be overwritten by the quantization config <class 'vllm_metax.quant_config.awq_marlin.MacaAWQMarlinConfig'>.\nWARNING 08-12 09:54:54 [__init__.py:80] The quantization method 'compressed-tensors' already exists and will be overwritten by the quantization config <class 'vllm_metax.quant_config.compressed_tensors.MacaCompressedTensorsConfig'>.\nWARNING 08-12 09:54:54 [__init__.py:80] The quantization method 'gptq' already exists and will be overwritten by the quantization config <class 'vllm_metax.quant_config.gptq.MacaGPTQConfig'>.\nWARNING 08-12 09:54:54 [__init__.py:80] The quantization method 'gptq_marlin' already exists and will be overwritten by the quantization config <class 'vllm_metax.quant_config.gptq_marlin.MacaGPTQMarlinConfig'>.\nWARNING 08-12 09:54:54 [__init__.py:80] The quantization method 'moe_wna16' already exists and will be overwritten by the quantization config <class 'vllm_metax.quant_config.moe_wna16.MacaMoeWNA16Config'>.\nWARNING 08-12 09:54:54 [registry.py:886] Model architecture DeepSeekMTPModel is already registered, and will be overwritten by the new model class vllm_metax.models.deepseek_mtp:DeepSeekMTP.\nWARNING 08-12 09:54:54 [registry.py:886] Model architecture DeepseekV2ForCausalLM is already registered, and will be overwritten by the new model class vllm_metax.models.deepseek_v2:DeepseekV2ForCausalLM.\nWARNING 08-12 09:54:54 [registry.py:886] Model architecture DeepseekV3ForCausalLM is already registered, and will be overwritten by the new model class vllm_metax.models.deepseek_v2:DeepseekV3ForCausalLM.\nWARNING 08-12 09:54:54 [registry.py:886] Model architecture DeepseekV32ForCausalLM is already registered, and will be overwritten by the new model class vllm_metax.models.deepseek_v2:DeepseekV3ForCausalLM.\nWARNING 08-12 09:54:54 [registry.py:886] Model architecture KimiK25ForConditionalGeneration is already registered, and will be overwritten by the new model class vllm_metax.models.kimi_k25:KimiK25ForConditionalGeneration.\nWARNING 08-12 09:54:54 [registry.py:886] Model architecture GlmMoeDsaForCausalLM is already registered, and will be overwritten by the new model class vllm_metax.models.deepseek_v2:GlmMoeDsaForCausalLM.\nWARNING 08-12 09:54:54 [registry.py:886] Model architecture Step3p5MTP is already registered, and will be overwritten by the new model class vllm_metax.models.step3p5_mtp:Step3p5MTP.\nINFO 08-12 09:54:54 [utils.py:238] non-default args: {'trust_remote_code': True, 'dtype': 'float16', 'max_model_len': 2048, 'gpu_memory_utilization': 0.5, 'disable_log_stats': True, 'enforce_eager': True, 'model': '/data/models/LFM2.5-1.2B-Instruct'}\nThe argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.\nThe argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.\nINFO 08-12 09:54:54 [model.py:531] Resolved architecture: Lfm2ForCausalLM\nWARNING 08-12 09:54:54 [model.py:1892] Casting torch.bfloat16 to torch.float16.\nINFO 08-12 09:54:54 [model.py:1554] Using max model len 2048\nINFO 08-12 09:54:54 [scheduler.py:231] Chunked prefill is enabled with max_num_batched_tokens=8192.\nINFO 08-12 09:54:54 [config.py:544] Setting attention block size to 16 tokens to ensure that attention page size is >= mamba page size.\nINFO 08-12 09:54:54 [config.py:575] Padding mamba page size by 300.00% to ensure that mamba page size and attention page size are exactly equal.\nINFO 08-12 09:54:54 [vllm.py:747] Asynchronous scheduling is enabled.\nWARNING 08-12 09:54:54 [vllm.py:781] Enforce eager set, disabling torch.compile and CUDAGraphs. This is equivalent to setting -cc.mode=none -cc.cudagraph_mode=none\nWARNING 08-12 09:54:54 [vllm.py:792] Inductor compilation was disabled by user settings, optimizations settings that are only active during inductor compilation will be ignored.\nINFO 08-12 09:54:54 [vllm.py:957] Cudagraph is disabled under eager mode\nINFO 08-12 09:54:54 [envs.py:104] Plugin sets VLLM_TUNED_CONFIG_FOLDER to /opt/conda/lib/python3.10/site-packages/vllm_metax/model_executor/layers/fused_moe/configs/H=2048. Reason: set FusedMoE tuned config dir by hidden_size=2048\nWARNING 08-12 09:54:55 [system_utils.py:152] We must use the `spawn` multiprocessing start method. Overriding VLLM_WORKER_MULTIPROC_METHOD to 'spawn'. See https://docs.vllm.ai/en/latest/usage/troubleshooting.html#python-multiprocessing for more information. Reasons: CUDA is initialized\nINFO 08-12 09:55:39 [llm.py:388] Supported tasks: ['generate']\n\rRendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]\rRendering prompts: 100%|##########| 1/1 [00:00<00:00, 60.32it/s]\n\rProcessed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]\rProcessed prompts: 100%|##########| 1/1 [00:00<00:00,  1.24it/s, est. speed input: 17.42 toks/s, output: 19.91 toks/s]\rProcessed prompts: 100%|##########| 1/1 [00:00<00:00,  1.24it/s, est. speed input: 17.42 toks/s, output: 19.91 toks/s]\rProcessed prompts: 100%|##########| 1/1 [00:00<00:00,  1.24it/s, est. speed input: 17.42 toks/s, output: 19.91 toks/s]\n",
+    "events": {
+      "resolved_architecture": [
+        "Lfm2ForCausalLM"
+      ],
+      "casting_dtype": [
+        "torch.bfloat16 to torch.float16"
+      ],
+      "max_model_len": [
+        "2048"
+      ],
+      "chunked_prefill": [
+        "8192"
+      ],
+      "mamba_page_alignment": [
+        "INFO 08-12 09:54:54 [config.py:544] Setting attention block size to 16 tokens to ensure that attention page size is >= mamba page size.",
+        "INFO 08-12 09:54:54 [config.py:575] Padding mamba page size by 300.00% to ensure that mamba page size and attention page size are exactly equal."
+      ]
+    },
+    "hardware_after": {
+      "mx_smi_rc": 0,
+      "mx_smi": "mx-smi  version: 2.2.12\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Wed Aug 12 09:55:40 2026\n\nAttached GPUs                                     : 1\n+---------------------------------------------------------------------------------+\n| MX-SMI 2.2.12                      Kernel Mode Driver Version: 3.8.30           |\n| MACA Version: 3.5.3.20             BIOS Version: 1.33.5.0                       |\n|------------------+-----------------+---------------------+----------------------|\n| Board       Name | GPU   Persist-M | Bus-id              | GPU-Util      sGPU-M |\n| Pwr:Usage/Cap    | Temp       Perf | Memory-Usage        | GPU-State            |\n|==================+=================+=====================+======================|\n| 0     MetaX C500 | 0           Off | 0000:37:00.0        | 3%           Enabled |\n| 75W / 350W       | 39C          P9 | 23045/65536 MiB     | Available            |\n+------------------+-----------------+---------------------+----------------------+\n\n+---------------------------------------------------------------------------------+\n| Sliced GPU                                                                      |\n|------------------------------------+---------------------+----------------------|\n| Minor    GPU    sGPU-Id    Compute | Vram Quota          | sGPU-Util            |\n|====================================+=====================+======================|\n| 022      0      3          25%     | 7888/16000 MiB      | 3%                   |\n+------------------------------------+---------------------+----------------------+\n\n+---------------------------------------------------------------------------------+\n| Process:                                                                        |\n|  GPU                    PID         Process Name                 GPU Memory     |\n|                                                                  Usage(MiB)     |\n|=================================================================================|\n|  0-s3                  9021         VLLM::EngineCor              7888           |\n+---------------------------------------------------------------------------------+\n\nEnd of Log\n",
+      "torch": {
+        "version": "2.8.0+metax3.5.3.9",
+        "cuda_version": "11.6",
+        "cuda_available": true,
+        "device_count": 1,
+        "device_name": "MetaX C500",
+        "visible_memory_bytes": 16341008384,
+        "multi_processor_count": 104,
+        "warp_size": 64,
+        "l2_cache_size": 8388608
+      }
+    },
+    "finished_at": "2026-08-12T09:55:40+0800"
+  }
+]

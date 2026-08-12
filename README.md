@@ -58,11 +58,18 @@ raw/
   metax-c500/
     c500_hardware_exposure.txt  # mx-smi help/plain/query + PyTorch props + MACA runtime props
     c500_mxsmi_detail.txt       # mx-smi 各 show 子命令详细输出
+  metax-c500-vllm/
+    c500_lfm25_lifecycle.json   # LFM2.5 vLLM offline lifecycle
+    kv_sweep_lfm25/             # KV cache / concurrency sweep raw data
 
 probes/
   metax-c500/
     add1.cpp                    # 最小 MACA 自定义 kernel 编译/运行探针
     device_props.cpp            # mcGetDeviceProperties 属性采集探针
+
+scripts/
+  vllm_lifecycle_probe.py       # 采集 vLLM 模型生命周期
+  vllm_kv_sweep.py              # 扫 max_model_len / gpu_memory_utilization
 ```
 
 ## 复现方式
