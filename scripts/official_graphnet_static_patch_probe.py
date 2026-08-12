@@ -169,6 +169,13 @@ def patch_cops_full(model_path: Path) -> dict[str, Any]:
             return None
         return f"paddle.equal({args[0]}, {args[1]})"
 
+    def full_like_converter(args: list[str]) -> str | None:
+        if len(args) != 4:
+            return None
+        x, fill_value, dtype_expr, _place = args
+        dtype = dtype_token_to_string(dtype_expr)
+        return f'paddle.full_like({x}, fill_value={fill_value}, dtype="{dtype}")'
+
     def cast_converter(args: list[str]) -> str | None:
         if len(args) != 2:
             return None
@@ -263,6 +270,7 @@ def patch_cops_full(model_path: Path) -> dict[str, Any]:
 
     converters = [
         ("full", full_converter),
+        ("full_like", full_like_converter),
         ("equal", equal_converter),
         ("cast", cast_converter),
         ("scale", scale_converter),

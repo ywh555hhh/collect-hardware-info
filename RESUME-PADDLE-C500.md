@@ -27,7 +27,8 @@ These are safe to use now, based on current repository evidence:
 - Profiled dense and sparse-ish graph blocks across matmul, gelu, layernorm, gather, scatter, projection, and reduction; observed dynamic avg latency of 0.333 ms for dense block, 0.878 ms for gather/scatter block, and 1.268 ms for mixed graph block on `Place(gpu:0)`.
 - Verified JIT export/load for dense and mixed graph blocks, with dense block improving from 0.333 ms dynamic to 0.255 ms JIT path, and mixed block from 1.268 ms dynamic to 1.122 ms JIT path.
 - Exported fixed-shape dense and mixed graph blocks to Paddle Inference and validated `PaddleInferPredictor` execution on C500, observing 1.515 ms and 2.670 ms average end-to-end predictor latency for the two blocks.
-- Brought up an official PaddlePaddle/GraphNet `ernie-3.0-nano-zh` sample on C500: direct dygraph forward succeeded on `Place(gpu:0)` with output shape `[1, 312]`; after rewriting all 159 generated `_C_ops` calls to high-level Paddle APIs, the official `compiler=nope` benchmark completed with `eager:success compiled:success` and e2e median latency of 4.415 ms / 4.409 ms.
+- Brought up official PaddlePaddle/GraphNet PaddleNLP samples on C500: direct dygraph forward succeeded for `ernie-3.0-nano-zh`, and a generated-code rewrite pass converted low-level `_C_ops` calls to high-level Paddle APIs so official `compiler=nope` benchmark timing could run.
+- Expanded the official GraphNet compatibility experiment from one sample to a five-sample PaddleNLP sweep; improved selected-sample pass rate from 3/5 to 5/5 after adding `_C_ops.full_like` coverage, rewriting 949 generated `_C_ops` calls in the final sweep and measuring compiled/nope e2e medians from 3.120 ms to 12.438 ms.
 - Identified official GraphNet bring-up compatibility gaps on C500: Paddle accepts `gpu` / `gpu:0` but rejects GraphNet's expected `cuda` / `cuda:0` device strings, and the upstream benchmark has a backend import path mismatch requiring a thin wrapper or patch.
 - Evaluated the current C500 Paddle image's suitability for compiler benchmarking, finding that it supports runtime/operator/static-graph analysis but cannot directly run CINN acceleration because CINN is not compiled in.
 
@@ -43,7 +44,7 @@ Use these only after real GraphNet benchmark or vendor-profiler work is complete
 
 A good 60-second version:
 
-> I wanted to connect my PaddlePaddle internship experience with inference and compiler systems, so I investigated Paddle on a MetaX C500 accelerator. First I built backend probes to see how the vendor image exposes the card to Paddle. It turned out to use Paddle's CUDA-compatible `gpu:0` route, not custom-device dispatch, and CINN was not compiled in. Then I validated Paddle Inference availability and core op coverage, including fp16/fp32 matmul, conv2d, softmax, layernorm, gather, and scatter. The GraphNet angle is that PaddlePaddle/GraphNet is a computation graph dataset for tensor compiler research, so I built a mini GraphNet-style Paddle workload with dense, sparse gather/scatter, mixed graph, and readout blocks, then compared dynamic graph execution with `paddle.jit.save/load` static graph execution. This makes the project about framework backend behavior and compiler workload readiness, not just running a Paddle demo.
+> I wanted to connect my PaddlePaddle internship experience with inference and compiler systems, so I investigated Paddle on a MetaX C500 accelerator. First I built backend probes to see how the vendor image exposes the card to Paddle. It turned out to use Paddle's CUDA-compatible `gpu:0` route, not custom-device dispatch, and CINN was not compiled in. Then I validated Paddle Inference availability and core op coverage, including fp16/fp32 matmul, conv2d, softmax, layernorm, gather, and scatter. The GraphNet angle is that PaddlePaddle/GraphNet is a computation graph dataset for tensor compiler research, so I built a mini GraphNet-style Paddle workload and then pushed into official GraphNet samples. The original official benchmark path failed in generated `_C_ops` under Paddle 2.6/MACA; I wrote a temporary rewrite pass to convert low-level generated calls to high-level Paddle APIs, then expanded it to a five-sample PaddleNLP sweep. The selected official samples went from 3/5 passing to 5/5 passing, with 949 generated calls rewritten and compiled/nope e2e medians from 3.120 ms to 12.438 ms.
 
 ## Evidence Links In This Repo
 
@@ -63,7 +64,10 @@ A good 60-second version:
 | Official GraphNet raw output | `raw/metax-c500-paddle/official_graphnet/official_graphnet_c500_bringup_probe.json` |
 | Paddle `_C_ops` signature script | `scripts/paddle_cops_signature_probe.py` |
 | Paddle `_C_ops` signature raw output | `raw/metax-c500-paddle/cops_signature/paddle_cops_signature_probe.json` |
+| Official GraphNet multi-sample sweep script | `scripts/official_graphnet_multi_sample_sweep.py` |
+| Official GraphNet multi-sample raw output | `raw/metax-c500-paddle/official_graphnet_multi_sample_final/official_graphnet_multi_sample_sweep.json` |
 | Official GraphNet alignment note | `notes/paddle-graphnet-official-alignment.md` |
+| Multi-sample sweep note | `notes/paddle-graphnet-multi-sample-sweep.md` |
 | Technical note | `notes/metax-c500-paddle-backend-graphnet-probe.md` |
 
 ## What Not To Overclaim Yet
@@ -82,7 +86,7 @@ Current true claim:
 - completed Paddle Inference predictor probe for dense/mixed graph blocks
 - completed device-string compatibility probe for official GraphNet bring-up
 - completed official GraphNet Paddle sample direct-dygraph bring-up on C500
-- completed one-sample official GraphNet `compiler=nope` timing through generated-code rewrite
+- completed five-sample official GraphNet PaddleNLP `compiler=nope` timing through generated-code rewrite
 - identified image-level compiler limitation (`CINN=False`)
 - established a concrete path toward real GraphNet and vendor-profiler follow-up
 
@@ -92,7 +96,7 @@ The highest-return next tasks:
 
 1. Read GraphNet data format and benchmark driver.
 2. Patch or wrap official GraphNet Paddle benchmark so `cuda` maps to Paddle `gpu:0` on C500.
-3. Generalize the generated `_C_ops` rewrite pass across more official GraphNet Paddle samples.
+3. Extend the generated `_C_ops` rewrite pass to more operator families and a broader official GraphNet sample set.
 4. Add vendor-profiler or `mx-smi` time-series sampling around each graph block.
 5. Compare predictor latency under larger graph sizes and batched/repeated request patterns.
 
@@ -100,3 +104,7 @@ The highest-return next tasks:
 ## Official Static Patch Follow-Up
 
 A temporary generated-code patch experiment is recorded in `raw/metax-c500-paddle/official_graphnet_static_patch/official_graphnet_static_patch_probe.json` and implemented by `scripts/official_graphnet_static_patch_probe.py`. Rewriting all 159 generated `_C_ops` calls in the official `ernie-3.0-nano-zh` sample to higher-level Paddle APIs allowed the official `compiler=nope` benchmark to complete with `eager:success compiled:success`. The measured e2e median was 4.415 ms for eager and 4.409 ms for compiled; GPU event timing reported 0.0 ms, so GPU-only timing is not reliable in this Paddle/MACA image.
+
+## Official Multi-Sample Sweep
+
+The stronger follow-up is recorded in `raw/metax-c500-paddle/official_graphnet_multi_sample_final/official_graphnet_multi_sample_sweep.json` and summarized in `notes/paddle-graphnet-multi-sample-sweep.md`. The final sweep covered five official PaddleNLP GraphNet samples, rewrote 949 generated `_C_ops` calls, and passed all five samples after adding `_C_ops.full_like` coverage. The compiled/nope e2e median range was 3.120 ms to 12.438 ms. This is the current best resume claim because it shows a repeatable compatibility harness rather than a one-sample demo.

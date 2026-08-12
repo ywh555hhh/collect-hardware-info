@@ -21,7 +21,8 @@
 - 实现 mini GraphNet-style 计算图 workload，覆盖 dense block、sparse gather/scatter block、mixed graph block 与 graph readout，比较 Paddle 动态图与 `paddle.jit.save/load` 静态图执行路径。
 - 在 C500 上验证 dense/mixed graph block 的 `paddle.jit.save/load` 静态图执行，dense block 从 `0.333 ms` 动态图降低到 `0.255 ms` JIT 路径，mixed block 从 `1.268 ms` 降到 `1.122 ms`。
 - 将固定形状 dense/mixed graph block 导出到 Paddle Inference，验证 `PaddleInferPredictor` 在 C500 上可执行，测得端到端 predictor latency 分别为 `1.515 ms` 与 `2.670 ms`。
-- Bring up 官方 PaddlePaddle/GraphNet `ernie-3.0-nano-zh` Paddle sample：direct dygraph forward 在 `Place(gpu:0)` 上成功，输出 shape `[1, 312]`；进一步定位官方 benchmark static path 失败于 `paddle.jit.to_static` / generated `_C_ops` 兼容问题；将全部 159 个 generated `_C_ops` 降级为高层 Paddle API 后，official `compiler=nope` benchmark 跑通，eager/compiled e2e median 分别为 `4.415 ms` / `4.409 ms`。
+- Bring up 官方 PaddlePaddle/GraphNet PaddleNLP samples：`ernie-3.0-nano-zh` direct dygraph forward 在 `Place(gpu:0)` 上成功，输出 shape `[1, 312]`；进一步定位官方 benchmark static path 失败于 `paddle.jit.to_static` / generated `_C_ops` 兼容问题，并实现 generated `_C_ops` 到高层 Paddle API 的临时 rewrite pass。
+- 将 official GraphNet 兼容性实验从单样本扩展为 5 个 PaddleNLP sample sweep；第一轮 3/5 pass，补齐 `_C_ops.full_like` converter 并修正 sample path 后，最终 5/5 pass；final sweep 共 rewrite 949 个 generated `_C_ops` 调用，compiled/nope e2e median 覆盖 `3.120 ms` 到 `12.438 ms`。
 - 识别官方 GraphNet 在 C500 Paddle 镜像上的适配 gap：上游 Paddle benchmark 存在 backend import path mismatch，且默认 `--device cuda` 与当前镜像要求的 `gpu/gpu:0` device string 不完全一致，需要 thin wrapper 或小补丁。
 - 明确当前镜像能力边界：`is_compiled_with_cuda=True` 但 `is_compiled_with_cinn=False`，因此适合 runtime/operator/static graph/Paddle Inference 路径研究，不应声称完成 CINN speedup benchmark。
 
@@ -40,7 +41,7 @@
 
 我用一台 MetaX C500 做了一个 PaddlePaddle 后端和推理路径的 bring-up 项目。第一步不是直接跑模型，而是确认 Paddle 怎么暴露这张卡：这个镜像是 `paddlepaddle-gpu 2.6.0+maca3.0.0.5`，设备走 CUDA-compatible `gpu:0`，不是 custom device，也没有 CINN。然后我做了核心算子 smoke，覆盖 matmul、conv、softmax、layernorm、gather、scatter。
 
-之后我把它往 GraphNet 和推理路径上推：实现了 mini GraphNet-style workload，比较动态图、`paddle.jit.save/load` 静态图和 Paddle Inference Predictor。最后我还拉了官方 PaddlePaddle/GraphNet 的 `ernie-3.0-nano-zh` sample，在 C500 上 direct dygraph forward 成功，但官方 benchmark 的 static path 在 `to_static` 生成代码里失败。我把问题定位到 generated `_C_ops.full` 与 Paddle 2.6/MACA dy2static 的兼容问题，而不是简单的硬件不能跑。这个项目本质上是一次非 NVIDIA Paddle 后端的 runtime / graph / inference bring-up。
+之后我把它往 GraphNet 和推理路径上推：实现了 mini GraphNet-style workload，比较动态图、`paddle.jit.save/load` 静态图和 Paddle Inference Predictor。最后我拉了官方 PaddlePaddle/GraphNet 的 PaddleNLP samples，在 C500 上先跑通 `ernie-3.0-nano-zh` direct dygraph forward；原始官方 benchmark 卡在 generated `_C_ops` 与 Paddle 2.6/MACA `dy2static` 的兼容问题。我进一步做了一个 generated `_C_ops` 到高层 Paddle API 的临时 rewrite pass，并把它扩到 5 个官方样本：第一轮 3/5 pass，补齐 `_C_ops.full_like` 后 final sweep 5/5 pass，共 rewrite 949 个 generated calls，compiled/nope e2e median 从 `3.120 ms` 到 `12.438 ms`。这个项目本质上是一次非 NVIDIA Paddle 后端的 runtime / graph / inference bring-up。
 
 ## 可被追问的技术点
 
@@ -49,7 +50,7 @@
 | 为什么 GraphNet 不是普通 GNN？ | 它是真实深度学习计算图数据集和 tensor compiler benchmark，用来评估编译器/后端优化能力。 |
 | 为什么和推理有关？ | 推理部署依赖动态图、静态图导出、IR pass、Paddle Inference Predictor、算子覆盖和内存行为；GraphNet 给的是图级 workload。 |
 | 为什么 `cuda` 不可用但 `gpu:0` 可用？ | Paddle Python device API 接受 `gpu/gpu:0`，但当前镜像底层仍是 CUDA-compatible 编译路径；这暴露了框架 device abstraction 与 benchmark 约定之间的 gap。 |
-| 为什么 official benchmark failed 也有价值？ | 因为 direct dygraph sample 已经成功，失败被定位到 static conversion / generated `_C_ops.full` 兼容问题，说明这是可工程化推进的 bring-up gap。 |
+| 为什么一开始 official benchmark failed 也有价值？ | 因为 direct dygraph sample 已经成功，失败被定位到 static conversion / generated `_C_ops` 兼容问题；后续 rewrite pass 进一步证明这是可工程化推进的 bring-up gap，并把 selected official PaddleNLP sample pass rate 从 3/5 推到 5/5。 |
 | 能不能声称 CINN？ | 不能。当前镜像 `is_compiled_with_cinn=False`，只能说完成了 runtime/operator/static graph/Paddle Inference 路径研究，并为 CINN-enabled 镜像预留 benchmark 路线。 |
 
 ## 证据索引
@@ -63,9 +64,11 @@
 | Paddle Inference predictor | `scripts/paddle_inference_graphnet_probe.py` / `raw/metax-c500-paddle/paddle_inference_graphnet/paddle_inference_graphnet_probe.json` |
 | official GraphNet bring-up | `scripts/official_graphnet_c500_bringup_probe.py` / `raw/metax-c500-paddle/official_graphnet/official_graphnet_c500_bringup_probe.json` |
 | official static patch 实验 | `scripts/official_graphnet_static_patch_probe.py` / `raw/metax-c500-paddle/official_graphnet_static_patch/official_graphnet_static_patch_probe.json` |
+| official multi-sample sweep | `scripts/official_graphnet_multi_sample_sweep.py` / `raw/metax-c500-paddle/official_graphnet_multi_sample_final/official_graphnet_multi_sample_sweep.json` |
 | `_C_ops` 签名探针 | `scripts/paddle_cops_signature_probe.py` / `raw/metax-c500-paddle/cops_signature/paddle_cops_signature_probe.json` |
 | 技术报告 | `notes/metax-c500-paddle-backend-graphnet-probe.md` |
 | 官方 GraphNet 对齐报告 | `notes/paddle-graphnet-official-alignment.md` |
+| 多样本 sweep 报告 | `notes/paddle-graphnet-multi-sample-sweep.md` |
 
 ## 不要过度声明
 
@@ -81,12 +84,12 @@
 - 完成 C500 Paddle 后端能力图谱
 - 完成 mini GraphNet-style dynamic/static/Paddle Inference 路径验证
 - 跑通 official GraphNet Paddle sample 的 direct dygraph forward
-- 通过 generated `_C_ops` rewrite 跑通一个 official GraphNet `compiler=nope` benchmark timing
+- 通过 generated `_C_ops` rewrite 跑通 5 个 official GraphNet PaddleNLP sample 的 `compiler=nope` benchmark timing
 
 ## 下一步最值钱
 
 1. 做一个最小 patch：修 official GraphNet backend import path。
 2. 加 device wrapper：把 benchmark 逻辑 device `cuda` 映射到 Paddle runtime device `gpu:0`。
-3. 系统性替换或修复 generated `_C_ops` 的 dy2static 兼容问题，至少让 `ernie-3.0-nano-zh` official benchmark 的 `compiler=nope` 跑出 timing。
+3. 把 generated `_C_ops` rewrite 继续扩展到更多官方 GraphNet sample 和更多低层 op family，形成更完整的兼容性覆盖图。
 4. 如果平台提供 CINN-enabled Paddle 镜像，再做 `nope` vs `cinn` 对比。
 5. 再加 vendor profiler / `mx-smi` 时间序列，分析 gather/scatter 与 static graph predictor overhead。

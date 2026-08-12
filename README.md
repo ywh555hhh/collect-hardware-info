@@ -87,6 +87,12 @@ raw/
       official_graphnet_c500_bringup_probe.json # Official GraphNet sample bring-up
     official_graphnet_static_patch/
       official_graphnet_static_patch_probe.json # Generated-code static patch experiment
+    official_graphnet_multi_sample/
+      official_graphnet_multi_sample_sweep.json # First 5-sample sweep, 3/5 pass before full_like fix
+    official_graphnet_multi_sample_v2/
+      official_graphnet_multi_sample_sweep.json # Targeted retry for previous failures, 2/2 pass
+    official_graphnet_multi_sample_final/
+      official_graphnet_multi_sample_sweep.json # Final official PaddleNLP sweep, 5/5 pass
     mini_graphnet/
       mini_graphnet_probe.json  # Paddle mini GraphNet-style dynamic/JIT workload
     paddle_inference_graphnet/
@@ -107,6 +113,7 @@ scripts/
   paddle_cops_signature_probe.py # Paddle _C_ops signature compatibility 探针
   official_graphnet_c500_bringup_probe.py # Official GraphNet bring-up 探针
   official_graphnet_static_patch_probe.py # Official GraphNet static compatibility patch 探针
+  official_graphnet_multi_sample_sweep.py # Official GraphNet multi-sample sweep orchestrator
   paddle_op_probe.py            # Paddle op coverage / latency smoke 探针
   paddle_mini_graphnet_probe.py # GraphNet-style dense/sparse/mixed graph workload
   paddle_inference_graphnet_probe.py # Paddle Inference predictor probe
@@ -138,7 +145,8 @@ scripts/
 - Paddle 包为 `paddlepaddle-gpu 2.6.0+maca3.0.0.5`。
 - C500 通过 Paddle 的 CUDA-compatible `gpu:0` 路径暴露，不是 `maca:0` custom-device 路径。
 - Paddle device string 实测：`gpu` / `gpu:0` 可用，`cuda` / `cuda:0` 不可用；官方 GraphNet Paddle benchmark 的 `--device cuda` 需要兼容层或小补丁。
-- 官方 GraphNet `ernie-3.0-nano-zh` Paddle sample 的 direct dygraph forward 已在 C500 上跑通，输出 `[1, 312]`；官方 benchmark 的 eager/compiled static 路径仍失败；全量临时 rewrite 将 159 个 generated `_C_ops` 调用替换为高层 Paddle API 后，官方 `compiler=nope` benchmark 跑通，状态为 `eager:success compiled:success`；e2e median 分别为 eager `4.415 ms`、compiled `4.409 ms`。GPU event timing 为 `0.0 ms`，说明该镜像下 Paddle Event 计时不可直接用于 GPU-only timing。
+- 官方 GraphNet `ernie-3.0-nano-zh` Paddle sample 的 direct dygraph forward 已在 C500 上跑通，输出 `[1, 312]`；原始官方 benchmark 失败被定位到 generated `_C_ops` 与 Paddle 2.6/MACA `dy2static` 兼容问题。
+- 进一步实现 generated `_C_ops` -> 高层 Paddle API 的临时 rewrite pass，并扩展到 5 个官方 PaddleNLP GraphNet sample。第一轮 sweep 为 3/5 pass；修正 sample path 并补齐 `_C_ops.full_like` converter 后，最终 sweep 为 5/5 pass，共 rewrite 949 个 generated `_C_ops` 调用，compiled/nope e2e median 范围为 `3.120 ms` 到 `12.438 ms`。GPU event timing 为 `0.0 ms`，说明该镜像下 Paddle Event 计时不可直接用于 GPU-only timing。
 - `is_compiled_with_cuda=True`，`is_compiled_with_cinn=False`。
 - Paddle Inference API 可用，`paddle.utils.run_check()` 通过。
 - matmul / conv2d / softmax / layernorm / gather / scatter 都能在 `Place(gpu:0)` 上跑通。
@@ -166,6 +174,7 @@ Predictor 计时包含 input feed / output fetch 的端到端调用成本，不�
 
 - `notes/metax-c500-paddle-backend-graphnet-probe.md`
 - `notes/paddle-graphnet-official-alignment.md`
+- `notes/paddle-graphnet-multi-sample-sweep.md`
 
 ## 复现方式
 

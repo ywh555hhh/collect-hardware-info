@@ -1,0 +1,238 @@
+{
+  "started_at": "2026-08-13T00:49:51+0800",
+  "python": "3.10.10 | packaged by conda-forge | (main, Mar 24 2023, 20:08:06) [GCC 11.3.0]",
+  "executable": "/opt/conda/bin/python3",
+  "params": {
+    "archive": "/data/PaddlePaddle-GraphNet-c500-probe.tgz",
+    "work_dir": "/data/reports/official_graphnet_multi_sample/work/04_paddle_samples_PaddleNLP_uer_chinese-roberta-tiny",
+    "output_json": "/data/reports/official_graphnet_multi_sample/04_paddle_samples_PaddleNLP_uer_chinese-roberta-tiny.json",
+    "sample": "paddle_samples/PaddleNLP/uer_chinese-roberta-tiny",
+    "warmup": 2,
+    "trials": 3,
+    "timeout": 420
+  },
+  "graphnet_root": "/data/reports/official_graphnet_multi_sample/work/04_paddle_samples_PaddleNLP_uer_chinese-roberta-tiny/PaddlePaddle-GraphNet.5ce69o",
+  "sample_path": "/data/reports/official_graphnet_multi_sample/work/04_paddle_samples_PaddleNLP_uer_chinese-roberta-tiny/PaddlePaddle-GraphNet.5ce69o/paddle_samples/PaddleNLP/uer_chinese-roberta-tiny",
+  "backend_patch": {
+    "ok": true,
+    "copied": [
+      "._cinn_backend.py",
+      "._graph_compiler_backend.py",
+      "._nope_backend.py",
+      "cinn_backend.py",
+      "graph_compiler_backend.py",
+      "nope_backend.py"
+    ]
+  },
+  "model_patch": {
+    "ok": true,
+    "count": 89,
+    "replacements": [
+      {
+        "op": "full",
+        "original": "paddle._C_ops.full(\n            [], float(\"0\"), paddle.int64, paddle.framework._current_expected_place()\n        )",
+        "replacement": "paddle.full([], float(\"0\"), dtype=\"int64\")"
+      },
+      {
+        "op": "full",
+        "original": "paddle._C_ops.full(\n            [1], float(\"-10000\"), paddle.float32, paddle.core.CPUPlace()\n        )",
+        "replacement": "paddle.full([1], float(\"-10000\"), dtype=\"float32\")"
+      },
+      {
+        "op": "full",
+        "original": "paddle._C_ops.full(\n            [1], float(\"1\"), paddle.float32, paddle.core.CPUPlace()\n        )",
+        "replacement": "paddle.full([1], float(\"1\"), dtype=\"float32\")"
+      },
+      {
+        "op": "full",
+        "original": "paddle._C_ops.full(\n            [1], float(\"-1\"), paddle.int32, paddle.core.CPUPlace()\n        )",
+        "replacement": "paddle.full([1], float(\"-1\"), dtype=\"int32\")"
+      },
+      {
+        "op": "full",
+        "original": "paddle._C_ops.full(\n            [1], float(\"0.1\"), paddle.float32, paddle.core.CPUPlace()\n        )",
+        "replacement": "paddle.full([1], float(\"0.1\"), dtype=\"float32\")"
+      },
+      {
+        "op": "full",
+        "original": "paddle._C_ops.full(\n            [1], float(\"0.125\"), paddle.float32, paddle.core.CPUPlace()\n        )",
+        "replacement": "paddle.full([1], float(\"0.125\"), dtype=\"float32\")"
+      },
+      {
+        "op": "equal",
+        "original": "paddle._C_ops.equal(data_0, full_0)",
+        "replacement": "paddle.equal(data_0, full_0)"
+      },
+      {
+        "op": "cast",
+        "original": "paddle._C_ops.cast(equal_0, paddle.float32)",
+        "replacement": "paddle.cast(equal_0, dtype=\"float32\")"
+      },
+      {
+        "op": "scale",
+        "original": "paddle._C_ops.scale(cast_0, full_1, float(\"0\"), True)",
+        "replacement": "(cast_0 * full_1)"
+      },
+      {
+        "op": "scale",
+        "original": "paddle._C_ops.scale(transpose_0, full_5, float(\"0\"), True)",
+        "replacement": "(transpose_0 * full_5)"
+      },
+      {
+        "op": "scale",
+        "original": "paddle._C_ops.scale(transpose_4, full_5, float(\"0\"), True)",
+        "replacement": "(transpose_4 * full_5)"
+      },
+      {
+        "op": "unsqueeze",
+        "original": "paddle._C_ops.unsqueeze(scale_0, full_int_array_0)",
+        "replacement": "paddle.unsqueeze(scale_0, axis=full_int_array_0)"
+      },
+      {
+        "op": "embedding",
+        "original": "paddle._C_ops.embedding(data_0, parameter_38, -1, False)",
+        "replacement": "paddle.nn.functional.embedding(data_0, parameter_38, padding_idx=-1, sparse=False)"
+      },
+      {
+        "op": "embedding",
+        "original": "paddle._C_ops.embedding(subtract_0, parameter_37, -1, False)",
+        "replacement": "paddle.nn.functional.embedding(subtract_0, parameter_37, padding_idx=-1, sparse=False)"
+      },
+      {
+        "op": "embedding",
+        "original": "paddle._C_ops.embedding(data_1, parameter_36, -1, False)",
+        "replacement": "paddle.nn.functional.embedding(data_1, parameter_36, padding_idx=-1, sparse=False)"
+      },
+      {
+        "op": "cumsum",
+        "original": "paddle._C_ops.cumsum(full_like_0, full_3, False, False, False)",
+        "replacement": "paddle.cumsum(full_like_0, axis=1)"
+      },
+      {
+        "op": "subtract",
+        "original": "paddle._C_ops.subtract(cumsum_0, full_like_0)",
+        "replacement": "paddle.subtract(cumsum_0, full_like_0)"
+      },
+      {
+        "op": "add",
+        "original": "paddle._C_ops.add(embedding_0, embedding_1)",
+        "replacement": "paddle.add(embedding_0, embedding_1)"
+      },
+      {
+        "op": "add",
+        "original": "paddle._C_ops.add(add_0, embedding_2)",
+        "replacement": "paddle.add(add_0, embedding_2)"
+      },
+      {
+        "op": "add",
+        "original": "paddle._C_ops.add(matmul_0, parameter_32)",
+        "replacement": "paddle.add(matmul_0, parameter_32)"
+      },
+      {
+        "op": "add",
+        "original": "paddle._C_ops.add(matmul_1, parameter_30)",
+        "replacement": "paddle.add(matmul_1, parameter_30)"
+      },
+      {
+        "op": "add",
+        "original": "paddle._C_ops.add(matmul_2, parameter_28)",
+        "replacement": "paddle.add(matmul_2, parameter_28)"
+      },
+      {
+        "op": "add",
+        "original": "paddle._C_ops.add(matmul_3, unsqueeze_0)",
+        "replacement": "paddle.add(matmul_3, unsqueeze_0)"
+      },
+      {
+        "op": "add",
+        "original": "paddle._C_ops.add(matmul_5, parameter_26)",
+        "replacement": "paddle.add(matmul_5, parameter_26)"
+      },
+      {
+        "op": "add",
+        "original": "paddle._C_ops.add(dropout_0, dropout_4)",
+        "replacement": "paddle.add(dropout_0, dropout_4)"
+      },
+      {
+        "op": "add",
+        "original": "paddle._C_ops.add(matmul_6, parameter_24)",
+        "replacement": "paddle.add(matmul_6, parameter_24)"
+      },
+      {
+        "op": "add",
+        "original": "paddle._C_ops.add(matmul_7, parameter_22)",
+        "replacement": "paddle.add(matmul_7, parameter_22)"
+      },
+      {
+        "op": "add",
+        "original": "paddle._C_ops.add(layer_norm_3, dropout_6)",
+        "replacement": "paddle.add(layer_norm_3, dropout_6)"
+      },
+      {
+        "op": "add",
+        "original": "paddle._C_ops.add(matmul_8, parameter_16)",
+        "replacement": "paddle.add(matmul_8, parameter_16)"
+      },
+      {
+        "op": "add",
+        "original": "paddle._C_ops.add(matmul_9, parameter_14)",
+        "replacement": "paddle.add(matmul_9, parameter_14)"
+      }
+    ]
+  },
+  "benchmark": {
+    "cmd": [
+      "/opt/conda/bin/python3",
+      "-m",
+      "graph_net_bench.paddle.test_compiler",
+      "--model-path",
+      "/data/reports/official_graphnet_multi_sample/work/04_paddle_samples_PaddleNLP_uer_chinese-roberta-tiny/PaddlePaddle-GraphNet.5ce69o/paddle_samples/PaddleNLP/uer_chinese-roberta-tiny",
+      "--compiler",
+      "nope",
+      "--device",
+      "cuda",
+      "--warmup",
+      "2",
+      "--trials",
+      "3",
+      "--log-prompt",
+      "c500-official-graphnet-static-patch-log"
+    ],
+    "cwd": "/data/reports/official_graphnet_multi_sample/work/04_paddle_samples_PaddleNLP_uer_chinese-roberta-tiny/PaddlePaddle-GraphNet.5ce69o",
+    "returncode": 0,
+    "elapsed_s": 4.223,
+    "stdout": "",
+    "stderr": "c500-official-graphnet-static-patch-log [Processing] /data/reports/official_graphnet_multi_sample/work/04_paddle_samples_PaddleNLP_uer_chinese-roberta-tiny/PaddlePaddle-GraphNet.5ce69o/paddle_samples/PaddleNLP/uer_chinese-roberta-tiny\nW0813 00:50:05.430359 32556 gpu_resources.cc:120] Please NOTE: device: 0, GPU Compute Capability: 8.0, Driver API Version: 11.6, Runtime API Version: 11.6\nW0813 00:50:06.260387 32556 gpu_resources.cc:165] device: 0, cuDNN Version: 1.1.\nc500-official-graphnet-static-patch-log [Config] model: uer/chinese-roberta-tiny\nc500-official-graphnet-static-patch-log [Config] device: cuda\nc500-official-graphnet-static-patch-log [Config] hardware: MetaX C500\nc500-official-graphnet-static-patch-log [Config] compiler: nope\nc500-official-graphnet-static-patch-log [Config] warmup: 2\nc500-official-graphnet-static-patch-log [Config] trials: 3\nc500-official-graphnet-static-patch-log [Config] compile_framework_version: 2.6.0\nRun model in eager mode.\nRun model in eager mode failed: In transformed code:\n\n    File \"/data/reports/official_graphnet_multi_sample/work/04_paddle_samples_PaddleNLP_uer_chinese-roberta-tiny/PaddlePaddle-GraphNet.5ce69o/paddle_samples/PaddleNLP/uer_chinese-roberta-tiny/model.py\", line 81, in forward\n        # pd_op.full_like: (1x11xi64) <- (1x11xi64, 1xf32)\n        full_like_0 = paddle._C_ops.full_like(\n        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ <--- HERE\n            data_0, full_2, paddle.int64, paddle.framework._current_expected_place()\n        )\n\n\n    ValueError: (InvalidArgument) full_like(): argument (position 1) must be OpResult, but got Variable (at /workspace/paddle/paddle/fluid/pybind/eager_utils.cc:2108)\n\n\nTraceback (most recent call last):\n  File \"/data/reports/official_graphnet_multi_sample/work/04_paddle_samples_PaddleNLP_uer_chinese-roberta-tiny/PaddlePaddle-GraphNet.5ce69o/graph_net_bench/paddle/test_compiler.py\", line 338, in test_single_model\n    static_model = get_static_model(args, model)\n  File \"/data/reports/official_graphnet_multi_sample/work/04_paddle_samples_PaddleNLP_uer_chinese-roberta-tiny/PaddlePaddle-GraphNet.5ce69o/graph_net_bench/paddle/test_compiler.py\", line 128, in get_static_model\n    program = static_model.forward.concrete_program.main_program  # noqa\n  File \"/opt/conda/lib/python3.10/site-packages/paddle/jit/dy2static/program_translator.py\", line 941, in concrete_program\n    return self.concrete_program_specify_input_spec(input_spec=None)\n  File \"/opt/conda/lib/python3.10/site-packages/paddle/jit/dy2static/program_translator.py\", line 986, in concrete_program_specify_input_spec\n    concrete_program, _ = self.get_concrete_program(\n  File \"/opt/conda/lib/python3.10/site-packages/paddle/jit/dy2static/program_translator.py\", line 875, in get_concrete_program\n    concrete_program, partial_program_layer = self._program_cache[\n  File \"/opt/conda/lib/python3.10/site-packages/paddle/jit/dy2static/program_translator.py\", line 1648, in __getitem__\n    self._caches[item_id] = self._build_once(item)\n  File \"/opt/conda/lib/python3.10/site-packages/paddle/jit/dy2static/program_translator.py\", line 1575, in _build_once\n    concrete_program = ConcreteProgram.from_func_spec(\n  File \"/opt/conda/lib/python3.10/site-packages/decorator.py\", line 235, in fun\n    return caller(func, *(extras + args), **kw)\n  File \"/opt/conda/lib/python3.10/site-packages/paddle/base/wrapped_decorator.py\", line 26, in __impl__\n    return wrapped_func(*args, **kwargs)\n  File \"/opt/conda/lib/python3.10/site-packages/paddle/base/dygraph/base.py\", line 68, in __impl__\n    return func(*args, **kwargs)\n  File \"/opt/conda/lib/python3.10/site-packages/paddle/jit/dy2static/program_translator.py\", line 1346, in from_func_spec\n    error_data.raise_new_exception()\n  File \"/opt/conda/lib/python3.10/site-packages/paddle/jit/dy2static/error.py\", line 452, in raise_new_exception\n    raise new_exception from None\nValueError: In transformed code:\n\n    File \"/data/reports/official_graphnet_multi_sample/work/04_paddle_samples_PaddleNLP_uer_chinese-roberta-tiny/PaddlePaddle-GraphNet.5ce69o/paddle_samples/PaddleNLP/uer_chinese-roberta-tiny/model.py\", line 81, in forward\n        # pd_op.full_like: (1x11xi64) <- (1x11xi64, 1xf32)\n        full_like_0 = paddle._C_ops.full_like(\n        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ <--- HERE\n            data_0, full_2, paddle.int64, paddle.framework._current_expected_place()\n        )\n\n\n    ValueError: (InvalidArgument) full_like(): argument (position 1) must be OpResult, but got Variable (at /workspace/paddle/paddle/fluid/pybind/eager_utils.cc:2108)\n\n\n\nRun model in compiled mode.\nRun model in compiled mode failed: In transformed code:\n\n    File \"/data/reports/official_graphnet_multi_sample/work/04_paddle_samples_PaddleNLP_uer_chinese-roberta-tiny/PaddlePaddle-GraphNet.5ce69o/paddle_samples/PaddleNLP/uer_chinese-roberta-tiny/model.py\", line 81, in forward\n        # pd_op.full_like: (1x11xi64) <- (1x11xi64, 1xf32)\n        full_like_0 = paddle._C_ops.full_like(\n        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ <--- HERE\n            data_0, full_2, paddle.int64, paddle.framework._current_expected_place()\n        )\n\n\n    ValueError: (InvalidArgument) full_like(): argument (position 1) must be OpResult, but got Variable (at /workspace/paddle/paddle/fluid/pybind/eager_utils.cc:2108)\n\n\nTraceback (most recent call last):\n  File \"/data/reports/official_graphnet_multi_sample/work/04_paddle_samples_PaddleNLP_uer_chinese-roberta-tiny/PaddlePaddle-GraphNet.5ce69o/graph_net_bench/paddle/test_compiler.py\", line 357, in test_single_model\n    compiled_out, compiled_time_stats = measure_performance(\n  File \"/data/reports/official_graphnet_multi_sample/work/04_paddle_samples_PaddleNLP_uer_chinese-roberta-tiny/PaddlePaddle-GraphNet.5ce69o/graph_net_bench/paddle/test_compiler.py\", line 137, in measure_performance\n    outs = model_call()\n  File \"/data/reports/official_graphnet_multi_sample/work/04_paddle_samples_PaddleNLP_uer_chinese-roberta-tiny/PaddlePaddle-GraphNet.5ce69o/graph_net_bench/paddle/test_compiler.py\", line 358, in <lambda>\n    lambda: compiled_model(**input_dict), args, compiler, profile=False\n  File \"/opt/conda/lib/python3.10/site-packages/paddle/nn/layer/layers.py\", line 1429, in __call__\n    return self.forward(*inputs, **kwargs)\n  File \"/opt/conda/lib/python3.10/site-packages/paddle/jit/dy2static/program_translator.py\", line 503, in __call__\n    return self._perform_call(*args, **kwargs)\n  File \"/opt/conda/lib/python3.10/site-packages/paddle/jit/dy2static/program_translator.py\", line 818, in _perform_call\n    error_data.raise_new_exception()\n  File \"/opt/conda/lib/python3.10/site-packages/paddle/jit/dy2static/error.py\", line 452, in raise_new_exception\n    raise new_exception from None\nValueError: In transformed code:\n\n    File \"/data/reports/official_graphnet_multi_sample/work/04_paddle_samples_PaddleNLP_uer_chinese-roberta-tiny/PaddlePaddle-GraphNet.5ce69o/paddle_samples/PaddleNLP/uer_chinese-roberta-tiny/model.py\", line 81, in forward\n        # pd_op.full_like: (1x11xi64) <- (1x11xi64, 1xf32)\n        full_like_0 = paddle._C_ops.full_like(\n        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ <--- HERE\n            data_0, full_2, paddle.int64, paddle.framework._current_expected_place()\n        )\n\n\n    ValueError: (InvalidArgument) full_like(): argument (position 1) must be OpResult, but got Variable (at /workspace/paddle/paddle/fluid/pybind/eager_utils.cc:2108)\n\n\n\nc500-official-graphnet-static-patch-log [Result][status] eager:failed compiled:failed\n"
+  },
+  "stdout_log": "/data/reports/official_graphnet_multi_sample/official_graphnet_static_patch_ernie_nano_nope.stdout.log",
+  "stderr_log": "/data/reports/official_graphnet_multi_sample/official_graphnet_static_patch_ernie_nano_nope.stderr.log",
+  "parsed": {
+    "status_lines": [
+      "c500-official-graphnet-static-patch-log [Result][status] eager:failed compiled:failed"
+    ],
+    "performance_lines": [],
+    "config_lines": [
+      "c500-official-graphnet-static-patch-log [Processing] /data/reports/official_graphnet_multi_sample/work/04_paddle_samples_PaddleNLP_uer_chinese-roberta-tiny/PaddlePaddle-GraphNet.5ce69o/paddle_samples/PaddleNLP/uer_chinese-roberta-tiny",
+      "c500-official-graphnet-static-patch-log [Config] model: uer/chinese-roberta-tiny",
+      "c500-official-graphnet-static-patch-log [Config] device: cuda",
+      "c500-official-graphnet-static-patch-log [Config] hardware: MetaX C500",
+      "c500-official-graphnet-static-patch-log [Config] compiler: nope",
+      "c500-official-graphnet-static-patch-log [Config] warmup: 2",
+      "c500-official-graphnet-static-patch-log [Config] trials: 3",
+      "c500-official-graphnet-static-patch-log [Config] compile_framework_version: 2.6.0"
+    ],
+    "first_error_lines": [
+      "Run model in eager mode failed: In transformed code:",
+      "    ValueError: (InvalidArgument) full_like(): argument (position 1) must be OpResult, but got Variable (at /workspace/paddle/paddle/fluid/pybind/eager_utils.cc:2108)",
+      "ValueError: In transformed code:",
+      "    ValueError: (InvalidArgument) full_like(): argument (position 1) must be OpResult, but got Variable (at /workspace/paddle/paddle/fluid/pybind/eager_utils.cc:2108)",
+      "Run model in compiled mode failed: In transformed code:",
+      "    ValueError: (InvalidArgument) full_like(): argument (position 1) must be OpResult, but got Variable (at /workspace/paddle/paddle/fluid/pybind/eager_utils.cc:2108)",
+      "ValueError: In transformed code:",
+      "    ValueError: (InvalidArgument) full_like(): argument (position 1) must be OpResult, but got Variable (at /workspace/paddle/paddle/fluid/pybind/eager_utils.cc:2108)"
+    ]
+  },
+  "benchmark_status_ok": false,
+  "ok": false,
+  "finished_at": "2026-08-13T00:50:07+0800"
+}

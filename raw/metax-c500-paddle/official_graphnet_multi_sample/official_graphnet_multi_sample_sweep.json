@@ -1,0 +1,132 @@
+{
+  "started_at": "2026-08-13T00:48:23+0800",
+  "params": {
+    "archive": "/data/PaddlePaddle-GraphNet-c500-probe.tgz",
+    "output_json": "/data/reports/official_graphnet_multi_sample/official_graphnet_multi_sample_sweep.json",
+    "work_root": "/data/reports/official_graphnet_multi_sample/work",
+    "runner": "/data/official_graphnet_static_patch_probe.py",
+    "samples": [],
+    "warmup": 2,
+    "trials": 3,
+    "timeout_per_sample": 420,
+    "keep_going": true
+  },
+  "samples": [
+    "paddle_samples/PaddleNLP/ernie-3.0-nano-zh",
+    "paddle_samples/PaddleNLP/ernie-3.0-pico-zh",
+    "paddle_samples/PaddleNLP/ernie-3.0-tiny-base-v2-zh",
+    "paddle_samples/PaddleNLP/rocketqa-nano-cross-encoder",
+    "paddle_samples/PaddleNLP/uer_chinese-roberta-tiny"
+  ],
+  "results": [
+    {
+      "sample": "paddle_samples/PaddleNLP/ernie-3.0-nano-zh",
+      "sample_output_json": "/data/reports/official_graphnet_multi_sample/00_paddle_samples_PaddleNLP_ernie-3.0-nano-zh.json",
+      "runner_returncode": 0,
+      "runner_elapsed_s": 23.812,
+      "ok": true,
+      "benchmark_status_ok": true,
+      "patch_count": 159,
+      "status_lines": [
+        "c500-official-graphnet-static-patch-log [Result][status] eager:success compiled:success"
+      ],
+      "performance_lines": [
+        "c500-official-graphnet-static-patch-log [Performance][eager]: {\"e2e\": {\"median\": 4.49157, \"iqr\": 0.0753403, \"mean\": 4.48747, \"std\": 0.0600867, \"min\": 4.38142, \"max\": 4.61531}, \"gpu\": {\"median\": 0.0, \"iqr\": 0.0, \"mean\": 0.0, \"std\": 0.0, \"min\": 0.0, \"max\": 0.0}}",
+        "c500-official-graphnet-static-patch-log [Performance][compiled]: {\"e2e\": {\"median\": 4.48406, \"iqr\": 0.064373, \"mean\": 4.47943, \"std\": 0.0408779, \"min\": 4.41527, \"max\": 4.58145}, \"gpu\": {\"median\": 0.0, \"iqr\": 0.0, \"mean\": 0.0, \"std\": 0.0, \"min\": 0.0, \"max\": 0.0}}"
+      ],
+      "first_error_lines": [],
+      "eager_e2e_median_ms": 4.49157,
+      "eager_e2e_mean_ms": 4.48747,
+      "eager_gpu_median_ms": 0.0,
+      "compiled_e2e_median_ms": 4.48406,
+      "compiled_e2e_mean_ms": 4.47943,
+      "compiled_gpu_median_ms": 0.0
+    },
+    {
+      "sample": "paddle_samples/PaddleNLP/ernie-3.0-pico-zh",
+      "sample_output_json": "/data/reports/official_graphnet_multi_sample/01_paddle_samples_PaddleNLP_ernie-3.0-pico-zh.json",
+      "runner_returncode": 0,
+      "runner_elapsed_s": 11.988,
+      "ok": false,
+      "benchmark_status_ok": null,
+      "patch_count": null,
+      "status_lines": [],
+      "performance_lines": [],
+      "first_error_lines": []
+    },
+    {
+      "sample": "paddle_samples/PaddleNLP/ernie-3.0-tiny-base-v2-zh",
+      "sample_output_json": "/data/reports/official_graphnet_multi_sample/02_paddle_samples_PaddleNLP_ernie-3.0-tiny-base-v2-zh.json",
+      "runner_returncode": 0,
+      "runner_elapsed_s": 28.17,
+      "ok": true,
+      "benchmark_status_ok": true,
+      "patch_count": 419,
+      "status_lines": [
+        "c500-official-graphnet-static-patch-log [Result][status] eager:success compiled:success"
+      ],
+      "performance_lines": [
+        "c500-official-graphnet-static-patch-log [Performance][eager]: {\"e2e\": {\"median\": 12.8078, \"iqr\": 0.185847, \"mean\": 13.2918, \"std\": 1.16114, \"min\": 12.6891, \"max\": 16.1273}, \"gpu\": {\"median\": 0.0, \"iqr\": 0.0, \"mean\": 0.0, \"std\": 0.0, \"min\": 0.0, \"max\": 0.0}}",
+        "c500-official-graphnet-static-patch-log [Performance][compiled]: {\"e2e\": {\"median\": 12.6605, \"iqr\": 0.139117, \"mean\": 12.7214, \"std\": 0.23783, \"min\": 12.3873, \"max\": 13.216}, \"gpu\": {\"median\": 0.0, \"iqr\": 0.0, \"mean\": 0.0, \"std\": 0.0, \"min\": 0.0, \"max\": 0.0}}"
+      ],
+      "first_error_lines": [],
+      "eager_e2e_median_ms": 12.8078,
+      "eager_e2e_mean_ms": 13.2918,
+      "eager_gpu_median_ms": 0.0,
+      "compiled_e2e_median_ms": 12.6605,
+      "compiled_e2e_mean_ms": 12.7214,
+      "compiled_gpu_median_ms": 0.0
+    },
+    {
+      "sample": "paddle_samples/PaddleNLP/rocketqa-nano-cross-encoder",
+      "sample_output_json": "/data/reports/official_graphnet_multi_sample/03_paddle_samples_PaddleNLP_rocketqa-nano-cross-encoder.json",
+      "runner_returncode": 0,
+      "runner_elapsed_s": 24.263,
+      "ok": true,
+      "benchmark_status_ok": true,
+      "patch_count": 159,
+      "status_lines": [
+        "c500-official-graphnet-static-patch-log [Result][status] eager:success compiled:success"
+      ],
+      "performance_lines": [
+        "c500-official-graphnet-static-patch-log [Performance][eager]: {\"e2e\": {\"median\": 4.79794, \"iqr\": 0.108957, \"mean\": 4.90112, \"std\": 0.436248, \"min\": 4.59981, \"max\": 6.75702}, \"gpu\": {\"median\": 0.0, \"iqr\": 0.0, \"mean\": 0.0, \"std\": 0.0, \"min\": 0.0, \"max\": 0.0}}",
+        "c500-official-graphnet-static-patch-log [Performance][compiled]: {\"e2e\": {\"median\": 4.76503, \"iqr\": 0.136852, \"mean\": 5.09164, \"std\": 0.906196, \"min\": 4.69279, \"max\": 7.88856}, \"gpu\": {\"median\": 0.0, \"iqr\": 0.0, \"mean\": 0.0, \"std\": 0.0, \"min\": 0.0, \"max\": 0.0}}"
+      ],
+      "first_error_lines": [],
+      "eager_e2e_median_ms": 4.79794,
+      "eager_e2e_mean_ms": 4.90112,
+      "eager_gpu_median_ms": 0.0,
+      "compiled_e2e_median_ms": 4.76503,
+      "compiled_e2e_mean_ms": 5.09164,
+      "compiled_gpu_median_ms": 0.0
+    },
+    {
+      "sample": "paddle_samples/PaddleNLP/uer_chinese-roberta-tiny",
+      "sample_output_json": "/data/reports/official_graphnet_multi_sample/04_paddle_samples_PaddleNLP_uer_chinese-roberta-tiny.json",
+      "runner_returncode": 0,
+      "runner_elapsed_s": 16.283,
+      "ok": false,
+      "benchmark_status_ok": false,
+      "patch_count": 89,
+      "status_lines": [
+        "c500-official-graphnet-static-patch-log [Result][status] eager:failed compiled:failed"
+      ],
+      "performance_lines": [],
+      "first_error_lines": [
+        "Run model in eager mode failed: In transformed code:",
+        "    ValueError: (InvalidArgument) full_like(): argument (position 1) must be OpResult, but got Variable (at /workspace/paddle/paddle/fluid/pybind/eager_utils.cc:2108)",
+        "ValueError: In transformed code:",
+        "    ValueError: (InvalidArgument) full_like(): argument (position 1) must be OpResult, but got Variable (at /workspace/paddle/paddle/fluid/pybind/eager_utils.cc:2108)",
+        "Run model in compiled mode failed: In transformed code:",
+        "    ValueError: (InvalidArgument) full_like(): argument (position 1) must be OpResult, but got Variable (at /workspace/paddle/paddle/fluid/pybind/eager_utils.cc:2108)"
+      ]
+    }
+  ],
+  "summary": {
+    "total": 5,
+    "ok": 3,
+    "failed": 2,
+    "success_rate": 0.6
+  },
+  "finished_at": "2026-08-13T00:50:07+0800"
+}

@@ -78,6 +78,8 @@ Already completed in this repo:
 - official GraphNet `ernie-3.0-nano-zh` direct dygraph forward on C500
 - official GraphNet benchmark static-path failure diagnosis
 - low-level `_C_ops.full` / `_C_ops.cast` signature probe
+- generated `_C_ops` rewrite pass for official GraphNet Paddle samples
+- five-sample official PaddleNLP GraphNet sweep with final 5/5 pass rate
 
 Current limitation:
 
@@ -87,7 +89,7 @@ Current usable project framing:
 
 > Paddle GraphNet-style backend and inference probe on MetaX C500.
 
-This is a runtime/backend readiness project, not a full official GraphNet/CINN benchmark yet.
+This is a runtime/backend readiness project with selected official GraphNet Paddle sample timing, not a full GraphNet/CINN speedup benchmark yet.
 
 
 ## Official Sample Bring-Up Result
@@ -133,23 +135,23 @@ full_0 = paddle._C_ops.full(
 
 A separate low-level signature probe shows `_C_ops.full([], 0.0, paddle.int64, gpu_place)` succeeds directly on this image. Therefore the current evidence suggests the failure is tied to GraphNet generated code under `paddle.jit.to_static` / dy2static transformation on Paddle 2.6.0+MACA, not a simple missing C500 kernel.
 
-This is exactly the next serious engineering problem: make official GraphNet static benchmark replay compatible with the vendor Paddle image, then compare static/nope/CINN if a CINN-enabled image becomes available.
+This became the next engineering step: make official GraphNet static benchmark replay compatible with the vendor Paddle image, then compare static/nope/CINN if a CINN-enabled image becomes available.
 
-## Recommended Next Implementation
+## Compatibility Harness Implemented
 
-The highest-return next step is a thin compatibility harness rather than a broad rewrite:
+The implemented path is a thin compatibility harness rather than a broad rewrite:
 
-1. Clone official GraphNet on the C500 machine.
-2. Install only the minimum dependencies needed to import and run a small sample.
-3. Keep the backend import compatibility patch minimal and upstreamable.
-4. Patch or wrap the Paddle benchmark so logical GraphNet `cuda` maps to Paddle `gpu:0`.
-5. Fix or bypass the `paddle.jit.to_static` / `_C_ops.full` compatibility issue for generated GraphNet Paddle samples.
-6. Re-run `compiler=nope` static benchmark, then compare against CINN only if a CINN-enabled Paddle image becomes available.
+1. Unpack official GraphNet into a temporary workdir.
+2. Keep the backend import compatibility patch minimal.
+3. Run samples on Paddle's accepted `gpu:0` device path.
+4. Rewrite generated low-level `paddle._C_ops.*` calls to high-level Paddle APIs in the temporary workdir.
+5. Re-run official `graph_net_bench.paddle.test_compiler --compiler nope`.
+6. Aggregate status, patch count, e2e timing, and failure lines across samples.
 
-Expected deliverables:
+Current deliverables:
 
 - compatibility patch notes
-- one small official GraphNet sample run log or an explicit incompatibility report
+- one-sample and five-sample official GraphNet timing logs
 - operator/device coverage matrix
 - comparison with mini GraphNet-style probe results
 
@@ -157,11 +159,11 @@ Expected deliverables:
 
 A strong but honest resume claim after the current work:
 
-> Built a PaddlePaddle backend-readiness and GraphNet-style inference probe on MetaX C500, identifying device API compatibility gaps (`cuda` rejected, `gpu:0` accepted), validating dense/sparse/static/Paddle Inference graph execution, and scoping the changes required to run official GraphNet hardware regression workloads on a non-NVIDIA accelerator.
+> Built a PaddlePaddle/GraphNet compatibility harness on MetaX C500, identifying device API compatibility gaps (`cuda` rejected, `gpu:0` accepted), validating dense/sparse/static/Paddle Inference graph execution, rewriting generated `_C_ops` calls to high-level Paddle APIs, and running official `compiler=nope` timing across five PaddleNLP GraphNet samples.
 
 Do not claim yet:
 
-- full official GraphNet benchmark completion
+- full 2.7K+ GraphNet corpus benchmark completion
 - CINN speedup on C500
 - kernel-level profiling with vendor tools
 
@@ -183,3 +185,17 @@ The final static patch experiment rewrites all 159 generated `_C_ops` calls in `
 | compiled/nope | success | 4.409 | 4.411 | 0.000 |
 
 Interpretation: this proves the official Paddle sample can be made to run through GraphNet benchmark infrastructure on C500. The near-identical eager and compiled/nope timings are expected because `nope` is not an optimizing compiler. GPU event timing is unusable in this image because it reports 0.0 ms, so e2e timing should be used until a reliable vendor/Paddle event timing path is found.
+
+## Official Multi-Sample Sweep
+
+The stronger follow-up is recorded in `raw/metax-c500-paddle/official_graphnet_multi_sample_final/official_graphnet_multi_sample_sweep.json` and summarized in `notes/paddle-graphnet-multi-sample-sweep.md`.
+
+| Official GraphNet Paddle Sample | Generated `_C_ops` Rewritten | Eager e2e Median ms | Compiled/nope e2e Median ms | Status |
+| --- | ---: | ---: | ---: | --- |
+| `PaddleNLP/ernie-3.0-nano-zh` | 159 | 4.483 | 4.415 | pass |
+| `PaddleNLP/ernie-3.0-tiny-pico-v2-zh` | 122 | 3.442 | 3.356 | pass |
+| `PaddleNLP/ernie-3.0-tiny-base-v2-zh` | 419 | 12.377 | 12.438 | pass |
+| `PaddleNLP/rocketqa-nano-cross-encoder` | 159 | 4.585 | 4.590 | pass |
+| `PaddleNLP/uer_chinese-roberta-tiny` | 90 | 3.171 | 3.120 | pass |
+
+The first five-sample sweep passed 3/5. After correcting the sample path and adding `_C_ops.full_like` conversion, the final sweep passed 5/5 and rewrote 949 generated calls. This is the best current evidence that the harness is repeatable across selected official PaddleNLP GraphNet samples, not just a one-sample demo.

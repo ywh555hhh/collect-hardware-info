@@ -246,18 +246,19 @@ Phase 2: mini GraphNet-style graph replay harness, completed as first pass.
 - Convert supported graphs through `paddle.jit.save` and test static/Paddle Inference execution.
 - Record unsupported ops, fallback behavior, and export failures.
 
-Phase 3: GraphNet alignment.
+Phase 3: GraphNet alignment, completed as selected official-sample sweep.
 
 - Read PaddlePaddle/GraphNet graph format and benchmark scripts.
 - Map GraphNet graph operator categories to the mini harness categories.
-- If dependencies are manageable, run one real GraphNet sample.
-- If not, clearly document why the current C500 Paddle image is insufficient and use the mini harness as a controlled approximation.
+- Run official PaddlePaddle/GraphNet PaddleNLP samples through a temporary compatibility harness.
+- Rewrite generated low-level `_C_ops` calls to high-level Paddle APIs when Paddle 2.6/MACA dy2static compatibility blocks the static benchmark path.
+- Aggregate selected-sample pass rate, generated-call rewrite count, and e2e timing.
 
-Phase 4: resume-ready summary.
+Phase 4: resume-ready summary, completed as first pass.
 
 - Produce tables for backend capability, op coverage, dynamic vs static inference, and sparse-ish op latency.
 - Write a short project README suitable for linking from a resume.
-- Keep caveats explicit: C500 Paddle image is CUDA-compatible, CINN is absent, and current numbers are smoke-level until repeated runs are added.
+- Keep caveats explicit: C500 Paddle image is CUDA-compatible, CINN is absent, GPU event timing reports 0.0 ms, and the current official GraphNet result is a selected five-sample sweep rather than a full 2.7K+ corpus run.
 
 ## Sources
 
@@ -266,7 +267,7 @@ Phase 4: resume-ready summary.
 
 ## Evidence Quality
 
-Current evidence is enough for a first report and a resume-ready mini project, but not yet enough to claim full GraphNet benchmark completion.
+Current evidence is enough for a resume-ready backend/runtime bring-up project and selected official GraphNet PaddleNLP sample timing, but not enough to claim CINN speedup or full GraphNet corpus completion.
 
 Completed:
 
@@ -277,12 +278,16 @@ Completed:
 - mini GraphNet-style dynamic graph workload
 - `paddle.jit.save/load` static graph smoke for dense and mixed blocks
 - Paddle Inference predictor smoke for dense and mixed graph blocks
+- official GraphNet `ernie-3.0-nano-zh` direct dygraph forward
+- one-sample official `compiler=nope` timing after generated-code rewrite
+- five-sample official PaddleNLP GraphNet sweep after adding `_C_ops.full_like` conversion
 
 Not completed yet:
 
-- broader official GraphNet static benchmark replay across multiple samples
 - CINN benchmark comparison
-- full deployment benchmark with repeated request patterns
+- full 2.7K+ GraphNet corpus benchmark replay
+- vendor-profiler or kernel-level timing analysis
+- larger-shape / repeated-run deployment benchmark
 - repeated runs across multiple graph sizes
 
 
@@ -301,3 +306,19 @@ A temporary generated-code patch experiment is recorded in `raw/metax-c500-paddl
 | compiled/nope | 4.409 | 4.411 | success |
 
 The GPU-only event timing reports 0.0 ms, so it is treated as unsupported/unreliable for this image.
+
+## Official Multi-Sample Sweep
+
+The stronger follow-up is recorded in `raw/metax-c500-paddle/official_graphnet_multi_sample_final/official_graphnet_multi_sample_sweep.json` and summarized in `notes/paddle-graphnet-multi-sample-sweep.md`.
+
+Final parameters: 3 warmup iterations, 5 measured trials per sample.
+
+| Official GraphNet Paddle Sample | Generated `_C_ops` Rewritten | Eager e2e Median ms | Compiled/nope e2e Median ms | Status |
+| --- | ---: | ---: | ---: | --- |
+| `PaddleNLP/ernie-3.0-nano-zh` | 159 | 4.483 | 4.415 | pass |
+| `PaddleNLP/ernie-3.0-tiny-pico-v2-zh` | 122 | 3.442 | 3.356 | pass |
+| `PaddleNLP/ernie-3.0-tiny-base-v2-zh` | 419 | 12.377 | 12.438 | pass |
+| `PaddleNLP/rocketqa-nano-cross-encoder` | 159 | 4.585 | 4.590 | pass |
+| `PaddleNLP/uer_chinese-roberta-tiny` | 90 | 3.171 | 3.120 | pass |
+
+The first five-sample sweep passed 3/5. One failure was an invalid sample path, and the other exposed missing `_C_ops.full_like` conversion. After fixing those, the final sweep passed 5/5 and rewrote 949 generated calls. This is the current best evidence that the compatibility harness generalizes across selected official PaddleNLP GraphNet samples.

@@ -1,0 +1,30 @@
+{
+  "started_at": "2026-08-13T00:48:47+0800",
+  "python": "3.10.10 | packaged by conda-forge | (main, Mar 24 2023, 20:08:06) [GCC 11.3.0]",
+  "executable": "/opt/conda/bin/python3",
+  "params": {
+    "archive": "/data/PaddlePaddle-GraphNet-c500-probe.tgz",
+    "work_dir": "/data/reports/official_graphnet_multi_sample/work/01_paddle_samples_PaddleNLP_ernie-3.0-pico-zh",
+    "output_json": "/data/reports/official_graphnet_multi_sample/01_paddle_samples_PaddleNLP_ernie-3.0-pico-zh.json",
+    "sample": "paddle_samples/PaddleNLP/ernie-3.0-pico-zh",
+    "warmup": 2,
+    "trials": 3,
+    "timeout": 420
+  },
+  "graphnet_root": "/data/reports/official_graphnet_multi_sample/work/01_paddle_samples_PaddleNLP_ernie-3.0-pico-zh/PaddlePaddle-GraphNet.5ce69o",
+  "sample_path": "/data/reports/official_graphnet_multi_sample/work/01_paddle_samples_PaddleNLP_ernie-3.0-pico-zh/PaddlePaddle-GraphNet.5ce69o/paddle_samples/PaddleNLP/ernie-3.0-pico-zh",
+  "backend_patch": {
+    "ok": true,
+    "copied": [
+      "._cinn_backend.py",
+      "._graph_compiler_backend.py",
+      "._nope_backend.py",
+      "cinn_backend.py",
+      "graph_compiler_backend.py",
+      "nope_backend.py"
+    ]
+  },
+  "ok": false,
+  "error": "FileNotFoundError(2, 'No such file or directory')",
+  "finished_at": "2026-08-13T00:48:59+0800"
+}

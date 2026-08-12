@@ -1,0 +1,145 @@
+{
+  "started_at": "2026-08-13T00:54:24+0800",
+  "params": {
+    "archive": "/data/PaddlePaddle-GraphNet-c500-probe.tgz",
+    "output_json": "/data/reports/official_graphnet_multi_sample_final/official_graphnet_multi_sample_sweep.json",
+    "work_root": "/data/reports/official_graphnet_multi_sample_final/work",
+    "runner": "/data/official_graphnet_static_patch_probe.py",
+    "samples": [],
+    "warmup": 3,
+    "trials": 5,
+    "timeout_per_sample": 420,
+    "keep_going": true
+  },
+  "samples": [
+    "paddle_samples/PaddleNLP/ernie-3.0-nano-zh",
+    "paddle_samples/PaddleNLP/ernie-3.0-tiny-pico-v2-zh",
+    "paddle_samples/PaddleNLP/ernie-3.0-tiny-base-v2-zh",
+    "paddle_samples/PaddleNLP/rocketqa-nano-cross-encoder",
+    "paddle_samples/PaddleNLP/uer_chinese-roberta-tiny"
+  ],
+  "results": [
+    {
+      "sample": "paddle_samples/PaddleNLP/ernie-3.0-nano-zh",
+      "sample_output_json": "/data/reports/official_graphnet_multi_sample_final/00_paddle_samples_PaddleNLP_ernie-3.0-nano-zh.json",
+      "runner_returncode": 0,
+      "runner_elapsed_s": 24.749,
+      "ok": true,
+      "benchmark_status_ok": true,
+      "patch_count": 159,
+      "status_lines": [
+        "c500-official-graphnet-static-patch-log [Result][status] eager:success compiled:success"
+      ],
+      "performance_lines": [
+        "c500-official-graphnet-static-patch-log [Performance][eager]: {\"e2e\": {\"median\": 4.48298, \"iqr\": 0.112772, \"mean\": 4.47962, \"std\": 0.0731094, \"min\": 4.36449, \"max\": 4.62675}, \"gpu\": {\"median\": 0.0, \"iqr\": 0.0, \"mean\": 0.0, \"std\": 0.0, \"min\": 0.0, \"max\": 0.0}}",
+        "c500-official-graphnet-static-patch-log [Performance][compiled]: {\"e2e\": {\"median\": 4.41504, \"iqr\": 0.0680089, \"mean\": 4.41791, \"std\": 0.0482434, \"min\": 4.33254, \"max\": 4.52423}, \"gpu\": {\"median\": 0.0, \"iqr\": 0.0, \"mean\": 0.0, \"std\": 0.0, \"min\": 0.0, \"max\": 0.0}}"
+      ],
+      "first_error_lines": [],
+      "eager_e2e_median_ms": 4.48298,
+      "eager_e2e_mean_ms": 4.47962,
+      "eager_gpu_median_ms": 0.0,
+      "compiled_e2e_median_ms": 4.41504,
+      "compiled_e2e_mean_ms": 4.41791,
+      "compiled_gpu_median_ms": 0.0
+    },
+    {
+      "sample": "paddle_samples/PaddleNLP/ernie-3.0-tiny-pico-v2-zh",
+      "sample_output_json": "/data/reports/official_graphnet_multi_sample_final/01_paddle_samples_PaddleNLP_ernie-3.0-tiny-pico-v2-zh.json",
+      "runner_returncode": 0,
+      "runner_elapsed_s": 23.675,
+      "ok": true,
+      "benchmark_status_ok": true,
+      "patch_count": 122,
+      "status_lines": [
+        "c500-official-graphnet-static-patch-log [Result][status] eager:success compiled:success"
+      ],
+      "performance_lines": [
+        "c500-official-graphnet-static-patch-log [Performance][eager]: {\"e2e\": {\"median\": 3.44241, \"iqr\": 0.101745, \"mean\": 3.45027, \"std\": 0.0675973, \"min\": 3.36218, \"max\": 3.63493}, \"gpu\": {\"median\": 0.0, \"iqr\": 0.0, \"mean\": 0.0, \"std\": 0.0, \"min\": 0.0, \"max\": 0.0}}",
+        "c500-official-graphnet-static-patch-log [Performance][compiled]: {\"e2e\": {\"median\": 3.35598, \"iqr\": 0.0529289, \"mean\": 3.37154, \"std\": 0.0436709, \"min\": 3.3195, \"max\": 3.47972}, \"gpu\": {\"median\": 0.0, \"iqr\": 0.0, \"mean\": 0.0, \"std\": 0.0, \"min\": 0.0, \"max\": 0.0}}"
+      ],
+      "first_error_lines": [],
+      "eager_e2e_median_ms": 3.44241,
+      "eager_e2e_mean_ms": 3.45027,
+      "eager_gpu_median_ms": 0.0,
+      "compiled_e2e_median_ms": 3.35598,
+      "compiled_e2e_mean_ms": 3.37154,
+      "compiled_gpu_median_ms": 0.0
+    },
+    {
+      "sample": "paddle_samples/PaddleNLP/ernie-3.0-tiny-base-v2-zh",
+      "sample_output_json": "/data/reports/official_graphnet_multi_sample_final/02_paddle_samples_PaddleNLP_ernie-3.0-tiny-base-v2-zh.json",
+      "runner_returncode": 0,
+      "runner_elapsed_s": 28.588,
+      "ok": true,
+      "benchmark_status_ok": true,
+      "patch_count": 419,
+      "status_lines": [
+        "c500-official-graphnet-static-patch-log [Result][status] eager:success compiled:success"
+      ],
+      "performance_lines": [
+        "c500-official-graphnet-static-patch-log [Performance][eager]: {\"e2e\": {\"median\": 12.3765, \"iqr\": 0.0879765, \"mean\": 12.388, \"std\": 0.0719432, \"min\": 12.2845, \"max\": 12.5105}, \"gpu\": {\"median\": 0.0, \"iqr\": 0.0, \"mean\": 0.0, \"std\": 0.0, \"min\": 0.0, \"max\": 0.0}}",
+        "c500-official-graphnet-static-patch-log [Performance][compiled]: {\"e2e\": {\"median\": 12.4381, \"iqr\": 0.0891685, \"mean\": 12.4203, \"std\": 0.0582472, \"min\": 12.3026, \"max\": 12.4786}, \"gpu\": {\"median\": 0.0, \"iqr\": 0.0, \"mean\": 0.0, \"std\": 0.0, \"min\": 0.0, \"max\": 0.0}}"
+      ],
+      "first_error_lines": [],
+      "eager_e2e_median_ms": 12.3765,
+      "eager_e2e_mean_ms": 12.388,
+      "eager_gpu_median_ms": 0.0,
+      "compiled_e2e_median_ms": 12.4381,
+      "compiled_e2e_mean_ms": 12.4203,
+      "compiled_gpu_median_ms": 0.0
+    },
+    {
+      "sample": "paddle_samples/PaddleNLP/rocketqa-nano-cross-encoder",
+      "sample_output_json": "/data/reports/official_graphnet_multi_sample_final/03_paddle_samples_PaddleNLP_rocketqa-nano-cross-encoder.json",
+      "runner_returncode": 0,
+      "runner_elapsed_s": 24.719,
+      "ok": true,
+      "benchmark_status_ok": true,
+      "patch_count": 159,
+      "status_lines": [
+        "c500-official-graphnet-static-patch-log [Result][status] eager:success compiled:success"
+      ],
+      "performance_lines": [
+        "c500-official-graphnet-static-patch-log [Performance][eager]: {\"e2e\": {\"median\": 4.58527, \"iqr\": 0.0891685, \"mean\": 4.7365, \"std\": 0.630422, \"min\": 4.51279, \"max\": 7.54023}, \"gpu\": {\"median\": 0.0, \"iqr\": 0.0, \"mean\": 0.0, \"std\": 0.0, \"min\": 0.0, \"max\": 0.0}}",
+        "c500-official-graphnet-static-patch-log [Performance][compiled]: {\"e2e\": {\"median\": 4.58956, \"iqr\": 0.0436306, \"mean\": 4.74758, \"std\": 0.728574, \"min\": 4.53067, \"max\": 8.003}, \"gpu\": {\"median\": 0.0, \"iqr\": 0.0, \"mean\": 0.0, \"std\": 0.0, \"min\": 0.0, \"max\": 0.0}}"
+      ],
+      "first_error_lines": [],
+      "eager_e2e_median_ms": 4.58527,
+      "eager_e2e_mean_ms": 4.7365,
+      "eager_gpu_median_ms": 0.0,
+      "compiled_e2e_median_ms": 4.58956,
+      "compiled_e2e_mean_ms": 4.74758,
+      "compiled_gpu_median_ms": 0.0
+    },
+    {
+      "sample": "paddle_samples/PaddleNLP/uer_chinese-roberta-tiny",
+      "sample_output_json": "/data/reports/official_graphnet_multi_sample_final/04_paddle_samples_PaddleNLP_uer_chinese-roberta-tiny.json",
+      "runner_returncode": 0,
+      "runner_elapsed_s": 24.772,
+      "ok": true,
+      "benchmark_status_ok": true,
+      "patch_count": 90,
+      "status_lines": [
+        "c500-official-graphnet-static-patch-log [Result][status] eager:success compiled:success"
+      ],
+      "performance_lines": [
+        "c500-official-graphnet-static-patch-log [Performance][eager]: {\"e2e\": {\"median\": 3.17097, \"iqr\": 0.101805, \"mean\": 3.30117, \"std\": 0.583144, \"min\": 3.04818, \"max\": 6.34861}, \"gpu\": {\"median\": 0.0, \"iqr\": 0.0, \"mean\": 0.0, \"std\": 0.0, \"min\": 0.0, \"max\": 0.0}}",
+        "c500-official-graphnet-static-patch-log [Performance][compiled]: {\"e2e\": {\"median\": 3.12042, \"iqr\": 0.0458956, \"mean\": 3.27497, \"std\": 0.821184, \"min\": 3.01266, \"max\": 7.76792}, \"gpu\": {\"median\": 0.0, \"iqr\": 0.0, \"mean\": 0.0, \"std\": 0.0, \"min\": 0.0, \"max\": 0.0}}"
+      ],
+      "first_error_lines": [],
+      "eager_e2e_median_ms": 3.17097,
+      "eager_e2e_mean_ms": 3.30117,
+      "eager_gpu_median_ms": 0.0,
+      "compiled_e2e_median_ms": 3.12042,
+      "compiled_e2e_mean_ms": 3.27497,
+      "compiled_gpu_median_ms": 0.0
+    }
+  ],
+  "summary": {
+    "total": 5,
+    "ok": 5,
+    "failed": 0,
+    "success_rate": 1.0
+  },
+  "finished_at": "2026-08-13T00:56:31+0800"
+}
