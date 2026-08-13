@@ -101,6 +101,10 @@ raw/
   metax-c500-fastdeploy/
     fastdeploy_c500_readiness_probe.json # FastDeploy LLM serving readiness gate
     fastdeploy_package_index_probe.log   # Non-mutating package index check
+    hardinstall/
+      import_probe_after_hardinstall.json # Isolated source hard-install import probe
+      final_import_probe.json             # Final import failures without Paddle API shim
+      shim_import_probe.json              # Import results with temporary Paddle API shim
 
 configs/
   fastdeploy/
@@ -165,11 +169,14 @@ C500 首轮 readiness 结论：
 - 当前镜像有 `paddlepaddle-gpu 2.6.0+maca3.0.0.5`，Paddle 走 `gpu:0`，但没有 `fastdeploy`、`paddlenlp/paddleformers`、`fastapi/uvicorn/openai`。
 - `from paddle.jit.marker import unified` 失败，`from fastdeploy.model_executor.ops.gpu import beam_search_softmax` 失败；当前镜像不应被当作 FastDeploy serving 镜像。
 - 非破坏性 package index 检查能看到 NVIDIA CUDA 路线的 `fastdeploy-gpu==2.5.0`，但当前 MACA 源未看到 `fastdeploy-metax-gpu` / `paddle-metax-gpu` wheel。
+- 进一步做了隔离 venv 源码硬装：Python 依赖层可补齐，`fastdeploy.engine.args_utils` / `cache_manager` 等模块可 import；但 FastDeploy 主包卡在 Paddle 2.6 缺少 `enable_compat`，临时 shim 后 `LLM` / `SamplingParams` 可 import，关键 GPU custom op `beam_search_softmax` 仍缺失。
+- 硬装结论：这条路适合做兼容性诊断，不适合在当前镜像上产出可信 FastDeploy TTFT / TPOT / prefix-cache / chunked-prefill serving 数据。
 
 入口文档：
 
 - `notes/fastdeploy-cross-hardware-experiment-design.md`
 - `notes/fastdeploy-c500-readiness-report.md`
+- `notes/fastdeploy-c500-hardinstall-attempt.md`
 
 ## Paddle / GraphNet 方向
 

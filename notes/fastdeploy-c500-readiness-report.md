@@ -117,6 +117,14 @@ Current C500 image status:
 
 This is a useful result because it prevents us from mislabeling a package problem as an inference-performance result. The current machine can continue to support Paddle runtime / GraphNet compatibility work, but FastDeploy serving experiments need a different C500/MetaX image or a source-build path that matches C500, MACA, and the available Paddle package.
 
+Follow-up hard-install attempt:
+
+- See `notes/fastdeploy-c500-hardinstall-attempt.md`.
+- An isolated source hard-install under `/data/fd-hardinstall` successfully filled much of the Python serving dependency layer.
+- With temporary Paddle API shims, `fastdeploy`, `LLM`, and `SamplingParams` can import.
+- The attempt still does not reach real serving readiness because compiled GPU custom ops are absent, including `beam_search_softmax`.
+- The deeper mismatch is that the image exposes Paddle as CUDA-compatible `gpu:0` without `nvcc`, while FastDeploy MetaX ops expect a `metax_gpu` custom-device route.
+
 ## Required Next Environment
 
 For the next C500 attempt, request one of these environment changes first:

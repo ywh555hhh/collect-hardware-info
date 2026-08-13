@@ -1,0 +1,22 @@
+{
+  "fastdeploy": {
+    "ok": false,
+    "error": "AttributeError(\"module 'paddle' has no attribute 'enable_compat'\")"
+  },
+  "fastdeploy:LLM": {
+    "ok": false,
+    "error": "AttributeError(\"module 'paddle' has no attribute 'enable_compat'\")"
+  },
+  "fastdeploy:SamplingParams": {
+    "ok": false,
+    "error": "AttributeError(\"module 'paddle' has no attribute 'enable_compat'\")"
+  },
+  "fastdeploy.entrypoints.openai.api_server": {
+    "ok": false,
+    "error": "AttributeError(\"module 'paddle' has no attribute 'enable_compat'\")"
+  },
+  "fastdeploy.model_executor.ops.gpu:beam_search_softmax": {
+    "ok": false,
+    "error": "AttributeError(\"module 'fastdeploy.model_executor.ops.gpu' has no attribute 'beam_search_softmax'\")"
+  }
+}

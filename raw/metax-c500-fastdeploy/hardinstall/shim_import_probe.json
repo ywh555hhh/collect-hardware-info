@@ -1,0 +1,22 @@
+{
+  "fastdeploy": {
+    "ok": true,
+    "repr": "<module 'fastdeploy' from '/data/fd-hardinstall/FastDeploy/fastdeploy/__init__.py'>"
+  },
+  "LLM": {
+    "ok": true,
+    "repr": "<class 'fastdeploy.entrypoints.llm.LLM'>"
+  },
+  "SamplingParams": {
+    "ok": true,
+    "repr": "<class 'fastdeploy.engine.sampling_params.SamplingParams'>"
+  },
+  "api_server": {
+    "ok": false,
+    "error": "Exception('The master of baidu/ernie-45-turbo is not exist. Please check the model name or revision.')"
+  },
+  "beam_search_softmax": {
+    "ok": false,
+    "error": "ImportError(\"cannot import name 'beam_search_softmax' from 'fastdeploy.model_executor.ops.gpu' (/data/fd-hardinstall/FastDeploy/fastdeploy/model_executor/ops/gpu/__init__.py)\")"
+  }
+}

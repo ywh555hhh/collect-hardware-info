@@ -12,7 +12,7 @@
 
 ## 一句话定位
 
-围绕 Paddle FastDeploy LLM serving 栈，设计 NVIDIA RTX 4090、MetaX C500、Iluvatar MR-V100 三硬件对照实验，关注 request lifecycle、prefill/decode、KV cache capacity、prefix cache、chunked prefill、graph optimization 与 OpenAI-compatible serving 指标；当前已在 C500 上完成 readiness gate，确认当前 Paddle 2.6/MACA 镜像不具备 FastDeploy serving 软件栈。
+围绕 Paddle FastDeploy LLM serving 栈，设计 NVIDIA RTX 4090、MetaX C500、Iluvatar MR-V100 三硬件对照实验，关注 request lifecycle、prefill/decode、KV cache capacity、prefix cache、chunked prefill、graph optimization 与 OpenAI-compatible serving 指标；当前已在 C500 上完成 readiness gate 和隔离源码硬装尝试，确认当前 Paddle 2.6/MACA 镜像只能推进到 Python 依赖 / import 诊断层，尚不具备真实 FastDeploy serving runtime。
 
 ## 当前稳妥可用版 Bullet
 
@@ -22,6 +22,9 @@
 - 验证当前 C500 镜像硬件可见：MetaX C500 sGPU slice，25% compute / 16GB VRAM quota；Paddle 可用，版本为 `paddlepaddle-gpu 2.6.0+maca3.0.0.5`，设备路径为 `gpu:0`。
 - 定位当前 C500 镜像不适合直接运行 FastDeploy LLM serving：缺少 `fastdeploy`、`paddlenlp/paddleformers`、`fastapi/uvicorn/openai`，且 `paddle.jit.marker.unified` 与 FastDeploy custom GPU op import 均失败。
 - 通过非破坏性 package index 检查区分 NVIDIA CUDA wheel 与 MetaX 路线：当前可见 `fastdeploy-gpu==2.5.0` 为 CUDA 路线，未在当前 MACA 源看到 `fastdeploy-metax-gpu` / `paddle-metax-gpu` wheel。
+- 在隔离 venv 中尝试 FastDeploy source hard-install，补齐 FastAPI/Uvicorn/OpenAI/Transformers/PaddleFormers 等 Python serving 依赖，并将导入链推进到 `fastdeploy.engine.args_utils`、`cache_manager` 和 `model_executor.ops.gpu` Python package。
+- 进一步定位硬装的真实 blocker：FastDeploy `develop` 依赖 Paddle 新 API（`paddle.enable_compat`、`paddle.device.get_device_properties`），当前 Paddle 2.6 缺失；临时 shim 后 `LLM` / `SamplingParams` 可 import，但关键 GPU custom op `beam_search_softmax` 仍未编译/加载。
+- 分析 build-path mismatch：当前 Paddle 暴露 `is_compiled_with_cuda=True` 和 `gpu:0`，但容器没有 `nvcc`；FastDeploy MetaX ops 需要 `metax_gpu` custom-device 路线，而当前镜像 `custom_device_types=[]`。
 
 ## 等真正跑通 FastDeploy Serving 后升级版 Bullet
 
@@ -35,7 +38,7 @@
 
 我想把 Paddle 经验往推理框架优化靠，所以没有停在 Paddle Inference demo，而是选了 Paddle 生态里更接近 vLLM/SGLang 的 FastDeploy。我的实验设计是三硬件对照：4090 做 NVIDIA baseline，C500 做 MetaX 兼容性目标，MR-V100 做 Iluvatar 异构后端。统一 workload 不是只测 tokens/s，而是拆 request lifecycle、prefill/decode、KV cache、prefix cache、chunked prefill 和 graph optimization。
 
-目前我先在 C500 上跑了 readiness gate。结果是硬件和 Paddle 都可见，C500 是 25% compute / 16GB quota 的 sGPU slice，Paddle 2.6 走 `gpu:0`；但这个镜像缺少 FastDeploy、Paddle LLM serving 依赖和 API server 依赖，`paddle.jit.marker.unified` 与 FastDeploy custom op import 也失败。所以这个结果说明当前镜像适合 Paddle runtime / GraphNet 研究，但不适合直接做 FastDeploy serving，需要换到 FastDeploy MetaX 路线镜像后再跑 TTFT/TPOT、KV cache、prefix cache 和 chunked prefill 实验。
+目前我先在 C500 上跑了 readiness gate 和源码硬装尝试。结果是硬件和 Paddle 都可见，C500 是 25% compute / 16GB quota 的 sGPU slice，Paddle 2.6 走 `gpu:0`；Python serving 依赖可以在隔离 venv 里补齐，甚至可以通过 shim 让 `LLM` / `SamplingParams` import 通过。但真正 blocker 在 GPU custom ops 和后端分发：当前 Paddle 缺少 FastDeploy 预期的新 API，且没有 `beam_search_softmax` 这类已编译 custom op；同时构建逻辑会看到 CUDA-compatible Paddle，但容器没有 `nvcc`，而 MetaX ops 又要求 `metax_gpu` custom-device 路线。所以这个结果说明当前镜像适合 Paddle runtime / GraphNet 研究和 FastDeploy 兼容性诊断，但不适合直接产出 FastDeploy TTFT/TPOT serving 数据。
 
 ## 不要过度声明
 
@@ -45,11 +48,13 @@
 - 已经拿到 C500 FastDeploy TTFT / TPOT
 - 已经证明 C500 FastDeploy prefix cache 或 chunked prefill 有收益
 - 当前 C500 Paddle 2.6/MACA 镜像兼容 FastDeploy MetaX 路线
+- Python-only hard-install 等价于 FastDeploy serving runtime
 
 当前最强真实 claim：
 
 - 完成 FastDeploy 推理框架实验设计
 - 完成 C500 readiness gate 和软件栈缺口定位
+- 完成 C500 隔离 source hard-install 尝试，定位到 Paddle API drift、CUDA-vs-MetaX backend dispatch mismatch、custom GPU ops 未编译三类 blocker
 - 明确当前 C500 镜像不是 FastDeploy serving 镜像
 - 给出下一次换镜像后的实验执行矩阵
 
@@ -61,5 +66,7 @@
 | FastDeploy readiness 脚本 | `scripts/fastdeploy_readiness_probe.py` |
 | C500 readiness 原始数据 | `raw/metax-c500-fastdeploy/fastdeploy_c500_readiness_probe.json` |
 | C500 package index 原始日志 | `raw/metax-c500-fastdeploy/fastdeploy_package_index_probe.log` |
+| C500 source hard-install 原始数据 | `raw/metax-c500-fastdeploy/hardinstall/` |
 | 跨硬件实验设计 | `notes/fastdeploy-cross-hardware-experiment-design.md` |
 | C500 readiness 报告 | `notes/fastdeploy-c500-readiness-report.md` |
+| C500 hard-install 报告 | `notes/fastdeploy-c500-hardinstall-attempt.md` |
