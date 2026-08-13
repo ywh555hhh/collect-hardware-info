@@ -13,6 +13,7 @@
 - `ARCHIVE-2026-08-12.md`
 - `RESUME-PADDLE-C500.md`
 - `RESUME-PADDLE-C500-CN.md`
+- `RESUME-FASTDEPLOY-INFERENCE-CN.md`
 
 ### MetaX C500
 
@@ -97,6 +98,13 @@ raw/
       mini_graphnet_probe.json  # Paddle mini GraphNet-style dynamic/JIT workload
     paddle_inference_graphnet/
       paddle_inference_graphnet_probe.json # Paddle Inference predictor workload
+  metax-c500-fastdeploy/
+    fastdeploy_c500_readiness_probe.json # FastDeploy LLM serving readiness gate
+    fastdeploy_package_index_probe.log   # Non-mutating package index check
+
+configs/
+  fastdeploy/
+    experiment_matrix.json       # Cross-hardware FastDeploy serving experiment matrix
 
 probes/
   metax-c500/
@@ -108,6 +116,7 @@ scripts/
   vllm_kv_sweep.py              # 扫 max_model_len / gpu_memory_utilization
   vllm_api_bench.py             # OpenAI-compatible API server 并发 smoke
   vllm_prefix_cache_probe.py    # Prefix cache / mixed prompt workload 探针
+  fastdeploy_readiness_probe.py # FastDeploy serving 软件栈 readiness 探针
   paddle_backend_probe.py       # Paddle backend/device capability 探针
   paddle_device_alias_probe.py  # Paddle device-string compatibility 探针
   paddle_cops_signature_probe.py # Paddle _C_ops signature compatibility 探针
@@ -137,6 +146,30 @@ scripts/
 - `notes/metax-c500-vllm-api-steady-state.md`
 - `notes/metax-c500-vllm-streaming-ttft-tpot.md`
 - `notes/metax-c500-vllm-prefix-cache-mixed-workload.md`
+
+## FastDeploy 推理框架方向
+
+FastDeploy 方向用于把 Paddle 经验拉回 LLM serving / 推理框架优化语境。目标硬件矩阵是 NVIDIA RTX 4090、MetaX C500、Iluvatar MR-V100；当前阶段只在 C500 上执行 readiness gate。
+
+实验设计聚焦：
+
+- request lifecycle：model load、KV cache allocation、warmup、prefill、decode、streaming。
+- KV cache：`block_size`、`gpu_memory_utilization`、`max_model_len`、`max_num_seqs`、cacheable tokens。
+- scheduler：chunked prefill、mixed prefill/decode traffic、`max_num_batched_tokens`。
+- prefix cache：shared-prefix / unique-prefix mixed workload 下的 TTFT、TPOT、p90/p99。
+- graph optimization：NVIDIA / Iluvatar 路线上的 CUDAGraph 或等价 graph optimization，对 C500 暂记为 unknown。
+
+C500 首轮 readiness 结论：
+
+- C500 硬件可见，当前实例是 25% compute / 16GB VRAM quota 的 sGPU slice。
+- 当前镜像有 `paddlepaddle-gpu 2.6.0+maca3.0.0.5`，Paddle 走 `gpu:0`，但没有 `fastdeploy`、`paddlenlp/paddleformers`、`fastapi/uvicorn/openai`。
+- `from paddle.jit.marker import unified` 失败，`from fastdeploy.model_executor.ops.gpu import beam_search_softmax` 失败；当前镜像不应被当作 FastDeploy serving 镜像。
+- 非破坏性 package index 检查能看到 NVIDIA CUDA 路线的 `fastdeploy-gpu==2.5.0`，但当前 MACA 源未看到 `fastdeploy-metax-gpu` / `paddle-metax-gpu` wheel。
+
+入口文档：
+
+- `notes/fastdeploy-cross-hardware-experiment-design.md`
+- `notes/fastdeploy-c500-readiness-report.md`
 
 ## Paddle / GraphNet 方向
 

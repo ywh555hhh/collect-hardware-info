@@ -1,0 +1,128 @@
+{
+  "timestamp": "2026-08-13T01:34:40+0800",
+  "host": {
+    "hostname": "f885a36ff5f1",
+    "platform": "Linux-5.15.0-58-generic-x86_64-with-glibc2.35",
+    "python": "3.10.10 | packaged by conda-forge | (main, Mar 24 2023, 20:08:06) [GCC 11.3.0]",
+    "executable": "/opt/conda/bin/python3",
+    "cwd": "/data"
+  },
+  "commands": {
+    "mx-smi": {
+      "path": "/usr/bin/mx-smi",
+      "probe": {
+        "cmd": [
+          "mx-smi"
+        ],
+        "returncode": 0,
+        "elapsed_s": 0.079,
+        "stdout": "mx-smi  version: 2.2.6\n\n=================== MetaX System Management Interface Log ===================\nTimestamp                                         : Thu Aug 13 01:34:40 2026\n\nAttached GPUs                                     : 1\n+---------------------------------------------------------------------------------+\n| MX-SMI 2.2.6                        Kernel Mode Driver Version: 3.8.30          |\n| MACA Version: 3.0.0.8               BIOS Version: 1.33.5.0                      |\n|------------------------------------+---------------------+----------------------+\n| GPU     NAME         Persistence-M | Bus-id              | GPU-Util      sGPU-M |\n| Temp    Pwr:Usage/Cap         Perf | Memory-Usage        | GPU-State            |\n|====================================+=====================+======================|\n| 0       MetaX C500             Off | 0000:37:00.0        | 0%             *sGPU |\n| 34C     34W / 350W              P0 | 826/65536 MiB       | Available            |\n+------------------------------------+---------------------+----------------------+\n\n+---------------------------------------------------------------------------------+\n| Sliced GPU                                                                      |\n|------------------------------------+---------------------+----------------------+\n| Minor    GPU    sGPU-Id    Compute | Vram Quota          | sGPU-Util            |\n|====================================+=====================+======================|\n| 022      0      3          25%     | 0/16000 MiB         | 0%                   |\n+------------------------------------+---------------------+----------------------+\n\n+---------------------------------------------------------------------------------+\n| Process:                                                                        |\n|  GPU                    PID         Process Name                 GPU Memory     |\n|                                                                  Usage(MiB)     |\n|=================================================================================|\n|  no process found                                                               |\n+---------------------------------------------------------------------------------+\n\nEnd of Log\n",
+        "stderr": ""
+      }
+    },
+    "nvidia-smi": {
+      "path": null
+    },
+    "ixsmi": {
+      "path": null
+    },
+    "macactl": {
+      "path": null
+    }
+  },
+  "python": {
+    "modules": {
+      "paddle": {
+        "found": true,
+        "origin": "/opt/conda/lib/python3.10/site-packages/paddle/__init__.py"
+      },
+      "fastdeploy": {
+        "found": false,
+        "origin": null
+      },
+      "paddlenlp": {
+        "found": false,
+        "origin": null
+      },
+      "paddleformers": {
+        "found": false,
+        "origin": null
+      },
+      "fastapi": {
+        "found": false,
+        "origin": null
+      },
+      "uvicorn": {
+        "found": false,
+        "origin": null
+      },
+      "openai": {
+        "found": false,
+        "origin": null
+      },
+      "transformers": {
+        "found": false,
+        "origin": null
+      }
+    },
+    "packages": {
+      "paddlepaddle": null,
+      "paddlepaddle-gpu": "2.6.0+maca3.0.0.5",
+      "paddle-metax-gpu": null,
+      "fastdeploy": null,
+      "paddlenlp": null,
+      "paddleformers": null,
+      "fastapi": null,
+      "uvicorn": null,
+      "openai": null,
+      "transformers": null,
+      "tokenizers": null,
+      "safetensors": null
+    }
+  },
+  "paddle": {
+    "import": {
+      "ok": true
+    },
+    "version": "2.6.0",
+    "device": "gpu:0",
+    "is_compiled_with_cuda": true,
+    "is_compiled_with_xpu": false,
+    "is_compiled_with_cinn": false,
+    "custom_device_types": []
+  },
+  "fastdeploy_import_checks": {
+    "paddle_jit_marker_unified": {
+      "ok": false,
+      "error": "ModuleNotFoundError(\"No module named 'paddle.jit.marker'\")"
+    },
+    "fastdeploy": {
+      "ok": false,
+      "error": "ModuleNotFoundError(\"No module named 'fastdeploy'\")"
+    },
+    "fastdeploy_llm": {
+      "ok": false,
+      "error": "ModuleNotFoundError(\"No module named 'fastdeploy'\")"
+    },
+    "fastdeploy_sampling_params": {
+      "ok": false,
+      "error": "ModuleNotFoundError(\"No module named 'fastdeploy'\")"
+    },
+    "fastdeploy_openai_api_server": {
+      "ok": false,
+      "error": "ModuleNotFoundError(\"No module named 'fastdeploy'\")"
+    },
+    "fastdeploy_gpu_ops": {
+      "ok": false,
+      "error": "ModuleNotFoundError(\"No module named 'fastdeploy'\")"
+    }
+  },
+  "readiness_gaps": [
+    "fastdeploy Python module is not installed",
+    "Paddle LLM model/tokenizer stack is not installed",
+    "OpenAI-compatible API server dependencies are missing",
+    "Paddle was built without CINN; compiler speedup experiments are out of scope",
+    "paddle.jit.marker.unified check failed; official FastDeploy MetaX verification may not pass",
+    "FastDeploy custom GPU operator import check failed"
+  ]
+}

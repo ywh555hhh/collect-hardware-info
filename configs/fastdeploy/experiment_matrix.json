@@ -1,0 +1,136 @@
+{
+  "project": "FastDeploy LLM serving cross-hardware experiment matrix",
+  "date": "2026-08-13",
+  "hardware": {
+    "rtx_4090": {
+      "role": "NVIDIA baseline",
+      "target_package_route": "paddlepaddle-gpu + fastdeploy-gpu, CUDA 12.6/12.9",
+      "expected_backend_focus": ["CUDA Graph", "GPU attention backend", "OpenAI API serving"]
+    },
+    "metax_c500": {
+      "role": "MetaX compatibility target",
+      "target_package_route": "MetaX/MACA Paddle + FastDeploy source or vendor image",
+      "current_status": "readiness gate failed on current Paddle 2.6/MACA image",
+      "expected_backend_focus": ["MetaX device exposure", "custom GPU ops", "KV cache block accounting"]
+    },
+    "iluvatar_mrv100": {
+      "role": "Iluvatar non-NVIDIA comparison",
+      "target_package_route": "paddlepaddle-iluvatar + fastdeploy_iluvatar_gpu",
+      "expected_backend_focus": ["block_size=16 path", "Iluvatar custom device", "graph optimization"]
+    }
+  },
+  "models": [
+    {
+      "level": "L0",
+      "name": "import-only",
+      "purpose": "verify Python package and custom-op surface",
+      "requires_model_download": false
+    },
+    {
+      "level": "L1",
+      "name": "baidu/ERNIE-4.5-0.3B-Paddle",
+      "purpose": "minimal FastDeploy LLM serving model",
+      "requires_model_download": true
+    },
+    {
+      "level": "L2",
+      "name": "small local Paddle-format LLM if available",
+      "purpose": "compare against existing Qwen/vLLM C500 probes",
+      "requires_model_download": false
+    },
+    {
+      "level": "L3",
+      "name": "ERNIE-4.5-21B-A3B-Paddle WINT8/WINT4",
+      "purpose": "realistic FastDeploy official workload",
+      "requires_model_download": true
+    }
+  ],
+  "stages": [
+    {
+      "id": "stage0_readiness",
+      "script": "scripts/fastdeploy_readiness_probe.py",
+      "outputs": ["fastdeploy_<hardware>_readiness_probe.json"],
+      "required_pass_checks": [
+        "accelerator visible",
+        "paddle import",
+        "fastdeploy import",
+        "from paddle.jit.marker import unified",
+        "from fastdeploy import LLM, SamplingParams",
+        "from fastdeploy.model_executor.ops.gpu import beam_search_softmax"
+      ]
+    },
+    {
+      "id": "stage1_offline_llm_smoke",
+      "entrypoint": "from fastdeploy import LLM, SamplingParams",
+      "variables": {
+        "prompt_count": [2, 8],
+        "max_tokens": [64, 256],
+        "sampling": ["greedy", "default"]
+      },
+      "metrics": ["model_load_s", "worker_launch_s", "generation_s", "output_tokens", "backend_log_markers"]
+    },
+    {
+      "id": "stage2_openai_server_smoke",
+      "entrypoint": "python -m fastdeploy.entrypoints.openai.api_server",
+      "variables": {
+        "max_model_len": [8192],
+        "max_num_seqs": [32],
+        "gpu_memory_utilization": [0.85]
+      },
+      "metrics": ["health", "first_non_streaming_response", "first_streaming_response", "cache_block_log"]
+    },
+    {
+      "id": "stage3_prefill_decode_sweep",
+      "variables": {
+        "input_tokens": [128, 512, 2048, 4096],
+        "output_tokens": [32, 128, 512],
+        "concurrency": [1, 4, 8, 16, 32]
+      },
+      "metrics": ["ttft_ms", "tpot_ms", "itl_ms", "e2e_ms", "request_throughput", "output_token_throughput", "p50", "p90", "p99"]
+    },
+    {
+      "id": "stage4_kv_cache_frontier",
+      "variables": {
+        "max_model_len": [2048, 4096, 8192, 16384, 32768],
+        "gpu_memory_utilization": [0.7, 0.8, 0.9],
+        "max_num_seqs": [8, 16, 32, 64, 128],
+        "block_size": ["backend_default", 16, 64]
+      },
+      "metrics": ["total_gpu_blocks", "cacheable_tokens", "oom_boundary", "max_successful_concurrency"]
+    },
+    {
+      "id": "stage5_prefix_cache_mixed_workload",
+      "variables": {
+        "shared_prefix_ratio": [0, 0.25, 0.5, 0.75, 1.0],
+        "enable_prefix_caching": [false, true],
+        "swap_space": [0, 8],
+        "input_tokens": [512, 2048],
+        "concurrency": [8, 16, 32]
+      },
+      "metrics": ["ttft_ms", "e2e_ms", "request_throughput", "p90", "p99", "cache_hit_evidence"]
+    },
+    {
+      "id": "stage6_chunked_prefill_mixed_traffic",
+      "variables": {
+        "traffic_mix": ["70pct_short_30pct_long"],
+        "enable_chunked_prefill": [false, true],
+        "max_num_batched_tokens": [512, 1024, 2048, 4096, 8192],
+        "max_num_partial_prefills": [1, 2, 4]
+      },
+      "metrics": ["short_ttft_p90", "short_ttft_p99", "long_e2e_ms", "output_throughput", "scheduler_rejections"]
+    },
+    {
+      "id": "stage7_graph_optimization",
+      "variables": {
+        "graph_optimization_config": [
+          {"use_cudagraph": false, "graph_opt_level": 0},
+          {"use_cudagraph": true, "graph_opt_level": 0}
+        ],
+        "input_tokens": [128],
+        "output_tokens": [512],
+        "concurrency": [1, 4, 16]
+      },
+      "metrics": ["tpot_ms", "itl_ms", "startup_overhead_s", "memory_overhead_mb"]
+    }
+  ]
+}
