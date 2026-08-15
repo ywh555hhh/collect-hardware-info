@@ -2,7 +2,9 @@
 
 Date: 2026-08-11
 
-This note records the profiling-driven round after the initial C500-to-4090 porting sweeps. The goal was to stop treating C500 tricks as universally portable, use `nsys`/`ncu` evidence where available, and turn the accepted RTX 4090 D variants into path-specific defaults for three TileLang kernels.
+This note records the RTX 4090 D profiling-driven round for three TileLang kernels. The baseline is the DeepSeek `TileKernels` style implementation, which is already a strong expert-written GPU baseline. The goal on 4090 D was therefore modest: use `nsys`/`ncu` evidence where available, avoid correctness false positives, and identify any path-specific tuning that still survives full benchmark validation.
+
+This is only one side of the larger arc. The clearer cross-hardware optimization story is: DeepSeek baseline -> modest RTX 4090 D tuning -> more substantial MetaX C500 adaptation. See `notes/tilelang-deepseek-baseline-4090-c500-arc.md`.
 
 ## Environment
 
@@ -150,14 +152,15 @@ Validation result files:
 
 Recommended conservative wording:
 
-> Optimized three TileLang FP8/MoE data-movement kernels on RTX 4090 D using NSYS-guided profiling and correctness-gated benchmarking. Converted C500-derived tuning ideas into shape/path-specific 4090 defaults, achieving validated gmean speedups of `1.060x` for `per_channel_cast_fused`, `1.005x` for `batched_transpose`, and `1.005x` overall for fused SwiGLU+FP8 cast+transpose, with path-specific SwiGLU transpose speedup up to `~1.047x` and per-channel peak bandwidth up to `~1.475 TB/s`.
+> Starting from DeepSeek TileKernels baselines, profiled and tuned three TileLang FP8/MoE data-movement kernels on RTX 4090 D using NSYS-guided profiling and correctness-gated benchmarking. Because the baseline was already strong, the 4090 D gains were modest: `1.060x` gmean for the MoE/top-k `per_channel_cast_fused` path and `~1.005x` whole-suite gains for `batched_transpose` and fused SwiGLU+FP8 cast+transpose.
 
 Stronger wording is possible for the main win:
 
-> Delivered a profile-guided adaptive TileLang FP8 quantization kernel on RTX 4090 D, improving MoE/top-k `per_channel_cast_fused` throughput by `~6.0%` gmean and reaching `~1.475 TB/s` peak bandwidth while preserving dense-path behavior and passing all benchmark correctness cases.
+> Delivered a profile-guided adaptive TileLang FP8 quantization kernel on RTX 4090 D, improving the DeepSeek-baseline MoE/top-k `per_channel_cast_fused` path by `~6.0%` gmean and reaching `~1.475 TB/s` peak bandwidth while preserving dense-path behavior and passing all benchmark correctness cases.
 
 Do not overclaim:
 
 - `batched_transpose` is a small but real improvement, not a headline SOTA result.
 - `swiglu` has meaningful path-specific improvement on transpose+npt32, but only modest whole-suite gain.
 - NCU counter-level analysis is currently blocked by driver permissions, so final claims should say `NSYS-guided` rather than `NCU roofline-guided`.
+- Do not imply the RTX 4090 D baseline was weak; it was the DeepSeek TileKernels baseline.

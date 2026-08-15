@@ -12,7 +12,7 @@
 
 采集时间：2026-08-11 / 2026-08-12
 
-这批数据记录 TileLang / TileKernels-Metax 三个 FP8/MoE 相关算子在 RTX 4090 D 上的 profile-guided 优化尝试。重点不是硬件属性枚举，而是沉淀一组真实 kernel 优化闭环：C500 迁移思路、4090 上的 NSYS profiling、correctness-gated benchmark、最终 adaptive 默认策略和代码快照。
+这批数据记录 TileLang / TileKernels-Metax 三个 FP8/MoE 相关算子在 RTX 4090 D 上的 profile-guided 优化尝试。这里的基线是 DeepSeek `TileKernels` 风格的强 baseline，不是未优化 toy kernel。4090 D 上的 tuning 收益整体不大，但保留了 NSYS profiling、correctness-gated benchmark、最终 adaptive 默认策略和代码快照，作为后续 C500 迁移/重构优化的对照。
 
 环境摘要：
 
@@ -36,8 +36,9 @@
 
 关键观察：
 
-- DeepSeek/TileKernels 原实现已经很强，单 kernel 局部调参空间有限。
-- 最大可写结果来自 `per_channel_cast_fused` 的 MoE/topk expand 路径：profile-guided adaptive 默认策略达到 `~6.0%` gmean speedup 和 `~1.475 TB/s` peak bandwidth。
+- DeepSeek/TileKernels 原实现已经很强，单 kernel 局部调参空间有限；4090 D 上的优化应表述为“小幅但真实的 profile-guided tuning”。
+- 4090 D 最大可写结果来自 `per_channel_cast_fused` 的 MoE/topk expand 路径：profile-guided adaptive 默认策略达到 `~6.0%` gmean speedup 和 `~1.475 TB/s` peak bandwidth。
+- 更明显的迁移/重构优化主线在 C500：同一类 TileLang 算子迁移到 C500 后，需要围绕 C500 的执行模型、shared memory、bank conflict、线程映射和数据流做更实质的硬件相关优化。
 - `batched_transpose` 的 `block_k=8 + threads=512` 是 correctness 修复后的真实小收益，不应包装成大 SOTA。
 - SwiGLU 的 `128x64` tile 只适合 transpose path + `num_per_tokens=32`，全局启用会伤害 no-transpose path。
 - NCU counter 当前不可用，因此本轮可信证据是 NSYS kernel summary + benchmark JSONL + correctness/pass rows。
@@ -46,13 +47,18 @@
 
 ```text
 notes/
+  tilelang-deepseek-baseline-4090-c500-arc.md
   nvidia-rtx4090d-tilelang-profile-guided.md
   nvidia-rtx4090d-tilelang-per-channel-sweep.md
   nvidia-rtx4090d-tilelang-three-operator-push.md
   nvidia-rtx4090d-tilelang-sota-push.md
+  metax-c500-tilelang/
 
 kernels/nvidia-rtx4090d/tilelang-profile-guided/
   *_4090_profile_guided_kernel.py
+
+kernels/metax-c500/tilelang-ops/
+  *_c500_kernel.py
 
 probes/nvidia-rtx4090d/tilelang-profile-guided/
   run_*.sh
@@ -129,6 +135,8 @@ probes/
 kernels/
   nvidia-rtx4090d/
     tilelang-profile-guided/     # final profile-guided TileLang kernel snapshots
+  metax-c500/
+    tilelang-ops/                # C500 TileLang optimized kernel snapshots
 ```
 
 ## 复现方式
